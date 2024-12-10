@@ -1,0 +1,119 @@
+[{
+  "_id": {
+    "$oid": "663c25cb9173d27dbf16f651"
+  },
+  "phoneCode": "+91",
+  "phone": "9944026743",
+  "otpSecret": "",
+  "isChannalActive": true,
+  "isVerified": true,
+  "createdAt": {
+    "$date": "2024-09-24T11:49:42.584Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-05T13:55:57.718Z"
+  },
+  "channelId": "c6a9b08f2b7a0b5f00e17e193a2109eb"
+},
+{
+  "_id": {
+    "$oid": "6650c5ce74c3379810be1f50"
+  },
+  "phoneCode": "+91",
+  "phone": "9944363757",
+  "otpSecret": "",
+  "isChannalActive": true,
+  "isVerified": true,
+  "createdAt": {
+    "$date": "2024-09-24T11:49:42.584Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-05T13:55:57.718Z"
+  },
+  "channelId": "5b9fa67f8e08ac010bf8101cebe13a5a"
+},
+{
+  "_id": {
+    "$oid": "664d4d856c71f21c8aae3690"
+  },
+  "phoneCode": "+91",
+  "phone": "9585048650",
+  "otpSecret": "",
+  "isChannalActive": true,
+  "isVerified": true,
+  "createdAt": {
+    "$date": "2024-09-24T11:49:42.584Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-05T13:55:57.718Z"
+  },
+  "channelId": "6027bac4b2acf6c4fa440de21eb745d7"
+},
+{
+  "_id": {
+    "$oid": "663f2c7d74aeac422b615471"
+  },
+  "phoneCode": "+91",
+  "phone": "9789741475",
+  "otpSecret": "",
+  "isChannalActive": true,
+  "isVerified": true,
+  "createdAt": {
+    "$date": "2024-09-24T11:49:42.584Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-05T13:55:57.718Z"
+  },
+  "channelId": "eb6c2a81e3574821c9f4e72c753bb72c"
+},
+{
+  "_id": {
+    "$oid": "664760fcc035dbeec0d73fa3"
+  },
+  "phoneCode": "+91",
+  "phone": "7904354946",
+  "otpSecret": "",
+  "isChannalActive": true,
+  "isVerified": true,
+  "createdAt": {
+    "$date": "2024-09-24T11:49:42.584Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-05T13:55:57.718Z"
+  },
+  "channelId": "0861ec84b3646a693e409e756fbcd624"
+},
+{
+  "_id": {
+    "$oid": "66f2a756e0c0d600cf07a44b"
+  },
+  "phoneCode": "+91",
+  "phone": "9750989497",
+  "otpSecret": "",
+  "isChannalActive": true,
+  "isVerified": true,
+  "createdAt": {
+    "$date": "2024-09-24T11:49:42.584Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-05T13:55:57.718Z"
+  },
+  "channelId": "bae7d1144c7d7036dbfb8313a416b694"
+},
+{
+  "_id": {
+    "$oid": "666001237fe29e47a524625e"
+  },
+  "phoneCode": "+91",
+  "phone": "8122730831",
+  "otpSecret": "",
+  "isChannalActive": true,
+  "isVerified": true,
+  "createdAt": {
+    "$date": "2024-09-24T11:49:42.584Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-05T13:55:57.718Z"
+  },
+  "channelId": "acf273aef63c9d31065b3656e43f4ad1"
+}]

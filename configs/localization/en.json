@@ -1,0 +1,23 @@
+{
+  "SUCCESS": "Success",
+  "HTTP_SUCCESS": "Success",
+  "FORBIDDEN": "Forbidden",
+  "ERR": "!!! Error !!!",
+  "DB_FAILURE": "Database Failure",
+  "DB_ERR": "Error in  Database",
+  "DB_DUPLICATE": "DB Duplicate key insertion error.",
+  "NO_RECORDS": "No Records Found",
+  "SERVER_ERROR": "Server Error",
+  "USER_REG_SUCC": "User registered successfully",
+  "USER_LOGGED_IN_SUCC": "User logged in successfully",
+  "USER_NOT_FOUND": "User not found",
+  "QR_DATA_CREATED": "QR code data created",
+  "LOGOUT_PREV_DEVICES": "Please logout previous devices",
+  "TOKEN_GENERATED_SUCC": "Token generated successfully",
+  "TOKEN_VERI_SUCC": "Token verified successfully",
+  "WEB_LOGOUT_SUCC": "Web Logout succeeded",
+  "AUTH_YOUR_APP": "Authenticate Your App",
+  "USER_DENIED": "User Denied Your Request",
+  "INVALID_CREDENTIALS": "Invalid credentials",
+  "INVALID_USER_ACCESS": "Invalid user: access restricted to Admin roles only"
+}
