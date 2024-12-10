@@ -14,7 +14,7 @@ const options = {
         description: 'Local Server',
       },
       {
-        url: 'https://veerasapi.onrender.com',
+        url: 'https://veeras-api.onrender.com',
         description: 'Stage Server',
       }
     ],
