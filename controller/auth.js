@@ -51,7 +51,6 @@ module.exports = function (mongoose, utils, pusher, constants) {
   ctrl.verify = async (req, res) => {
     try {
       const { deviceId } = req.headers;
-      console.log("deviceId::", req.headers);
       const { phoneNo, otp } = req.body;
       const user = await User.findOne({ phone: phoneNo });
       if (!user) {
@@ -72,7 +71,6 @@ module.exports = function (mongoose, utils, pusher, constants) {
       await LoginHistory.findOneAndUpdate({ userId: user._id, status: constants.loginStatus.ACTIVE }, { $set: { status: constants.loginStatus.IN_ACTIVE } })
 
       ctrl.recordLogin(user._id, req);
-      console.log('Toeken from user/verify: ', token);
       return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', token);
     } catch (err) {
       return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);

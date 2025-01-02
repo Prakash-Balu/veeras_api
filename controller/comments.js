@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function (mongoose, utils, constants, io) {
+module.exports = function (mongoose, utils, constants) {
 
     const commentsCtrl = {};
     const commentsService = require('../service/comments')(mongoose, utils);
@@ -8,11 +8,6 @@ module.exports = function (mongoose, utils, constants, io) {
     commentsCtrl.addComment = async (req, res) => {
         try {
             const result = await commentsService.addComment(req, res);
-
-            if(!!result._id) {
-                // Notify admin in real-time
-                io.emit('new-comment', { message: `New comment posted: "${req}"` });
-            }
 
             return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', result);
         } catch (err) {

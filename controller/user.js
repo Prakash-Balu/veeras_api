@@ -6,12 +6,25 @@ const privateKey = "63aed4efa5e8fa1cb63"
 module.exports = function (mongoose, utils, constants) {
   const User = mongoose.model("User");
   const UserProfiles = mongoose.model("user_profiles");
+  const Attendance = mongoose.model("Attendance");
   const SessionHistory = mongoose.model("SessionHistory");
   const ctrl = {};
 
   ctrl.myProfile = async (req, res) => {
     try {
       return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', req.userInfo);
+    } catch (err) {
+      return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
+    }
+  };
+
+
+  ctrl.myAttendance = async (req, res) => {
+    try {
+      const { _id: userId } = req.userInfo;
+      const { start, end } = req.body;
+      const attendance = await Attendance.find({ userId, createdAt: {$gte: start, $lte: end} }).lean();
+      return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', attendance);
     } catch (err) {
       return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
     }
@@ -69,17 +82,17 @@ module.exports = function (mongoose, utils, constants) {
     }
   };
 
-  ctrl.getUserDetails = async(req, res) => {
+  ctrl.getUserDetails = async (req, res) => {
     try {
-        const { userId } = req.body;
-        const userData = await UserProfiles.findOne({user_id: userId});
+      const { userId } = req.body;
+      const userData = await UserProfiles.findOne({ user_id: userId });
 
-        return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', userData);
+      return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', userData);
     } catch (err) {
-        console.log(err);
-        return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
+      console.log(err);
+      return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
     }
-};
+  };
 
   return ctrl;
 };

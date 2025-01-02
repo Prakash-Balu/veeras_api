@@ -39,6 +39,7 @@ module.exports = (constants) => {
       require('../models/subscription')(mongoose, constants)
       require('../models/attendance')(mongoose, constants)
       require('../models/chats')(mongoose, constants)
+      require('../models/register')(mongoose, constants)
       resolve(mongoose);
     });
 

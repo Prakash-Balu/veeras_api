@@ -10,26 +10,21 @@ module.exports = function (mongoose, utils) {
     try {
       const { authorization } = req.headers;
       if (!authorization) {
-        console.log("authorize")
         return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
       }
       const token = authorization.split(" ");
       if (token && token.length > 0 && token?.[0] !== 'Bearer') {
-        console.log("bearer")
         return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
       }
       if (!token[1]) {
-        console.log("token")
         return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
       }
       const decoded = jwt.verify(token[1], process.env.JWT_PRIVATE_KEY);
       if (!decoded) {
-        console.log("decodd=ed")
         return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
       }
       const user = await User.findOne({ _id: decoded._id }).lean();
       if (!user) {
-        console.log("user")
         return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
       }
       const attendanceObj = {
@@ -37,13 +32,11 @@ module.exports = function (mongoose, utils) {
       }
       if (!decoded.isMobile) {
         if (user.channelId !== decoded.channelId) {
-          console.log("decode not ismobile")
           return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
         }
         attendanceObj.app = 'mobile';
       } else {
         if (user.deviceId !== decoded.deviceId) {
-          console.log("decode ismobile")
           return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
         }
         attendanceObj.app = 'web';
@@ -53,7 +46,6 @@ module.exports = function (mongoose, utils) {
       return next();
     } catch (error) {
       console.log(error);
-      console.log("error")
       return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
     }
   };

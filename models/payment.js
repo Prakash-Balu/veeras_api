@@ -42,6 +42,9 @@ module.exports = function (mongoose, constants) {
       paymentSignature: {
         type: String
       },
+      duration: {
+        type: Number
+      },
       status: {
         type: String,
         enum: Object.values(constants.paymentStatus),

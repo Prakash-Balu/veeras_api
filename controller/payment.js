@@ -3,13 +3,21 @@ module.exports = function (mongoose, utils, constants) {
   const moment = require('moment');
   const Payment = mongoose.model("Payment");
   const Subscription = mongoose.model("Subscription");
+  const Register = mongoose.model("Register");
+  const User = mongoose.model("User");
   const razorService = require('../service/razorpay')();
   const ctrl = {};
 
   ctrl.cretePaymentLink = async (req, res) => {
     try {
-      const { planId, currencyCode, amount } = req.body;
-      const { _id: userId } = req.userInfo;
+      const { planId, currencyCode, amount, duration, user } = req.body;
+      const { phone, phoneCode } = user;
+      const userExists = await Register.findOne({ phoneCode, phone }).lean();
+      if (userExists) {
+        return utils.sendErrorNew(req, res, 'BAD_REQUEST', 'User already exists. please login to continue');
+      }
+      const [register, userObj] = await Promise.all([Register.create(user), User.create(user)]);
+      const { _id: userId } = userObj;
       const isPaymentExists = await Payment.findOne({ planId, userId, status: constants.paymentStatus.PROCESSING })
       if (isPaymentExists) {
         return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', isPaymentExists.paymentShortLink);
@@ -23,12 +31,12 @@ module.exports = function (mongoose, utils, constants) {
         callback_url: `${process.env.API_URL}/payment/callback`,
       }
       const paymentLinkResp = await razorService.createPaymentLink(razorPaymentObj);
-      console.log(paymentLinkResp);
       const paymentObj = {
         userId,
         planId,
         amount,
         currencyCode,
+        duration,
         expireIn: moment().add(15, 'minutes'),
         paymentLinkId: paymentLinkResp.id,
         paymentShortLink: paymentLinkResp.short_url
@@ -66,7 +74,7 @@ module.exports = function (mongoose, utils, constants) {
         planId: checkPayment.planId._id,
         paymentId: checkPayment._id,
         startAt: moment(),
-        expiresAt: moment().add(checkPayment.planId.monthsno, 'months')
+        expiresAt: moment().add(checkPayment.duration, 'months')
       }
       await Subscription.create(subscriptionObj);
       return utils.sendResponseNew(req, res, 'OK', 'SUCCESS');
