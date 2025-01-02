@@ -9,7 +9,9 @@ const http = require('http');
 const socketIo = require('socket.io');
 
 const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./configs/swaggerConfig');
+// const swaggerSpec = require('./configs/swaggerConfig');
+const swaggerJsdoc = require('swagger-jsdoc');
+// const { updateSwaggerServers } = require('./configs/swaggerConfig');
 const constants = require('./configs/constants');
 const Razorpay = require('razorpay')
 const razorpay = new Razorpay({
@@ -69,7 +71,41 @@ module.exports = (async () => {
 
 
   // Serve Swagger documentation
+
+  const swaggerOptions = {
+    definition: {
+      openapi: '3.0.0',
+      info: {
+        title: 'API Documentation',
+        version: '1.0.0',
+        description: 'A simple API documentation example',
+      },
+      components: {
+        securitySchemes: {
+          BearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+          },
+        },
+      },
+      security: [
+        {
+          BearerAuth: [],
+        },
+      ],
+    },
+    apis: ['./routes/*.js'], // Adjust the path to match your project
+  };
+
+  const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  // app.use('/api-docs', updateSwaggerServers, (req, res, next) => {
+  //   swaggerUi.serve(req, res, next); // Serve Swagger UI
+  // }, (req, res) => {
+  //   swaggerUi.setup(req.swaggerSpec)(req, res);
+  // });
 
   app.get('/order', async (req, res) => {
     // setting up options for razorpay order.
