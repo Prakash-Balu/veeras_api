@@ -22,7 +22,7 @@ module.exports = function (mongoose, utils, constants) {
   ctrl.myAttendance = async (req, res) => {
     try {
       const { _id: userId } = req.userInfo;
-      const { start, end } = req.body;
+      const { start, end } = req.query;
       const attendance = await Attendance.find({ userId, createdAt: {$gte: start, $lte: end} }).lean();
       return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', attendance);
     } catch (err) {

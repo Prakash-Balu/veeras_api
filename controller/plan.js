@@ -7,7 +7,6 @@ module.exports = function (mongoose, utils, constants) {
     const Location = mongoose.model("location_details");
     const LocationPrice = mongoose.model("location_prices");
     const { IPinfoWrapper } = require("node-ipinfo");
-    const planService = require('../service/plan')(mongoose, utils);
 
     planCtrl.getPlanDetails = async (req, res) => {
         try {
