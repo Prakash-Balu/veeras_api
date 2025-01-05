@@ -6,44 +6,45 @@ module.exports = function (utils) {
   validator.createPayment = function (req, res, next) {
     const data = req.body;
     const schema = Joi.object().keys({
-      user: Joi.object().keys({
-        name: Joi.string()
-          .required()
-          .error(() => Error("Invalid name")),
-        phoneCode: Joi.string()
-          .required()
-          .error(() => Error("Invalid phoneCode")),
-        phone: Joi.string()
-          .required()
-          .error(() => Error("Invalid phone")),
-        whatsapp: Joi.string()
-          .required()
-          .error(() => Error("Invalid whatsapp")),
-        email: Joi.email()
-          .required()
-          .error(() => Error("Invalid email")),
-        country: Joi.string()
-          .required()
-          .error(() => Error("Invalid country")),
-        state: Joi.string()
-          .required()
-          .error(() => Error("Invalid state")),
-        city: Joi.string()
-          .required()
-          .error(() => Error("Invalid city")),
-        pincode: Joi.number()
-          .required()
-          .error(() => Error("Invalid pincode")),
-        isCompany: Joi.boolean()
-          .required()
-          .error(() => Error("Invalid isCompany")),
-        companyName: Joi.string()
-          .optional()
-          .error(() => Error("Invalid companyName")),
-        gstNumber: Joi.string()
-          .optional()
-          .error(() => Error("Invalid gstNumber")),
-      }).required().error(() => "Invalid user object"),
+      name: Joi.string()
+        .required()
+        .error(() => Error("Invalid name")),
+      phoneCode: Joi.string()
+        .required()
+        .error(() => Error("Invalid phoneCode")),
+      phone: Joi.string()
+        .required()
+        .error(() => Error("Invalid phone")),
+      whatsapp: Joi.string()
+        .required()
+        .error(() => Error("Invalid whatsapp")),
+      email: Joi.string()
+        .email()
+        .required()
+        .error(() => Error("Invalid email")),
+      country: Joi.string()
+        .required()
+        .error(() => Error("Invalid country")),
+      state: Joi.string()
+        .required()
+        .error(() => Error("Invalid state")),
+      city: Joi.string()
+        .required()
+        .error(() => Error("Invalid city")),
+      pincode: Joi.number()
+        .required()
+        .error(() => Error("Invalid pincode")),
+      isCompany: Joi.boolean()
+        .required()
+        .error(() => Error("Invalid isCompany")),
+      companyName: Joi.string()
+        .optional()
+        .error(() => Error("Invalid companyName")),
+      gstNumber: Joi.string()
+        .optional()
+        .error(() => Error("Invalid gstNumber")),
+      // user: Joi.object().keys({
+      // }).required().error(() => "Invalid user object"),
       planId: Joi.string()
         .required()
         .error(() => Error("Invalid PlanId")),
