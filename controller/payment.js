@@ -13,7 +13,7 @@ module.exports = function (mongoose, utils, constants) {
     try {
       const { planId, currencyCode, amount, duration, user } = req.body;
       const { phone, phoneCode } = user;
-      const [registerExists, userExists] = await Promise.all[(Register.findOne({ phoneCode, phone }).lean(), User.findOne({ phone }))];
+      const [registerExists, userExists] = await Promise.all([Register.findOne({ phoneCode, phone }).lean(), User.findOne({ phone })]);
       if (registerExists && userExists) {
         const { _id: userId } = userExists;
         const isPaymentExists = await Payment.findOne({ planId, userId, status: constants.paymentStatus.PROCESSING })
@@ -150,8 +150,6 @@ module.exports = function (mongoose, utils, constants) {
       const ipinfo = new IPinfoWrapper(TOKEN);
       let ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
       ipAddress = ipAddress.split(',')[0].trim();
-      console.log('ipAddress::', ipAddress)
-      ipAddress = '43.247.156.26';
       const info = await ipinfo.lookupIp(ipAddress);
       return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', info);
     } catch (err) {
