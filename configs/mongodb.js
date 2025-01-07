@@ -40,6 +40,8 @@ module.exports = (constants) => {
       require('../models/attendance')(mongoose, constants)
       require('../models/chats')(mongoose, constants)
       require('../models/register')(mongoose, constants)
+      require('../models/selfpracticeSegment')(mongoose)
+      require('../models/questions')(mongoose)
       resolve(mongoose);
     });
 
