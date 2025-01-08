@@ -2,12 +2,12 @@
 module.exports = (mongoose, utils, constants) => {
   const express = require("express");
   const router = express.Router();
-  const SelfPracticeSegment = mongoose.model("SelfpracticeSegment");
+  const questionanswer = mongoose.model("qa");
 
   router.post("/addsegment", async (req, res) => {
     try {
       const { segmentid, title, nofexercise, video } = req.body;
-      const newSegment = new SelfPracticeSegment({
+      const newSegment = new questionanswer({
         segmentid,
         title,
         video,
@@ -36,7 +36,7 @@ module.exports = (mongoose, utils, constants) => {
         timeline,
       };
   
-      const segment = await SelfPracticeSegment.findOne({ segmentid });
+      const segment = await questionanswer.findOne({ segmentid });
   
       if (segment) {
         segment.title = title;
@@ -68,7 +68,7 @@ module.exports = (mongoose, utils, constants) => {
   
   router.get("/getqa", async (req, res) => {
     try {
-      const segments = await SelfPracticeSegment.find();
+      const segments = await questionanswer.find();
       res.status(200).json({
         message: "Segments retrieved successfully!",
         data: segments,
@@ -81,7 +81,7 @@ module.exports = (mongoose, utils, constants) => {
   
   router.get("/segments", async (req, res) => {
     try {
-      const segments = await SelfPracticeSegment.find({}, "_id segmentid video title nofexercise");
+      const segments = await questionanswer.find({}, "_id segmentid video title nofexercise");
       res.status(200).json({
         message: "Segments retrieved successfully!",
         data: segments,
@@ -94,7 +94,7 @@ module.exports = (mongoose, utils, constants) => {
   
   router.get("/getqa/:id", async (req, res) => {
     try {
-      const segment = await SelfPracticeSegment.findById(req.params.id);
+      const segment = await questionanswer.findById(req.params.id);
       if (!segment) {
         return res.status(404).json({ message: "Segment not found" });
       }
@@ -124,7 +124,7 @@ module.exports = (mongoose, utils, constants) => {
     try {
       const { segmentid, qid, answers, timeline, question, exercise, rawquestion, title, video } = req.body;
   
-      const segment = await SelfPracticeSegment.findOne({ segmentid });
+      const segment = await questionanswer.findOne({ segmentid });
       if (!segment) {
         return res.status(404).json({ message: "Segment not found" });
       }
@@ -153,7 +153,7 @@ module.exports = (mongoose, utils, constants) => {
     try {
       const { id } = req.body;
   
-      const result = await SelfPracticeSegment.findByIdAndDelete(id);
+      const result = await questionanswer.findByIdAndDelete(id);
   
       if (result) {
         res.status(200).json({ message: "Segment deleted successfully" });
