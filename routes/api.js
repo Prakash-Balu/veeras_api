@@ -228,7 +228,7 @@ module.exports = (mongoose, utils, constants) => {
   
       const dbAnswers = exercise.questions[qid].answers;
 
-      const result = blanks.map((answer, i) => answer === dbAnswers[i]);
+      const result = blanks.map((answer, i) => answer.trim().toLowerCase() === dbAnswers[i].trim().toLowerCase());
       const video = exercise.questions[qid].timeline;
       // Return the result in the response
       return res.status(200).json({
