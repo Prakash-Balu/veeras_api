@@ -42,7 +42,7 @@ module.exports = (constants) => {
       require('../models/register')(mongoose, constants)
       // require('../models/selfpracticeSegment')(mongoose)
       // require('../models/questions')(mongoose)
-      require('../models/qa')(mongoose)
+      // require('../models/qa')(mongoose)
       resolve(mongoose);
     });
 
