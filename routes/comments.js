@@ -7,6 +7,7 @@ module.exports = (mongoose, utils, constants) => {
     router.post("/addComment", authenticate.validateToken, controller.addComment);
     router.post("/addReplies", authenticate.validateToken, controller.addReplies);
     router.get('/viewComment', authenticate.validateToken, controller.viewComment);
+    router.get('/view-notification', authenticate.validateToken, controller.viewNotification);
 
     return router;
 }

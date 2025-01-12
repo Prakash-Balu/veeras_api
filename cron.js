@@ -5,6 +5,8 @@ module.exports = function (mongoose, utils, constants) {
   const cron = require("node-cron");
   const moment = require("moment");
   const Attendance = mongoose.model("Attendance");
+  const Notification = mongoose.model("Notification");
+  const Replies = mongoose.model("replies");
   const User = mongoose.model("User");
 
   cron.schedule("*/5 0 * * *", async function () {
@@ -29,6 +31,28 @@ module.exports = function (mongoose, utils, constants) {
       return
     } catch (error) {
       console.log("something error occured on absend updated", error.message)
+    }
+
+  });
+
+  cron.schedule("0 8 * * *", async function () {
+    try {
+      const pendingNotifications = await Notification.find({ status: "Processing" }).lean();
+      if (pendingNotifications.length > 0) {
+        const commentsIds = pendingNotifications.map(e => e.commentId);
+        const repliesData = await Replies.find({ commentId: { $in: commentsIds } });
+        if (repliesData.length > 0) {
+          for (const ele of pendingNotifications) {
+            const replyId = repliesData.find((e) => String(e.commentId) === String(ele.commentId));
+            if (replyId) {
+              await Notification.updateOne({ _id: ele._id }, { $set: { replyId: replyId?._id, status: 'Solved' } })
+            }
+          }
+        }
+      }
+      return
+    } catch (error) {
+      console.log("reply updating error occured", error.message)
     }
 
   });

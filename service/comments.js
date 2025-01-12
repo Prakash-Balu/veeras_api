@@ -3,21 +3,24 @@
 module.exports = function (mongoose, utils) {
     const commentsService = {};
     const Comments = mongoose.model("comments");
+    const Notification = mongoose.model("Notification")
     const Replies = mongoose.model("replies");
     const ObjectId = mongoose.Types.ObjectId;
 
     commentsService.addComment = async (req, res) => {
         try {
-          const commentsObject = await Comments.create({
-            userId: req.userInfo._id,
-            segmentId: req.body.segmentId,
-            seqNo: req.body.seqNo,
-            text: req.body.text,
-            audioPath: req.body.audioPath,
-          });
-    
-          //   console.log(commentsObject);
-          return commentsObject;
+            const commentsObject = await Comments.create({
+                userId: req.userInfo._id,
+                segmentId: req.body.segmentId,
+                seqNo: req.body.seqNo,
+                text: req.body.text,
+                audioPath: req.body.audioPath,
+            });
+            await Notification.create({
+                userId: req.userInfo._id,
+                commentId: commentsObject._id
+            });
+            return commentsObject;
         } catch (err) {
             console.log(err);
             return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);

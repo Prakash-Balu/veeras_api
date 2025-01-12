@@ -43,6 +43,7 @@ module.exports = (constants) => {
       // require('../models/selfpracticeSegment')(mongoose)
       // require('../models/questions')(mongoose)
       require('../models/qa')(mongoose)
+      require('../models/notifications')(mongoose, constants)
       resolve(mongoose);
     });
 
