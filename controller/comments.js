@@ -73,6 +73,34 @@ module.exports = function (mongoose, utils, constants) {
                 },
                 {
                     $lookup: {
+                        from: 'users',
+                        localField: 'userId',
+                        foreignField: '_id',
+                        as: 'users'
+                    }
+                },
+                {
+                    $unwind: {
+                        path: '$users',
+                        preserveNullAndEmptyArrays: true
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'user_profiles',
+                        localField: 'users.userProfileId',
+                        foreignField: '_id',
+                        as: 'user_profiles'
+                    }
+                },
+                {
+                    $unwind: {
+                        path: '$user_profiles',
+                        preserveNullAndEmptyArrays: true
+                    }
+                },
+                {
+                    $lookup: {
                         from: 'segments',
                         localField: 'comments.segmentId',
                         foreignField: '_id',
@@ -116,8 +144,8 @@ module.exports = function (mongoose, utils, constants) {
                 Notification.aggregate(aggregate),
                 Notification.aggregate(aggregate_1)
             ])
-            askedQuestions = askedQuestions.map(e => { return { ...e, ago: moment(e.createdAt).fromNow() } });
-            answeredQuestions = answeredQuestions.map(e => { return { ...e, ago: moment(e.createdAt).fromNow(), replyAgo: moment(e.replies.createdAt).fromNow() } });
+            askedQuestions = askedQuestions.map(e => { return { ...e, ago: moment(e.createdAt).fromNow(), shortName: e.user_profiles.fullName.split(' ').map(word => word.charAt(0)).join('') } });
+            answeredQuestions = answeredQuestions.map(e => { return { ...e, ago: moment(e.createdAt).fromNow(), replyAgo: moment(e.replies.createdAt).fromNow(), shortName: e.user_profiles.fullName.split(' ').map(word => word.charAt(0)).join('') } });
             return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', { askedQuestions, answeredQuestions });
         } catch (err) {
             return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);

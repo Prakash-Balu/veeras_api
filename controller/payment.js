@@ -3,7 +3,7 @@ module.exports = function (mongoose, utils, constants) {
   const moment = require('moment');
   const Payment = mongoose.model("Payment");
   const Subscription = mongoose.model("Subscription");
-  const Register = mongoose.model("Register");
+  const UserProfile = mongoose.model("user_profiles");
   const User = mongoose.model("User");
   const razorService = require('../service/razorpay')();
   const { IPinfoWrapper } = require("node-ipinfo");
@@ -13,91 +13,45 @@ module.exports = function (mongoose, utils, constants) {
     try {
       const { planId, currencyCode, amount, duration, user } = req.body;
       const { phone, phoneCode } = user;
-      const [registerExists, userExists] = await Promise.all([Register.findOne({ phoneCode, phone }).lean(), User.findOne({ phone })]);
-      if (registerExists && userExists) {
-        const { _id: userId } = userExists;
-        const isPaymentExists = await Payment.findOne({ planId, userId, status: constants.paymentStatus.PROCESSING })
-        if (isPaymentExists) {
-          return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', isPaymentExists.paymentShortLink);
-        }
-        const razorPaymentObj = {
-          "amount": Math.round(amount * 100),  // Amount in paise (50000 paise = 500 INR)
-          "currency": currencyCode,
-          "accept_partial": false,
-          "expire_by": Date.now() * 15,  // Optional: Unix timestamp for expiration
-          "reminder_enable": true,
-          callback_url: `${process.env.API_URL}/payment/callback`,
-        }
-        const paymentLinkResp = await razorService.createPaymentLink(razorPaymentObj);
-        const paymentObj = {
-          userId,
-          planId,
-          amount,
-          currencyCode,
-          duration,
-          expireIn: moment().add(15, 'minutes'),
-          paymentLinkId: paymentLinkResp.id,
-          paymentShortLink: paymentLinkResp.short_url
-        }
-        await Payment.create(paymentObj);
-        return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', paymentLinkResp.short_url);
-      } else if (!registerExists && !userExists) {
-        const [register, userObj] = await Promise.all([Register.create(user), User.create(user)]);
-        const { _id: userId } = userObj;
-        const isPaymentExists = await Payment.findOne({ planId, userId, status: constants.paymentStatus.PROCESSING })
-        if (isPaymentExists) {
-          return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', isPaymentExists.paymentShortLink);
-        }
-        const razorPaymentObj = {
-          "amount": Math.round(amount * 100),  // Amount in paise (50000 paise = 500 INR)
-          "currency": currencyCode,
-          "accept_partial": false,
-          "expire_by": Date.now() * 15,  // Optional: Unix timestamp for expiration
-          "reminder_enable": true,
-          callback_url: `${process.env.API_URL}/payment/callback`,
-        }
-        const paymentLinkResp = await razorService.createPaymentLink(razorPaymentObj);
-        const paymentObj = {
-          userId,
-          planId,
-          amount,
-          currencyCode,
-          duration,
-          expireIn: moment().add(15, 'minutes'),
-          paymentLinkId: paymentLinkResp.id,
-          paymentShortLink: paymentLinkResp.short_url
-        }
-        await Payment.create(paymentObj);
-        return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', paymentLinkResp.short_url);
-      } else if (!registerExists && userExists) {
-        await Register.create(user);
-        const { _id: userId } = userExists;
-        const isPaymentExists = await Payment.findOne({ planId, userId, status: constants.paymentStatus.PROCESSING })
-        if (isPaymentExists) {
-          return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', isPaymentExists.paymentShortLink);
-        }
-        const razorPaymentObj = {
-          "amount": Math.round(amount * 100),  // Amount in paise (50000 paise = 500 INR)
-          "currency": currencyCode,
-          "accept_partial": false,
-          "expire_by": Date.now() * 15,  // Optional: Unix timestamp for expiration
-          "reminder_enable": true,
-          callback_url: `${process.env.API_URL}/payment/callback`,
-        }
-        const paymentLinkResp = await razorService.createPaymentLink(razorPaymentObj);
-        const paymentObj = {
-          userId,
-          planId,
-          amount,
-          currencyCode,
-          duration,
-          expireIn: moment().add(15, 'minutes'),
-          paymentLinkId: paymentLinkResp.id,
-          paymentShortLink: paymentLinkResp.short_url
-        }
-        await Payment.create(paymentObj);
-        return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', paymentLinkResp.short_url);
+      const userExists = await User.findOne({ phoneCode, phone });
+      let userData, profileData;
+      if (!userExists) {
+        profileData = await UserProfile.create(user);
+        userData = await User.create({ phone, phoneCode, userProfileId: profileData._id })
+      };
+      if (userExists && !userExists.userProfileId) {
+        profileData = await UserProfile.create(user);
+        await User.updateOne({ _id: userExists._id }, { $set: { userProfileId: profileData._id } });
+      };
+
+      const { _id: userId } = userExists || userData;
+      const isPaymentExists = await Payment.findOne({ planId, userId, status: constants.paymentStatus.PROCESSING })
+      if (isPaymentExists) {
+        return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', isPaymentExists.paymentShortLink);
       }
+      const razorPaymentObj = {
+        "amount": Math.round(amount * 100),  // Amount in paise (50000 paise = 500 INR)
+        "currency": currencyCode,
+        "accept_partial": false,
+        "reminder_enable": true,
+        customer: {
+          contact: phone // Default phone number
+        },
+        callback_url: `${process.env.API_URL}/payment/callback`,
+      }
+      const paymentLinkResp = await razorService.createPaymentLink(razorPaymentObj);
+      const paymentObj = {
+        userId,
+        planId,
+        amount,
+        currencyCode,
+        duration,
+        expireIn: moment().add(15, 'minutes'),
+        paymentLinkId: paymentLinkResp.id,
+        paymentShortLink: paymentLinkResp.short_url
+      }
+      await Payment.create(paymentObj);
+      return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', paymentLinkResp.short_url);
     } catch (err) {
       if (err.msg) {
         return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.msg);
@@ -133,6 +87,8 @@ module.exports = function (mongoose, utils, constants) {
           expiresAt: moment().add(checkPayment.duration, 'months')
         }
         await Subscription.create(subscriptionObj);
+        const user = await User.findOne({ _id: checkPayment.userId });
+        await UserProfile.updateOne({ _id: user.userProfileId }, { $set: { isPaid: true } })
         res.redirect(301, process.env.UI_URL + "/payment-success");
       } else {
         res.redirect(301, process.env.UI_URL + "/payment-failure");
@@ -150,6 +106,7 @@ module.exports = function (mongoose, utils, constants) {
       const ipinfo = new IPinfoWrapper(TOKEN);
       let ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
       ipAddress = ipAddress.split(',')[0].trim();
+      // ipAddress = "115.240.90.163";
       const info = await ipinfo.lookupIp(ipAddress);
       return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', info);
     } catch (err) {

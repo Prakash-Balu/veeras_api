@@ -1,6 +1,7 @@
 "use strict";
 module.exports = function (mongoose) {
   const Schema = mongoose.Schema;
+  const ObjectId = Schema.ObjectId;
 
   let schema = new Schema(
     {
@@ -13,6 +14,10 @@ module.exports = function (mongoose) {
         index: true,
         unique: true,
         required: true,
+      },
+      userProfileId:{
+        type: ObjectId,
+        ref: "user_profiles",
       },
       otpSecret: {
         type: String
