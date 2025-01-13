@@ -18,9 +18,10 @@ module.exports = function (mongoose, utils, constants) {
       if (!userExists) {
         profileData = await UserProfile.create(user);
         userData = await User.create({ phone, phoneCode, userProfileId: profileData._id })
+        await UserProfile.updateOne({ _id: profileData._id }, { $set: { user_id: userData._id } })
       };
       if (userExists && !userExists.userProfileId) {
-        profileData = await UserProfile.create(user);
+        profileData = await UserProfile.create({ user, user_id: userExists._id });
         await User.updateOne({ _id: userExists._id }, { $set: { userProfileId: profileData._id } });
       };
 
