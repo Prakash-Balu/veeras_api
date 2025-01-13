@@ -13,7 +13,7 @@ module.exports = function (mongoose, utils, constants) {
     try {
       const StartOfDay = moment().subtract(1, 'day').startOf('day');
       const EndOfDay = moment().subtract(1, 'day').endOf('day');
-      const attendance = await Attendance.findOne({ createdAt: { $gte: new Date(StartOfDay), $lte: new Date(EndOfDay) } }).lean();
+      const attendance = await Attendance.find({ createdAt: { $gte: new Date(StartOfDay), $lte: new Date(EndOfDay) } }).lean();
       const userIds = attendance.map(e => e.userId);
       const absendUsers = await User.find({ _id: { $nin: userIds } }).lean();
       const absendUserIds = absendUsers.map(e => e._id);
