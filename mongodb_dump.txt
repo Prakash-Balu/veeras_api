@@ -1,0 +1,15 @@
+mongodump --uri="mongodb+srv://vercel-admin-user:Ahans%402021@cluster0.4rwwhvl.mongodb.net/veeras" --out=veeras_dump.json
+
+mongoexport --uri="mongodb+srv://vercel-admin-user:Ahans%402021@cluster0.4rwwhvl.mongodb.net/veeras" --out=veeras_dump.json
+
+#Working Dump Database
+mongodump --uri="mongodb+srv://vercel-admin-user:Ahans%402021@cluster0.4rwwhvl.mongodb.net/veeras" --out="D:\veeras_dump"
+
+mongodb://localhost:27017
+#Working Restore to local
+>mongorestore --uri="mongodb://localhost:27017/veeras" --dir="D:/veeras_dump/veeras"
+
+
+mongosh "mongodb+srv://YOUR_CLUSTER_NAME.YOUR_HASH.mongodb.net/" --apiVersion YOUR_API_VERSION --username YOUR_USERNAME
+
+mongosh "mongodb+srv://cluster0.4rwwhvl.mongodb.net/" --username vercel-admin-user

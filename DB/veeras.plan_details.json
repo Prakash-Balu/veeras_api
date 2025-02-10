@@ -1,0 +1,64 @@
+[{
+  "_id": {
+    "$oid": "67aa3b897298eb8a0a76cc74"
+  },
+  "code": "plan1",
+  "name": "Plan 1",
+  "description": "Plan 1",
+  "feeFieldName": "planFee",
+  "duration": "1",
+  "period": "month",
+  "hasValidity": false,
+  "createdAt": {
+    "$date": "2025-02-10T17:46:49.846Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T17:46:49.846Z"
+  },
+  "__v": 0,
+  "processingFee": 33
+},
+{
+  "_id": {
+    "$oid": "67aa3c5a7298eb8a0a76cc85"
+  },
+  "code": "plan2",
+  "name": "Plan 2",
+  "description": "Plan 2",
+  "feeFieldName": "planFee",
+  "duration": "6",
+  "period": "month",
+  "hasValidity": true,
+  "validityDuration": "1",
+  "validityPeriod": "month",
+  "createdAt": {
+    "$date": "2025-02-10T17:50:18.986Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T17:50:18.986Z"
+  },
+  "__v": 0,
+  "processingFee": 83
+},
+{
+  "_id": {
+    "$oid": "67aa3cbb7298eb8a0a76cc8d"
+  },
+  "code": "plan3",
+  "name": "Plan 3",
+  "description": "Plan 3",
+  "feeFieldName": "planFee",
+  "duration": "10",
+  "period": "month",
+  "hasValidity": true,
+  "validityDuration": "2",
+  "validityPeriod": "month",
+  "createdAt": {
+    "$date": "2025-02-10T17:51:55.447Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-10T17:51:55.447Z"
+  },
+  "__v": 0,
+  "processingFee": 142
+}]
