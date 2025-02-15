@@ -31,7 +31,8 @@ module.exports = (constants) => {
       require('../models/location_details')(mongoose)
       require('../models/location_prices')(mongoose)
       require('../models/plan_details')(mongoose, constants)
-      require('../models/plans')(mongoose, constants)
+      require('../models/locations')(mongoose) // New Files
+      require('../models/plans')(mongoose, constants) // New Files
       require('../models/replies')(mongoose)
       require('../models/segments')(mongoose)
       require('../models/user_plans')(mongoose)

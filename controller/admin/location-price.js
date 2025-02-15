@@ -67,5 +67,19 @@ module.exports = function (mongoose, utils, constants) {
         }
     };
 
+    locationPriceCtrl.addLocationNew = async (req, res) => {
+        try {
+            const A = await locationPriceService.addLocationNew(req, res);          
+
+            return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', A);
+        } catch (err) {
+            // Abort the transaction in case of error
+            // await session.abortTransaction();
+            // session.endSession();
+            console.log(err);
+            return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
+        }
+    };
+
     return locationPriceCtrl;
 }

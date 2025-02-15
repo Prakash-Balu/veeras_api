@@ -8,5 +8,8 @@ module.exports = (mongoose, utils, constants) => {
     router.post("/deleteLocationPrice", controller.deleteLocationPrice);
     router.get("/getLocationPriceList", controller.getLocationPriceList);
 
+    //New Location Urls
+    router.post("/addLocationNew", controller.addLocationNew);
+
     return router;
 }
