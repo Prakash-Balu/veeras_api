@@ -35,5 +35,32 @@ module.exports = function (mongoose, utils, constants) {
         }
     };
 
+    planCtrl.getPlanDetailsNew = async (req, res) => {
+        try {
+            const TOKEN = process.env.IPINFO_TOKEN;
+            const ipinfo = new IPinfoWrapper(TOKEN);
+            let ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+            ipAddress = ipAddress.split(',')[0].trim();
+            console.log('ipAddress::', ipAddress)
+            // ipAddress = "115.240.90.163";
+            const info = await ipinfo.lookupIp(ipAddress);
+            const locationInfo = await Location.findOne({ country_code: info.countryCode }).lean();
+            if (!locationInfo) {
+                return utils.sendErrorNew(req, res, 'BAD_REQUEST', 'Location Not found');
+            }
+            const [locationPrice, plans] = await Promise.all([
+                LocationPrice.findOne({ location_id: locationInfo._id }).lean(),
+                Plan.find().lean()
+            ]);
+            plans.forEach(element => {
+                element.locationPrice = locationPrice;
+                element.locationInfo = locationInfo;
+            });
+            return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', plans);
+        } catch (err) {
+            return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
+        }
+    };
+
     return planCtrl;
 }

@@ -7,5 +7,10 @@ module.exports = (mongoose, utils, constants) => {
     router.post("/updatePlan", controller.updatePlan);
     router.post("/deletePlan", controller.deletePlan);
 
+    //New Plan Urls
+    router.post("/addPlanNew", controller.addPlanNew);
+    router.post("/updatePlanNew", controller.updatePlanNew);
+    router.post("/deletePlanNew", controller.deletePlanNew);
+
     return router;
 }
