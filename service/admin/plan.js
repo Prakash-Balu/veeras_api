@@ -95,5 +95,15 @@ module.exports = function(mongoose, utils) {
         }
     };
 
+    planService.getPlanDetailsNew = async(req, res) => {
+        try {
+            
+            return await Plans.find();
+        } catch (err) {
+            console.log(err);
+            return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
+        }
+    };
+
     return planService;
 }
