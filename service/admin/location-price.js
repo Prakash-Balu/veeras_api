@@ -6,6 +6,7 @@ module.exports = function (mongoose, utils) {
     const Location = mongoose.model("location_details");
     const PriceDetails = mongoose.model("location_prices");
     const Locations = mongoose.model("locations");
+    const LocationPlans = mongoose.model("locationPlans");
 
     // Method to add a new location
     locationPriceService.addLocation = async (req, res, data) => {
@@ -158,6 +159,18 @@ module.exports = function (mongoose, utils) {
         try {
             
             return await Locations.find();
+        } catch (err) {
+            console.log(err);
+            return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
+        }
+    };
+
+    locationPriceService.addLocationPlans = async (req, res) => {
+        try {
+            const locationPlansData = req.body;
+
+            // Save the location document
+            return await LocationPlans(locationPlansData).save();
         } catch (err) {
             console.log(err);
             return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);

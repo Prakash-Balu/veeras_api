@@ -11,6 +11,7 @@ module.exports = (mongoose, utils, constants) => {
     //New Location Urls
     router.post("/addLocationNew", controller.addLocationNew);
     router.get("/getLocationNew", controller.getLocationNew);
+    router.post("/addLocationPlans", controller.addLocationPlans);
 
     return router;
 }

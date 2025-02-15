@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function (mongoose, constants) {
+module.exports = function (mongoose) {
 
     const Schema = mongoose.Schema;
 
