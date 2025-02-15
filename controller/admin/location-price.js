@@ -81,5 +81,16 @@ module.exports = function (mongoose, utils, constants) {
         }
     };
 
+    locationPriceCtrl.getLocationNew = async (req, res) => {
+        try {
+            const result = await locationPriceService.getLocationNew();
+
+            return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', result);
+        } catch (err) {
+            console.log(err);
+            return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
+        }
+    };
+
     return locationPriceCtrl;
 }

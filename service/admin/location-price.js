@@ -154,5 +154,15 @@ module.exports = function (mongoose, utils) {
         }
     };
 
+    locationPriceService.getLocationNew = async(req, res) => {
+        try {
+            
+            return await Locations.find();
+        } catch (err) {
+            console.log(err);
+            return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
+        }
+    };
+
     return locationPriceService;
 };
