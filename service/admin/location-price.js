@@ -167,7 +167,10 @@ module.exports = function (mongoose, utils) {
 
     locationPriceService.addLocationPlans = async (req, res) => {
         try {
-            const locationPlansData = req.body;
+            const locationPlansData =  {
+                locationId: req.body.location,
+                availablePlans: req.body.selectedPlans
+            };
 
             // Save the location document
             return await LocationPlans(locationPlansData).save();
