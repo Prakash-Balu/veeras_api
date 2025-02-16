@@ -1,0 +1,29 @@
+[{
+  "_id": {
+    "$oid": "67b18797700416fc95e6d0a1"
+  },
+  "locationId": {
+    "$oid": "67b0da8f306719938c9ce202"
+  },
+  "availablePlans": [
+    {
+      "$oid": "67b0c4eed52edba60466ae19"
+    },
+    {
+      "$oid": "67b0c5e3d52edba60466ae23"
+    },
+    {
+      "$oid": "67b0c727d52edba60466ae29"
+    },
+    {
+      "$oid": "67b0c77dd52edba60466ae31"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-02-16T06:37:11.630Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-16T06:37:11.630Z"
+  },
+  "__v": 0
+}]

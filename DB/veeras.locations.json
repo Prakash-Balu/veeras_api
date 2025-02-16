@@ -1,0 +1,190 @@
+[{
+  "_id": {
+    "$oid": "67b0da8f306719938c9ce202"
+  },
+  "countryName": "India",
+  "countryCode": "IN",
+  "phoneCode": "+91",
+  "currencyCode": "INR",
+  "countryFlag": "🇮🇳",
+  "currencySymbol": "₹",
+  "currencyName": "INR",
+  "createdAt": {
+    "$date": "2025-02-15T18:18:55.126Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T18:18:55.126Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b0db4b306719938c9ce204"
+  },
+  "countryName": "Singapore",
+  "countryCode": "SG",
+  "phoneCode": "+65",
+  "currencyCode": "SGD",
+  "countryFlag": "🇸🇬",
+  "currencySymbol": "SGD",
+  "currencyName": "SGD",
+  "createdAt": {
+    "$date": "2025-02-15T18:22:03.056Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T18:22:03.056Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b0db80306719938c9ce206"
+  },
+  "countryName": "United Arab Emirates",
+  "countryCode": "AE",
+  "phoneCode": "+971",
+  "currencyCode": "AED",
+  "countryFlag": "🇦🇪",
+  "currencySymbol": "AED",
+  "currencyName": "AED",
+  "createdAt": {
+    "$date": "2025-02-15T18:22:56.189Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T18:22:56.189Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b0dbbe306719938c9ce208"
+  },
+  "countryName": "Saudi Arabia",
+  "countryCode": "SA",
+  "phoneCode": "+966",
+  "currencyCode": "SAR",
+  "countryFlag": "🇸🇦",
+  "currencySymbol": "SAR",
+  "currencyName": "SAR",
+  "createdAt": {
+    "$date": "2025-02-15T18:23:58.837Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T18:23:58.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b0dbf3306719938c9ce20a"
+  },
+  "countryName": "Qatar",
+  "countryCode": "QA",
+  "phoneCode": "+974",
+  "currencyCode": "QAR",
+  "countryFlag": "🇶🇦",
+  "currencySymbol": "QAR",
+  "currencyName": "QAR",
+  "createdAt": {
+    "$date": "2025-02-15T18:24:51.637Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T18:24:51.637Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b0dc19306719938c9ce20c"
+  },
+  "countryName": "United States",
+  "countryCode": "US",
+  "phoneCode": "+1",
+  "currencyCode": "USD",
+  "countryFlag": "🇺🇸",
+  "currencySymbol": "$",
+  "currencyName": "USD",
+  "createdAt": {
+    "$date": "2025-02-15T18:25:29.733Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T18:25:29.733Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b0dc50306719938c9ce20e"
+  },
+  "countryName": "Canada",
+  "countryCode": "CA",
+  "phoneCode": "+1",
+  "currencyCode": "CAD",
+  "countryFlag": "🇨🇦",
+  "currencySymbol": "CA$",
+  "currencyName": "CAD",
+  "createdAt": {
+    "$date": "2025-02-15T18:26:24.587Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T18:26:24.587Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b0dd26306719938c9ce210"
+  },
+  "countryName": "Australia",
+  "countryCode": "AU",
+  "phoneCode": "+61",
+  "currencyCode": "AUD",
+  "countryFlag": "🇦🇺",
+  "currencySymbol": "A$",
+  "currencyName": "AUD",
+  "createdAt": {
+    "$date": "2025-02-15T18:29:58.093Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T18:29:58.093Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b0dd72306719938c9ce237"
+  },
+  "countryName": "Malaysia",
+  "countryCode": "MY",
+  "phoneCode": "+60",
+  "currencyCode": "MYR",
+  "countryFlag": "🇲🇾",
+  "currencySymbol": "MYR",
+  "currencyName": "MYR",
+  "createdAt": {
+    "$date": "2025-02-15T18:31:14.041Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T18:31:14.041Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b0de313f6dd6c77935f89d"
+  },
+  "countryName": "Other",
+  "countryCode": "OT",
+  "phoneCode": "+1",
+  "currencyCode": "USD",
+  "countryFlag": "",
+  "currencySymbol": "$",
+  "currencyName": "USD",
+  "createdAt": {
+    "$date": "2025-02-15T18:25:29.733Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T18:25:29.733Z"
+  },
+  "__v": 0
+}]
