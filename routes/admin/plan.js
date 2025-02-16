@@ -12,6 +12,7 @@ module.exports = (mongoose, utils, constants) => {
     router.post("/updatePlanNew", controller.updatePlanNew);
     router.post("/deletePlanNew", controller.deletePlanNew);
     router.get('/getPlanDetailsNew', controller.getPlanDetailsNew);
+    router.get('/getLocationPlans', controller.getLocationPlans);
 
     return router;
 }
