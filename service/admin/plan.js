@@ -117,7 +117,7 @@ module.exports = function(mongoose, utils) {
             let ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
             ipAddress = ipAddress.split(',')[0].trim();
             
-            ipAddress = "115.240.90.163";
+            // ipAddress = "115.240.90.163";
             console.log('ipAddress::', ipAddress)
             const info = await ipinfo.lookupIp(ipAddress);
             const locationInfo = await Locations.findOne({ countryCode: info.countryCode }).lean();
