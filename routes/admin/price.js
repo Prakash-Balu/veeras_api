@@ -6,7 +6,7 @@ module.exports = (mongoose, utils, constants) => {
     router.post("/addPrice", controller.addPrice);
     router.post("/updatePrice", controller.updatePrice);
     router.post("/deletePrice", controller.deletePrice);
-    router.get("/getLocationPlanPrice", controller.getLocationPlanPrice);
+    router.get("/getLocationPlanPrices", controller.getLocationPlanPrices);
     router.get("/getLocationPrice", controller.getLocationPrice);
 
     return router;

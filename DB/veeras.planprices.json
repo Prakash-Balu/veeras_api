@@ -1,0 +1,65 @@
+[{
+  "_id": {
+    "$oid": "67b378d070f30b719f704d96"
+  },
+  "locationId": {
+    "$oid": "67b0da8f306719938c9ce202"
+  },
+  "locationPlanId": {
+    "$oid": "67b18797700416fc95e6d0a1"
+  },
+  "gstPercent": 18,
+  "monthly_fee": "750",
+  "referral_fee": "4500",
+  "licensed_fee": "20000",
+  "student_fee": "300",
+  "createdAt": {
+    "$date": "2025-02-17T17:58:40.273Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T17:58:40.273Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b378f270f30b719f704d9a"
+  },
+  "locationId": {
+    "$oid": "67b0db4b306719938c9ce204"
+  },
+  "locationPlanId": {
+    "$oid": "67b1add0a09d7ccb57664810"
+  },
+  "gstPercent": 18,
+  "monthly_fee": "25",
+  "referral_fee": "150",
+  "createdAt": {
+    "$date": "2025-02-17T17:59:14.838Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T17:59:14.838Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b3790e70f30b719f704d9e"
+  },
+  "locationId": {
+    "$oid": "67b0dc19306719938c9ce20c"
+  },
+  "locationPlanId": {
+    "$oid": "67b1aec5fa3f001b52e60400"
+  },
+  "gstPercent": 18,
+  "monthly_fee": "20",
+  "referral_fee": "105",
+  "createdAt": {
+    "$date": "2025-02-17T17:59:42.542Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T17:59:42.542Z"
+  },
+  "__v": 0
+}]

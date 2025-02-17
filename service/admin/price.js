@@ -1,5 +1,7 @@
 "use strict";
 
+const planprices = require("../../models/planprices");
+
 module.exports = function(mongoose, utils) {
     const priceService = {};    
     const Plan = mongoose.model("plan_details");
@@ -54,7 +56,7 @@ module.exports = function(mongoose, utils) {
         }
     };
 
-    priceService.getLocationPlanPrice = async(req, res) => {
+    priceService.getLocationPlanPrices = async(req, res) => {
         try {
             
             var threadObject = await LocationPlans.aggregate([
@@ -78,19 +80,22 @@ module.exports = function(mongoose, utils) {
                     }
                 },
                 {
+                    $unwind: "$plans" // Convert array to object
+                },
+                {
+                    $lookup: {
+                    from: "planprices", // Join with the Location collection
+                    localField: "locationId",
+                    foreignField: "_id",
+                    as: "planprice"
+                    }
+                },
+                {
                     $project: {
                     _id: 1,
-                    location: {
-                        _id: "$location._id",
-                        countryName: "$location.countryName",
-                        countryCode: "$location.countryCode",
-                        phoneCode: "$location.phoneCode",
-                        currencyCode: "$location.currencyCode",
-                        countryFlag: "$location.countryFlag",
-                        currencySymbol: "$location.currencySymbol",
-                        currencyName: "$location.currencyName"
-                    },
+                    location: 1,
                     plans: 1, // Include all plan details
+                    planprice: 1,
                     createdAt: 1,
                     updatedAt: 1
                     }
@@ -98,8 +103,12 @@ module.exports = function(mongoose, utils) {
             ]);
 
             // console.log('====>', threadObject);
-            threadObject= [];
+            // threadObject= [];
             return threadObject;
+
+
+        
+              
         } catch (err) {
             console.log(err);
             return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);

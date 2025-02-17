@@ -51,9 +51,9 @@ module.exports = function (mongoose, utils, constants) {
         }
     };
 
-    priceCtrl.getLocationPlanPrice = async (req, res) => {
+    priceCtrl.getLocationPlanPrices = async (req, res) => {
         try {
-            const result = await priceService.getLocationPlanPrice(req, res);
+            const result = await priceService.getLocationPlanPrices(req, res);
 
             return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', result);
         } catch (err) {
