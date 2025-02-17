@@ -5,7 +5,8 @@ module.exports = function (mongoose) {
     const ObjectId = Schema.ObjectId;
 
     const planPricesSchema = new Schema({
-        locationPlanId: {type: ObjectId, ref: "locations"},
+        locationId:{type: ObjectId, ref: "locations"},
+        locationPlanId: {type: ObjectId, ref: "locationPlans"},
         createdAt: Date,
         updatedAt: Date,
     },

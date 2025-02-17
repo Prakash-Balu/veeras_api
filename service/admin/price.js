@@ -1,26 +1,26 @@
 "use strict";
 
 module.exports = function(mongoose, utils) {
-    const planService = {};    
+    const priceService = {};    
     const Plan = mongoose.model("plan_details");
-    const Plans = mongoose.model("plans"); // New plans
+    const PlanPrice = mongoose.model("planprices"); // New plans
     const Locations = mongoose.model("locations"); // New Locations
     const LocationPlans = mongoose.model("locationPlans"); // New Location Plans
     const { IPinfoWrapper } = require("node-ipinfo");
     const ObjectId = mongoose.Types.ObjectId;
 
-    planService.addPlan = async(req, res) => {
+    priceService.addPrice = async(req, res) => {
         try {
-            const planData = req.body;
+            const priceData = req.body;
 
-            return await Plan(planData).save();
+            return await PlanPrice(priceData).save();
         } catch (err) {
             console.log(err);
             return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
         }
     };
 
-    planService.updatePlan = async(req, res) => {
+    priceService.updatePrice = async(req, res) => {
         try {
             const planDetails = req.body;
 
@@ -45,7 +45,7 @@ module.exports = function(mongoose, utils) {
         }
     };
 
-    planService.deletePlan = async (_id) => {
+    priceService.deletePrice = async (_id) => {
         try {
             return await Plan.findByIdAndDelete({_id: _id});
         } catch (err) {
@@ -54,62 +54,59 @@ module.exports = function(mongoose, utils) {
         }
     };
 
-    planService.addPlanNew = async(req, res) => {
-        try {
-            const planData = req.body;
-
-            return await Plans(planData).save();
-        } catch (err) {
-            console.log(err);
-            return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
-        }
-    };
-
-    planService.updatePlanNew = async(req, res) => {
-        try {
-            const planDetails = req.body;
-
-            const planUpdate = {
-                code: planDetails.code,
-                name: planDetails.name,
-                desc: planDetails.desc,
-                duration: planDetails.duration,
-                offer_duration: planDetails.offer_duration,
-                monthsno: planDetails.monthsno,
-                feeFieldName: planDetails.feeFieldName,
-            }
-
-            return await Plans.findByIdAndUpdate(
-                { _id: planDetails._id },
-                { ...planUpdate },
-                { new: true },
-            );
-        } catch (err) {
-            console.log(err);
-            return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
-        }
-    };
-
-    planService.deletePlanNew = async (_id) => {
-        try {
-            return await Plans.findByIdAndDelete({_id: _id});
-        } catch (err) {
-            console.log(err);
-            return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
-        }
-    };
-
-    planService.getPlanDetailsNew = async(req, res) => {
+    priceService.getLocationPlanPrice = async(req, res) => {
         try {
             
-            return await Plans.find();
+            var threadObject = await LocationPlans.aggregate([
+                {
+                    $lookup: {
+                    from: "locations", // Join with the Location collection
+                    localField: "locationId",
+                    foreignField: "_id",
+                    as: "location"
+                    }
+                },
+                {
+                    $unwind: "$location" // Convert array to object
+                },
+                {
+                    $lookup: {
+                    from: "plans", // Join with the Plans collection
+                    localField: "availablePlans",
+                    foreignField: "_id",
+                    as: "plans"
+                    }
+                },
+                {
+                    $project: {
+                    _id: 1,
+                    location: {
+                        _id: "$location._id",
+                        countryName: "$location.countryName",
+                        countryCode: "$location.countryCode",
+                        phoneCode: "$location.phoneCode",
+                        currencyCode: "$location.currencyCode",
+                        countryFlag: "$location.countryFlag",
+                        currencySymbol: "$location.currencySymbol",
+                        currencyName: "$location.currencyName"
+                    },
+                    plans: 1, // Include all plan details
+                    createdAt: 1,
+                    updatedAt: 1
+                    }
+                }
+            ]);
+
+            // console.log('====>', threadObject);
+            threadObject= [];
+            return threadObject;
         } catch (err) {
             console.log(err);
             return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
         }
     };
 
-    planService.getLocationPlans = async(req, res) => {
+    priceService.getLocationPrice = async(req, res) => {
         try {
             
             const TOKEN = process.env.IPINFO_TOKEN;
@@ -173,5 +170,5 @@ module.exports = function(mongoose, utils) {
         }
     };
 
-    return planService;
+    return priceService;
 }
