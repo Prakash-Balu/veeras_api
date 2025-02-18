@@ -40,5 +40,14 @@ module.exports = function (mongoose, utils, constants) {
         }
     };
 
+    planCtrl.getPlans = async (req,res)=>{
+        try{
+            return utils.sendResponseNew(req,res,'OK','SUCCESS','');
+        }catch(err){
+            console.error(err);
+            return utils.sendResponseNew(req,res,'BAD_REQUEST',err.message);
+        }
+    }
+
     return planCtrl;
 }

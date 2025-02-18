@@ -56,6 +56,7 @@ module.exports = (async () => {
   const adminPlan = require('./routes/admin/plan')(mongoose, utils, constants);
   const adminSegments = require('./routes/admin/segments')(mongoose, utils, constants);
   const apiSelfPractice = require('./routes/api')(mongoose, utils, constants);
+  const practicewithmaster = require('./routes/practicewithmaster')(mongoose,utils,constants);
 
   app.get('/', (req, res) => {
     res.status(200).json({ message: "Hello World" })
@@ -70,6 +71,7 @@ module.exports = (async () => {
   app.use('/comments', comments);
   app.use("/chat", chat);
   app.use("/api", apiSelfPractice);
+  app.use("/api/practicewithmaster", practicewithmaster);
 
   // Serve Swagger documentation
 
