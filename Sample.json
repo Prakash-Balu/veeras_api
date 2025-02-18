@@ -1,0 +1,155 @@
+[
+  {
+    "countryName": "India",
+    "countryCode": "IN",
+    "phoneCode": "+91",
+    "countryFlag": "🇮🇳",
+    "currencySymbol": "₹",
+    "currencyName": "INR",
+    "plans": [
+        {
+        "_id": {
+          "$oid": "67b0c4eed52edba60466ae19"
+        },
+        "code": "monthly",
+        "name": "Monthly Plan",
+        "desc": "Monthly Plan",
+        "details": "10-March-2025 to 10-April-2025\nYour next renewal date is 15-April-2025\n✅ Includes: All updates",
+        "popUpHeading": "Plan Details",
+        "note": "Renew monthly",
+        "subBtnText": "Subscribe",
+        "viewDtlBtnText": "View Details",
+        "feeFieldName": "monthly_fee",
+        "duration": 1,
+        "period": "month",
+        "hasValidity": false,
+        "validityDuration": 0,
+        "validityPeriod": ""
+      },
+      {
+        "_id": {
+          "$oid": "67b0c5e3d52edba60466ae23"
+        },
+        "code": "referral",
+        "name": "Referral Plan",
+        "desc": "Referral Plan",
+        "details": "✔ Refer a friend & get 6 months of subscription free.\n✔ Validity will add-on to your account.\n✔ Refer your friend after joining.\n✔ You can refer one person within your subscription period.\n✅ Includes: All updates",
+        "popUpHeading": "Benefits of a Referral",
+        "note": "Renew your plan after 6 months",
+        "subBtnText": "Subscribe",
+        "viewDtlBtnText": "View Details",
+        "feeFieldName": "referral_fee",
+        "duration": 6,
+        "period": "month",
+        "hasValidity": false,
+        "validityDuration": 0,
+        "validityPeriod": ""
+      },
+      {
+        "_id": {
+          "$oid": "67b0c727d52edba60466ae29"
+        },
+        "code": "licensed",
+        "name": "Licensed Plan",
+        "desc": "Licensed Plan",
+        "details": "✔ Validity: 3 years\n✔ Number of users: 2\n✅ Includes: All updates",
+        "popUpHeading": "Plan Details",
+        "note": "Renew your plan after the licensed period, If you wish",
+        "subBtnText": "Subscribe",
+        "viewDtlBtnText": "View Details",
+        "feeFieldName": "licensed_fee",
+        "duration": 3,
+        "period": "year",
+        "hasValidity": false,
+        "validityDuration": 0,
+        "validityPeriod": ""
+      },
+      {
+        "_id": {
+          "$oid": "67b0c77dd52edba60466ae31"
+        },
+        "code": "student",
+        "name": "School Student Plan",
+        "desc": "School Student Plan",
+        "details": "NA",
+        "popUpHeading": "Plan Details",
+        "note": "Renew monthly",
+        "subBtnText": "Subscribe ",
+        "viewDtlBtnText": "Demo",
+        "feeFieldName": "student_fee",
+        "duration": 1,
+        "period": "month",
+        "hasValidity": false,
+        "validityDuration": 0,
+        "validityPeriod": ""
+      }
+    ],
+    "price": {
+      "_id": {
+        "$oid": "67b378d070f30b719f704d96"
+      },
+      "gstPercent": 18,
+      "monthly_fee": "750",
+      "referral_fee": "4500",
+      "licensed_fee": "20000", 
+      "student_fee": "300" 
+    }
+  },
+  {
+    "countryName": "Singapore",
+    "countryCode": "SG",
+    "phoneCode": "+65",
+    "countryFlag": "🇸🇬",
+    "currencySymbol": "SGD",
+    "currencyName": "SGD",
+    "plans" : [
+        {
+        "_id": {
+          "$oid": "67b0c4eed52edba60466ae19"
+        },
+        "code": "monthly",
+        "name": "Monthly Plan",
+        "desc": "Monthly Plan",
+        "details": "10-March-2025 to 10-April-2025\nYour next renewal date is 15-April-2025\n✅ Includes: All updates",
+        "popUpHeading": "Plan Details",
+        "note": "Renew monthly",
+        "subBtnText": "Subscribe",
+        "viewDtlBtnText": "View Details",
+        "feeFieldName": "monthly_fee",
+        "duration": 1,
+        "period": "month",
+        "hasValidity": false,
+        "validityDuration": 0,
+        "validityPeriod": ""
+      },
+      {
+        "_id": {
+          "$oid": "67b0c5e3d52edba60466ae23"
+        },
+        "code": "referral",
+        "name": "Referral Plan",
+        "desc": "Referral Plan",
+        "details": "✔ Refer a friend & get 6 months of subscription free.\n✔ Validity will add-on to your account.\n✔ Refer your friend after joining.\n✔ You can refer one person within your subscription period.\n✅ Includes: All updates",
+        "popUpHeading": "Benefits of a Referral",
+        "note": "Renew your plan after 6 months",
+        "subBtnText": "Subscribe",
+        "viewDtlBtnText": "View Details",
+        "feeFieldName": "referral_fee",
+        "duration": 6,
+        "period": "month",
+        "hasValidity": false,
+        "validityDuration": 0,
+        "validityPeriod": ""
+      }
+    ],
+    "price": {
+        "_id": {
+          "$oid": "67b378f270f30b719f704d9a"
+        },
+        "gstPercent": 18,
+        "monthly_fee": "25",
+        "referral_fee": "150"
+      }
+  }
+]
+

@@ -97,5 +97,24 @@ module.exports = function (mongoose, utils, constants) {
         }
     };
 
+    planCtrl.getPlans = async (req,res) =>{
+        try{
+            return utils.sendResponseNew(req,res,'OK','SUCCESS','');
+        }catch(err){
+            console.error(err);
+            return utils.sendErrorNew(req,res,'BAD_REQUEST',err.message);
+        }
+    }
+
+    planCtrl.getAllPlans = async (req, res) => {
+        try {
+            const result = await planService.getAllPlans(req, res);
+            return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', result);
+        } catch (err) {
+            console.log(err);
+            return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
+        }
+    };
+
     return planCtrl;
 }
