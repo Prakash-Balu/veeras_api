@@ -199,6 +199,9 @@ module.exports = function(mongoose, utils) {
                     }
                 },
                 {
+                    $unwind:"$planDetails"
+                },
+                {
                     $lookup:{
                         from: "planprices",
                         localField: "locationDetails._id",
@@ -215,7 +218,7 @@ module.exports = function(mongoose, utils) {
                         "countryFlag": { "$first": "$countryFlag" },
                         "currencySymbol": { "$first": "$currencySymbol" },
                         "currencyName": { "$first": "$currencyName" },
-                        "plans": { "$push": "$planDetails" },
+                        "plans": { "$addToSet": "$planDetails" },
                         "price":{"$first":"$priceDetails"},
                     }
                 },
@@ -231,6 +234,9 @@ module.exports = function(mongoose, utils) {
                       "plans": 1,
                       "price": 1
                     }
+                },
+                {
+                    $sort: { "countryName": 1 } // Add this stage to sort by countryName
                 }
             ]);
         } catch (err) {
