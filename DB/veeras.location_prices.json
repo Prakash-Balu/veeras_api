@@ -1,0 +1,286 @@
+[{
+  "_id": {
+    "$oid": "666a8155301ab65a61dab84b"
+  },
+  "location_id": {
+    "$oid": "666a8155301ab65a61dab849"
+  },
+  "month_fee": 75,
+  "planFee": 75,
+  "extendedplan1_fee": 375,
+  "extendedplan2_fee": 750,
+  "createdAt": {
+    "$date": "2024-06-13T05:19:17.707Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-13T05:19:17.707Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66688cf37ac54c8908229e1f"
+  },
+  "location_id": {
+    "$oid": "66688cf37ac54c8908229e1d"
+  },
+  "month_fee": 599,
+  "planFee": 599,
+  "extendedplan1_fee": 2490,
+  "extendedplan2_fee": 9960,
+  "gstPercent": 18,
+  "createdAt": {
+    "$date": "2024-06-11T17:44:19.266Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-22T14:35:07.495Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "666a849f301ab65a61dab85b"
+  },
+  "location_id": {
+    "$oid": "666a849f301ab65a61dab859"
+  },
+  "month_fee": 75,
+  "planFee": 75,
+  "extendedplan1_fee": 375,
+  "extendedplan2_fee": 750,
+  "createdAt": {
+    "$date": "2024-06-13T05:33:19.213Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-13T05:33:19.213Z"
+  },
+  "__v": 0  
+},
+{
+  "_id": {
+    "$oid": "66688ed77ac54c8908229e27"
+  },
+  "location_id": {
+    "$oid": "66688ed77ac54c8908229e25"
+  },
+  "month_fee": 92,
+  "planFee": 92,
+  "extendedplan1_fee": 460,
+  "extendedplan2_fee": 920,
+  "createdAt": {
+    "$date": "2024-06-11T17:52:23.393Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-11T17:52:23.393Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "666a81b4301ab65a61dab84f"
+  },
+  "location_id": {
+    "$oid": "666a81b4301ab65a61dab84d"
+  },
+  "month_fee": 75,
+  "planFee": 75,
+  "extendedplan1_fee": 375,
+  "extendedplan2_fee": 750,
+  "createdAt": {
+    "$date": "2024-06-13T05:20:52.138Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-13T05:20:52.138Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "666a8634301ab65a61dab86b"
+  },
+  "location_id": {
+    "$oid": "666a8634301ab65a61dab869"
+  },
+  "month_fee": 15,
+  "planFee": 15,
+  "extendedplan1_fee": 78,
+  "extendedplan2_fee": 156,
+  "createdAt": {
+    "$date": "2024-06-13T05:40:04.834Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-13T05:40:04.834Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "666994d35824a75026d450a6"
+  },
+  "location_id": {
+    "$oid": "666994d35824a75026d450a4"
+  },
+  "month_fee": 830,
+  "planFee": 830,
+  "extendedplan1_fee": 4150,
+  "extendedplan2_fee": 8300,
+  "createdAt": {
+    "$date": "2024-06-12T12:30:11.065Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-12T12:30:11.065Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66688d697ac54c8908229e23"
+  },
+  "location_id": {
+    "$oid": "66688d697ac54c8908229e21"
+  },
+  "month_fee": 25,
+  "planFee": 25,
+  "extendedplan1_fee": 135,
+  "extendedplan2_fee": 270,
+  "createdAt": {
+    "$date": "2024-06-11T17:46:17.044Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-11T17:46:17.044Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "666a8574301ab65a61dab863"
+  },
+  "location_id": {
+    "$oid": "666a8574301ab65a61dab861"
+  },
+  "month_fee": 20,
+  "planFee": 20,
+  "extendedplan1_fee": 100,
+  "extendedplan2_fee": 200,
+  "createdAt": {
+    "$date": "2024-06-13T05:36:52.773Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-13T05:36:52.773Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "666a82b4301ab65a61dab857"
+  },
+  "location_id": {
+    "$oid": "666a82b4301ab65a61dab855"
+  },
+  "month_fee": 8,
+  "planFee": 8,
+  "extendedplan1_fee": 38,
+  "extendedplan2_fee": 75,
+  "createdAt": {
+    "$date": "2024-06-13T05:25:08.269Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-13T05:25:08.269Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "666a85c9301ab65a61dab867"
+  },
+  "location_id": {
+    "$oid": "666a85c9301ab65a61dab865"
+  },
+  "month_fee": 27,
+  "planFee": 27,
+  "extendedplan1_fee": 138,
+  "extendedplan2_fee": 275,
+  "createdAt": {
+    "$date": "2024-06-13T05:38:17.726Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-13T05:38:17.726Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "666a81ee301ab65a61dab853"
+  },
+  "location_id": {
+    "$oid": "666a81ee301ab65a61dab851"
+  },
+  "month_fee": 6,
+  "planFee": 6,
+  "extendedplan1_fee": 30,
+  "extendedplan2_fee": 62,
+  "createdAt": {
+    "$date": "2024-06-13T05:21:50.165Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-13T05:21:50.165Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "666a84cb301ab65a61dab85f"
+  },
+  "location_id": {
+    "$oid": "666a84cb301ab65a61dab85d"
+  },
+  "month_fee": 7,
+  "planFee": 7,
+  "extendedplan1_fee": 38,
+  "extendedplan2_fee": 75,
+  "createdAt": {
+    "$date": "2024-06-13T05:34:03.033Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-13T05:34:03.033Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "666a86c9301ab65a61dab86f"
+  },
+  "location_id": {
+    "$oid": "666a86c9301ab65a61dab86d"
+  },
+  "month_fee": 30,
+  "planFee": 30,
+  "extendedplan1_fee": 150,
+  "extendedplan2_fee": 300,
+  "createdAt": {
+    "$date": "2024-06-13T05:42:33.152Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-13T05:42:33.152Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6671c5b20b848b263519f5a6"
+  },
+  "location_id": {
+    "$oid": "6671c5b20b848b263519f5a4"
+  },
+  "month_fee": 20,
+  "planFee": 20,
+  "extendedplan1_fee": 100,
+  "extendedplan2_fee": 200,
+  "createdAt": {
+    "$date": "2024-06-18T17:36:50.952Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-18T17:36:50.952Z"
+  },
+  "__v": 0
+}]

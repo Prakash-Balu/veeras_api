@@ -1,0 +1,75 @@
+[{
+  "_id": {
+    "$oid": "67b18797700416fc95e6d0a1"
+  },
+  "locationId": {
+    "$oid": "67b0da8f306719938c9ce202"
+  },
+  "availablePlans": [
+    {
+      "$oid": "67b0c4eed52edba60466ae19"
+    },
+    {
+      "$oid": "67b0c5e3d52edba60466ae23"
+    },
+    {
+      "$oid": "67b0c727d52edba60466ae29"
+    },
+    {
+      "$oid": "67b0c77dd52edba60466ae31"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-02-16T06:37:11.630Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-16T06:37:11.630Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b1add0a09d7ccb57664810"
+  },
+  "locationId": {
+    "$oid": "67b0db4b306719938c9ce204"
+  },
+  "availablePlans": [
+    {
+      "$oid": "67b0c4eed52edba60466ae19"
+    },
+    {
+      "$oid": "67b0c5e3d52edba60466ae23"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-02-16T09:20:16.734Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-16T09:20:16.734Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b1aec5fa3f001b52e60400"
+  },
+  "locationId": {
+    "$oid": "67b0dc19306719938c9ce20c"
+  },
+  "availablePlans": [
+    {
+      "$oid": "67b0c4eed52edba60466ae19"
+    },
+    {
+      "$oid": "67b0c5e3d52edba60466ae23"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-02-16T09:24:21.424Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-16T09:24:21.424Z"
+  },
+  "__v": 0
+}]

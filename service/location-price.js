@@ -60,6 +60,8 @@ module.exports = function (mongoose, utils) {
                             _id: 1,
                             location_id: 1,
                             month_fee: 1,
+                            planFee: 1,
+                            gstPercent: 1,
                             extendedplan1_fee: 1,
                             extendedplan2_fee: 1,
                             createdAt: 1,
