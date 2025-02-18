@@ -59,56 +59,70 @@ module.exports = function(mongoose, utils) {
     priceService.getLocationPlanPrices = async(req, res) => {
         try {
             
-            var threadObject = await LocationPlans.aggregate([
+            return await Locations.aggregate([
                 {
-                    $lookup: {
-                    from: "locations", // Join with the Location collection
-                    localField: "locationId",
-                    foreignField: "_id",
-                    as: "location"
+                    $lookup:{
+                        from: "locationplans",
+                        localField: "_id",
+                        foreignField: "locationId",
+                        as: "locationDetails"
+                    }  
+                },
+                {
+                    $unwind:"$locationDetails",
+                },
+                {
+                    $unwind:"$locationDetails.availablePlans"
+                },
+                {
+                    $lookup:{
+                        from: "plans",
+                        localField: "locationDetails.availablePlans",
+                        foreignField: "_id",
+                        as: "planDetails"
                     }
                 },
                 {
-                    $unwind: "$location" // Convert array to object
+                    $unwind:"$planDetails"
                 },
                 {
-                    $lookup: {
-                    from: "plans", // Join with the Plans collection
-                    localField: "availablePlans",
-                    foreignField: "_id",
-                    as: "plans"
+                    $lookup:{
+                        from: "planprices",
+                        localField: "locationDetails._id",
+                        foreignField: "locationPlanId",
+                        as: "priceDetails"
                     }
                 },
                 {
-                    $unwind: "$plans" // Convert array to object
-                },
-                {
-                    $lookup: {
-                    from: "planprices", // Join with the Location collection
-                    localField: "locationId",
-                    foreignField: "_id",
-                    as: "planprice"
+                    $group:{
+                        "_id": "$_id",
+                        "countryName": { "$first": "$countryName" },
+                        "countryCode": { "$first": "$countryCode" },
+                        "phoneCode": { "$first": "$phoneCode" },
+                        "countryFlag": { "$first": "$countryFlag" },
+                        "currencySymbol": { "$first": "$currencySymbol" },
+                        "currencyName": { "$first": "$currencyName" },
+                        "plans": { "$addToSet": "$planDetails" },
+                        "price":{"$first":"$priceDetails"},
                     }
                 },
                 {
-                    $project: {
-                    _id: 1,
-                    location: 1,
-                    plans: 1, // Include all plan details
-                    planprice: 1,
-                    createdAt: 1,
-                    updatedAt: 1
+                    "$project": {
+                      "_id": 1,
+                      "countryName": 1,
+                      "countryCode": 1,
+                      "phoneCode": 1,
+                      "countryFlag": 1,
+                      "currencySymbol": 1,
+                      "currencyName": 1,
+                      "plans": 1,
+                      "price": 1
                     }
+                },
+                {
+                    $sort: { "countryName": 1 } // Add this stage to sort by countryName
                 }
-            ]);
-
-            // console.log('====>', threadObject);
-            // threadObject= [];
-            return threadObject;
-
-
-        
-              
+            ]);   
         } catch (err) {
             console.log(err);
             return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);

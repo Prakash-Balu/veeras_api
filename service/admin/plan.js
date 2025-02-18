@@ -164,7 +164,7 @@ module.exports = function(mongoose, utils) {
                 }
             ]);
 
-            console.log('====>', threadObject);
+            // console.log('====>', threadObject);
            
             return threadObject;
         } catch (err) {
