@@ -115,7 +115,9 @@ module.exports = function(mongoose, utils) {
                       "countryFlag": 1,
                       "currencySymbol": 1,
                       "currencyName": 1,
-                      "plans": 1,
+                      "plans": {
+                        $sortArray: { input: "$plans", sortBy: { createdAt: 1 } }
+                      },
                       "price": 1
                     }
                 },
@@ -137,7 +139,8 @@ module.exports = function(mongoose, utils) {
             let ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
             ipAddress = ipAddress.split(',')[0].trim();
             
-            ipAddress = "115.240.90.163";
+            // ipAddress = "115.240.90.163"; //India
+            // ipAddress = "185.227.134.149"; // Singapore
             console.log('ipAddress::', ipAddress)
             const info = await ipinfo.lookupIp(ipAddress);
             const locationInfo = await Locations.findOne({ countryCode: info.countryCode }).lean();
@@ -199,7 +202,9 @@ module.exports = function(mongoose, utils) {
                       "countryFlag": 1,
                       "currencySymbol": 1,
                       "currencyName": 1,
-                      "plans": 1,
+                      "plans": {
+                        $sortArray: { input: "$plans", sortBy: { createdAt: 1 } }
+                      },
                       "price": 1
                     }
                 },
