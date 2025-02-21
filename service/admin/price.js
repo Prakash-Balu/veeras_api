@@ -115,7 +115,9 @@ module.exports = function(mongoose, utils) {
                       "countryFlag": 1,
                       "currencySymbol": 1,
                       "currencyName": 1,
-                      "plans": 1,
+                      "plans": {
+                        $sortArray: { input: "$plans", sortBy: { createdAt: 1 } }
+                      },
                       "price": 1
                     }
                 },
@@ -200,7 +202,9 @@ module.exports = function(mongoose, utils) {
                       "countryFlag": 1,
                       "currencySymbol": 1,
                       "currencyName": 1,
-                      "plans": 1,
+                      "plans": {
+                        $sortArray: { input: "$plans", sortBy: { createdAt: 1 } }
+                      },
                       "price": 1
                     }
                 },
