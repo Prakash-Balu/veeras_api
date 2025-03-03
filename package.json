@@ -30,7 +30,10 @@
     "swagger-ui-express": "^5.0.0",
     "twilio": "^5.0.4"
   },
-  "overrides": {
-    "glob": "^9.0.0"
+  "resolutions": {
+    "glob": "^9.0.0",
+    "z-schema": "^10.0.0",
+    "lodash.get": "^5.0.0",
+    "lodash.isequal": "^5.0.0"
   }
 }
