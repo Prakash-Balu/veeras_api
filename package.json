@@ -34,7 +34,6 @@
   "resolutions": {
     "glob": "^9.0.0",
     "z-schema": "^5.0.6",
-    "lodash.get": "^5.0.0",
-    "lodash.isequal": "^5.0.0"
+    "lodash.get": "^4.4.2"
   }
 }
