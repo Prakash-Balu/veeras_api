@@ -48,6 +48,7 @@ module.exports = (constants) => {
       // require('../models/questions')(mongoose)
       require('../models/qa')(mongoose)
       require('../models/notifications')(mongoose, constants)
+      require('../models/practicewithmaster')(mongoose)
       resolve(mongoose);
     });
 

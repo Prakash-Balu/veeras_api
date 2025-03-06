@@ -42,6 +42,9 @@ module.exports = (async () => {
     })
   );
   app.use("/", express.static(path.join(__dirname, "public")));
+
+
+  
   require("./cron")(mongoose, utils, constants);
   const auth = require('./routes/auth')(mongoose, utils, pusher, constants);
   const adminAuth = require('./routes/admin/auth')(mongoose, utils, constants);
@@ -57,6 +60,10 @@ module.exports = (async () => {
   const adminSegments = require('./routes/admin/segments')(mongoose, utils, constants);
   const apiSelfPractice = require('./routes/api')(mongoose, utils, constants);
   const adminPrice = require('./routes/admin/price')(mongoose, utils, constants);
+  const practicewithmaster = require('./routes/admin/practicewithmaster')(mongoose, utils, constants);
+  const practicewithmasterCustomer = require('./routes/practicewith-master')(mongoose, utils, constants);
+  const practiceWithMaster_watchedhistory= require('./routes/admin/practicewithmaster_watchedhistory')(mongoose, utils, constants);
+  const practiceWithMaster_wh_customer= require('./routes/practicewithmaster_watchedhistory')(mongoose, utils, constants);
 
   app.get('/', (req, res) => {
     res.status(200).json({ message: "Hello World" })
@@ -72,6 +79,11 @@ module.exports = (async () => {
   app.use("/chat", chat);
   app.use("/api", apiSelfPractice);
   app.use("/price", adminPrice);
+  app.use("/practicewithmaster", practicewithmaster);
+  app.use("/practicewithmasterCustomer", practicewithmasterCustomer);
+  app.use("/practiceWithMaster_wh", practiceWithMaster_watchedhistory);
+  app.use("/practiceWithMaster_wh_customer", practiceWithMaster_wh_customer);
+
 
   // Serve Swagger documentation
 
@@ -98,7 +110,8 @@ module.exports = (async () => {
         },
       ],
     },
-    apis: ['./routes/*.js'], // Adjust the path to match your project
+    apis: ['./routes/*.js','./routes/admin/*.js'], // Adjust the path to match your project
+
   };
 
   const swaggerSpec = swaggerJsdoc(swaggerOptions);

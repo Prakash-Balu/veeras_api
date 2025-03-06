@@ -13,7 +13,7 @@ module.exports = function (mongoose) {
     },
     {
       timestamps: true,
-      versionKey: false,
+      versionKey: true,
     }
   );
 

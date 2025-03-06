@@ -4,7 +4,7 @@ module.exports = function (mongoose) {
     const Schema = mongoose.Schema;
 
     const locationsSchema = new Schema({
-        // _id: {type: Schema.Types.ObjectId},
+        _id: {type: Schema.Types.ObjectId},
         countryName: String,
         countryCode: String,
         phoneCode: String,

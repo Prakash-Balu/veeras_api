@@ -15,9 +15,11 @@ module.exports = function (mongoose, utils, constants) {
             let ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
             ipAddress = ipAddress.split(',')[0].trim();
             console.log('ipAddress::', ipAddress)
-            // ipAddress = "115.240.90.163";
+            ipAddress = "115.240.90.163";
             const info = await ipinfo.lookupIp(ipAddress);
             const locationInfo = await Location.findOne({ country_code: info.countryCode }).lean();
+            console.log("locaInfo",locationInfo);
+            
             if (!locationInfo) {
                 return utils.sendErrorNew(req, res, 'BAD_REQUEST', 'Location Not found');
             }

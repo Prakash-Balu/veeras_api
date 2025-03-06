@@ -31,6 +31,9 @@ module.exports = function (mongoose, utils, constants) {
         return utils.sendErrorNew(req, res, "BAD_REQUEST", "INVALID_USER_ACCESS");
       }
 
+      console.log("role",existingUser.role);
+      
+
       const token = utils.generateToken({ _id: existingUser.user_id, deviceId, mail: existingUser.mailId, isMobile: false, role: existingUser.role, channelId: "" }, "3d");
       await LoginHistory.findOneAndUpdate(
         { userId: existingUser.user_id, status: constants.loginStatus.ACTIVE },

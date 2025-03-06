@@ -83,5 +83,9 @@ module.exports = {
     subscriptionStatus: {
         ACTIVE: 'active',
         EXPIRED: 'expired'
+    },
+    role: {
+        ADMIN: 'ADMIN',
+        
     }
 };
