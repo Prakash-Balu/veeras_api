@@ -94,6 +94,9 @@ module.exports = function(mongoose, utils) {
                     }
                 },
                 {
+                    $unwind:"$priceDetails"
+                },
+                {
                     $group:{
                         "_id": "$_id",
                         "countryName": { "$first": "$countryName" },
@@ -103,7 +106,7 @@ module.exports = function(mongoose, utils) {
                         "currencySymbol": { "$first": "$currencySymbol" },
                         "currencyName": { "$first": "$currencyName" },
                         "plans": { "$addToSet": "$planDetails" },
-                        "price":{"$first":"$priceDetails"},
+                        "price":{"$addToSet":"$priceDetails"},
                     }
                 },
                 {
