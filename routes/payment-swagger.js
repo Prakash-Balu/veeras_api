@@ -38,3 +38,47 @@
  *       '500':
  *         description: Server Error
  */
+
+
+
+/**
+ * @swagger
+ * /payment/createnew:
+ *   post:
+ *     tags:
+ *       - Payment
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               phoneCode:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *               currencyCode:
+ *                 type: string    
+ *               planId:
+ *                 type: string
+ *               amount:
+ *                 type: number
+ *               referralId:
+ *                 type: string 
+ *             required:
+ *               - planId
+ *               - currencyCode
+ *               - amount
+ *               - phoneCode
+ *               - phone     
+ *     responses:
+ *       '200':
+ *         description: Success
+ *       '201':
+ *         description: Created
+ *       '400':
+ *         description: Bad Request
+ *       '500':
+ *         description: Server Error
+ */
