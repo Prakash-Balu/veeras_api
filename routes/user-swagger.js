@@ -89,20 +89,72 @@
  *       - BearerAuth: []
  *     requestBody:
  *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 example: any
- *             required:
- *               - userId
+ *     parameters:
+ *       - in: query
+ *         token: token
+ *         schema:
+ *           type: token
  *     responses:
  *       '200':
  *         description: Success
  *       '201':
  *         description: Created
+ *       '400':
+ *         description: Bad Request
+ *       '500':
+ *         description: Server Error
+ */
+
+
+/**
+ * @swagger
+ * /user/attendance:
+ *   get:
+ *     tags:
+ *       - User
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: start
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Start date (YYYY-MM-DD format)
+ *       - in: query
+ *         name: end
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: End date (YYYY-MM-DD format)
+ *     responses:
+ *       '200':
+ *         description: Success
+ *       '400':
+ *         description: Bad Request
+ *       '500':
+ *         description: Server Error
+ */
+
+
+/**
+ * @swagger
+ * /user/report-attendance:
+ *   get:
+ *     tags:
+ *       - User
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: reportType
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: monthly or weekly
+ *     responses:
+ *       '200':
+ *         description: Success
  *       '400':
  *         description: Bad Request
  *       '500':

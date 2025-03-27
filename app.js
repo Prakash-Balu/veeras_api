@@ -64,6 +64,8 @@ module.exports = (async () => {
   const practicewithmasterCustomer = require('./routes/practicewith-master')(mongoose, utils, constants);
   const practiceWithMaster_watchedhistory= require('./routes/admin/practicewithmaster_watchedhistory')(mongoose, utils, constants);
   const practiceWithMaster_wh_customer= require('./routes/practicewithmaster_watchedhistory')(mongoose, utils, constants);
+  const bannerSection = require('./routes/admin/bannersection-new')(mongoose, utils, constants);
+  const bannerSectionCustomer = require('./routes/bannersection-new')(mongoose, utils, constants);
 
   app.get('/', (req, res) => {
     res.status(200).json({ message: "Hello World" })
@@ -83,6 +85,8 @@ module.exports = (async () => {
   app.use("/practicewithmasterCustomer", practicewithmasterCustomer);
   app.use("/practiceWithMaster_wh", practiceWithMaster_watchedhistory);
   app.use("/practiceWithMaster_wh_customer", practiceWithMaster_wh_customer);
+  app.use("/bannerSection", bannerSection);
+  app.use("/bannerSectionCustomer", bannerSectionCustomer);
 
 
   // Serve Swagger documentation

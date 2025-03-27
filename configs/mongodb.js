@@ -50,6 +50,7 @@ module.exports = (constants) => {
       require('../models/qa')(mongoose)
       require('../models/notifications')(mongoose, constants)
       require('../models/practicewithmaster')(mongoose)
+      require('../models/bannerSection_new')(mongoose)
       resolve(mongoose);
     });
 

@@ -9,6 +9,9 @@ module.exports = function (mongoose, utils) {
   authenticate.validateToken = async (req, res, next) => {
     try {
       const { authorization } = req.headers;
+      console.log("header",req.headers);
+      console.log("auth",authorization);
+      
       if (!authorization) {
         return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
       }
@@ -16,6 +19,8 @@ module.exports = function (mongoose, utils) {
       if (token && token.length > 0 && token?.[0] !== 'Bearer') {
         return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
       }
+
+      console.log("auth",authorization);
       if (!token[1]) {
         return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
       }
@@ -30,6 +35,8 @@ module.exports = function (mongoose, utils) {
       const attendanceObj = {
         userId: user._id
       }
+      console.log("attendanceObje",attendanceObj);
+      
       if (!decoded.isMobile) {
         if (user.channelId !== decoded.channelId) {
           return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
@@ -37,12 +44,22 @@ module.exports = function (mongoose, utils) {
         attendanceObj.app = 'mobile';
       } else {
         if (user.deviceId !== decoded.deviceId) {
+          console.log("userDevice",user.deviceId);
+          
           return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
         }
         attendanceObj.app = 'web';
       }
+     
+      console.log("attendanceObj2",attendanceObj);
       authenticate.updateAttendance(attendanceObj);
+
+
+      
       req.userInfo = user;
+
+      console.log("user",user);
+      
       return next();
     } catch (error) {
       console.log(error);

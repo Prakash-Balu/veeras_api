@@ -9,7 +9,7 @@ module.exports = function (mongoose, utils, constants) {
   const Replies = mongoose.model("replies");
   const User = mongoose.model("User");
 
-  cron.schedule("*/5 0 * * *", async function () {
+  cron.schedule("*/5 00 * * *", async function () {
     try {
       const StartOfDay = moment().subtract(1, 'day').startOf('day');
       const EndOfDay = moment().subtract(1, 'day').endOf('day');
@@ -28,6 +28,7 @@ module.exports = function (mongoose, utils, constants) {
         })
       }
       await Attendance.insertMany(attendanceInsertMany);
+      console.log("Attendance",Attendance);
       return
     } catch (error) {
       console.log("something error occured on absend updated", error.message)
