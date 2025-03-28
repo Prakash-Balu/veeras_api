@@ -2,16 +2,16 @@
 /**
  * @swagger
  * tags:
- *   - name: PracticeWithMasterCustomer
+ *   - name: PracticeWithMaster-Customer
  *     description: PracticeWithMasterCustomer management APIs
  */
 
 /**
  * @swagger
- * /practicewithmasterCustomer/getPractice/{id}:
+ * /practicewithmaster-customer/getPractice/{id}:
  *   get:
  *     tags:
- *       - PracticeWithMasterCustomer
+ *       - PracticeWithMaster-Customer
  *     parameters:
  *       - in: path
  *         name: id
@@ -32,10 +32,10 @@
 
 /**
  * @swagger
- * /practicewithmasterCustomer/listPractices:
+ * /practicewithmaster-customer/listPractices:
  *   get:
  *     tags:
- *       - PracticeWithMasterCustomer
+ *       - PracticeWithMaster-Customer
  *     parameters:
  *       - in: query
  *         name: status

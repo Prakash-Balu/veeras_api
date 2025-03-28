@@ -4,16 +4,13 @@ module.exports = function (mongoose, utils, constants) {
   const BannerSection = mongoose.model("BannerSection_new");
   const ctrl = {};
 
-
-
   ctrl.listBanner = async (req, res) => {
     try {
       const { skip, limit } = req.query;
 
       let filter = {};
-      
-          filter.status = "active"; 
 
+      filter.status = "active";
 
       const getBanner = await BannerSection.find(filter)
         .sort({ createdAt: -1 })

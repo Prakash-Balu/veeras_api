@@ -3,20 +3,7 @@
 module.exports = function (mongoose, utils, constants) {
   const PracticeWithMaster = mongoose.model("PracticeWithMaster");
   const ctrl = {};
-
-  ctrl.uploadVideo = async (req, res) => {
-    try {
-      const { filename } = req.file;
-      if (!req.file) {
-        return utils.sendErrorNew(req, res, "BAD_REQUEST", "No file Upload");
-      }
-      const audioPath = `${process.env.LOCAL_IP}/videos/${filename}`;
-      return utils.sendResponseNew(req, res, "OK", "SUCCESS", audioPath);
-    } catch (error) {
-      return utils.sendErrorNew(req, res, "BAD_REQUEST", error.message);
-    }
-  };
-
+  
   ctrl.addPractice = async (req, res) => {
     try {
       const { name, description, videoUrl, shorts } = req.body;

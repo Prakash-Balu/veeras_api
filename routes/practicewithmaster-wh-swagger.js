@@ -2,17 +2,17 @@
 /**
  * @swagger
  * tags:
- *   - name: practiceWithMaster_wh_customer
- *     description: practiceWithMaster_wh_customer management APIs
+ *   - name: PracticeWithMaster-wh-customer
+ *     description: Practice With Master Watched History Management APIs
  */
 
 
 /**
  * @swagger
- * /practiceWithMaster_wh_customer/addWatchedHistory:
+ * /practicewithmaster_wh_customer/addWatchedHistory:
  *   post:
  *     tags:
- *       - practiceWithMaster_wh_customer
+ *       - PracticeWithMaster-wh-customer
  *     security:
  *       - BearerAuth: []
  *     requestBody:
