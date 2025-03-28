@@ -51,6 +51,7 @@ module.exports = (constants) => {
       require('../models/notifications')(mongoose, constants)
       require('../models/practicewithmaster')(mongoose)
       require('../models/bannerSection_new')(mongoose)
+      require('../models/segment_category_new')(mongoose)
       resolve(mongoose);
     });
 
