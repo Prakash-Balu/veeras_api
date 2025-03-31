@@ -44,6 +44,7 @@ module.exports = (async () => {
   app.use("/", express.static(path.join(__dirname, "public")));
 
   require("./cron")(mongoose, utils, constants);
+  require("./seed/category_seed")(mongoose, utils, constants);
   const auth = require("./routes/auth")(mongoose, utils, pusher, constants);
   const adminAuth = require("./routes/admin/auth")(mongoose, utils, constants);
   const user = require("./routes/user")(mongoose, utils, constants);
