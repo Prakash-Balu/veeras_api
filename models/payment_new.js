@@ -14,6 +14,9 @@ module.exports = function (mongoose, constants) {
         type: String,
         required: true,
       },
+      email: {
+        type: String,
+      },
       currencyCode: {
         type: String,
         required: true

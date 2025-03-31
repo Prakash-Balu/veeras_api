@@ -157,7 +157,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.createPaymentLinkNew = async (req, res) => {
     try {
-      const { phoneCode, phone,currencyCode, planId, amount, referralId } = req.body;
+      const { phoneCode,email, phone,currencyCode, planId, amount, referralId } = req.body;
 console.log("reqBody",req.body);
 
       const existPlan = await Plan.findOne({ _id: planId });
@@ -205,6 +205,7 @@ console.log("reqBody",req.body);
       const paymentObj = {
         phoneCode,
         phone,
+        email,
         referralId,
         planId,
         amount,

@@ -2,15 +2,14 @@
 
 module.exports = function (mongoose, utils, constants) {
   const PracticeWithMaster = mongoose.model("PracticeWithMaster");
+  const Segment = mongoose.model("Segment_new");
   const ctrl = {};
-  
+
   ctrl.addPractice = async (req, res) => {
     try {
-      const { name, description, videoUrl, shorts } = req.body;
+      const { name, segmentId, description, videoUrl, shorts } = req.body;
 
       const existingName = await PracticeWithMaster.findOne({ name });
-      console.log("existing",existingName);
-      
       if (existingName) {
         return utils.sendErrorNew(
           req,
@@ -19,8 +18,23 @@ module.exports = function (mongoose, utils, constants) {
           "Already this name is exists, try different name"
         );
       }
+
+      const existingSegment = await Segment.findOne({
+        _id: segmentId,
+        status: "active",
+      });
+      if (!existingSegment) {
+        return utils.sendErrorNew(
+          req,
+          res,
+          "BAD_REQUEST",
+          "Segment is not found"
+        );
+      }
+
       const createPractice = await PracticeWithMaster.create({
         name,
+        segmentId,
         description,
         videoUrl,
         shorts,
@@ -35,13 +49,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updatePractice = async (req, res) => {
     try {
-      const {
-        id,
-        description,
-        videoUrl,
-        status,
-        shorts,
-      } = req.body;
+      const { id,segmentId, description, videoUrl, status, shorts } = req.body;
 
       const practice = await PracticeWithMaster.findOne({
         _id: id,
@@ -68,15 +76,16 @@ module.exports = function (mongoose, utils, constants) {
             },
           },
         }));
-  
+
         await PracticeWithMaster.bulkWrite(bulkOperations);
       }
-  
+
       // Update practice details
       const updatedPractice = await PracticeWithMaster.findOneAndUpdate(
         { _id: id, status: "active" },
         {
           $set: {
+            segmentId,
             description,
             videoUrl,
             status,
@@ -84,7 +93,7 @@ module.exports = function (mongoose, utils, constants) {
         },
         { new: true }
       );
-  
+
       return utils.sendResponseNew(req, res, "OK", "SUCCESS", updatedPractice);
     } catch (err) {
       console.log(err);
@@ -95,7 +104,10 @@ module.exports = function (mongoose, utils, constants) {
   ctrl.deletePractice = async (req, res) => {
     try {
       const { id } = req.body;
-      const getPractice = await PracticeWithMaster.findOne({ _id: id , status:"active"}).lean();
+      const getPractice = await PracticeWithMaster.findOne({
+        _id: id,
+        status: "active",
+      }).lean();
       if (!getPractice) {
         return utils.sendErrorNew(req, res, "BAD_REQUEST", "Message Not Found");
       }
@@ -137,14 +149,12 @@ module.exports = function (mongoose, utils, constants) {
   ctrl.listPractices = async (req, res) => {
     try {
       const { skip, limit } = req.query;
-      const {status} = req.query;
-
+      const { status } = req.query;
 
       let filter = {};
-        if (status) {
-            filter.status = status; 
-        }
-
+      if (status) {
+        filter.status = status;
+      }
 
       const getPractice = await PracticeWithMaster.find(filter)
         .sort({ createdAt: -1 })

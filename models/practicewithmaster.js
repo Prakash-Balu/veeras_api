@@ -2,6 +2,7 @@
 
 module.exports = function (mongoose, constants) {
   const Schema = mongoose.Schema;
+  const ObjectId = Schema.ObjectId;
 
   const shortSchema = new Schema({
     shortUrl: { type: String, required: true },
@@ -17,13 +18,17 @@ module.exports = function (mongoose, constants) {
         type: String,
         required: true,
       },
+      segmentId: 
+        {
+          type: ObjectId,
+          ref: "Segment_new",
+          require: true,
+        },
       description: {
         type: String,
-        required: true,
       },
       videoUrl: {
         type: String,
-        required: true,
       },
       shorts: [shortSchema],
       status: {
