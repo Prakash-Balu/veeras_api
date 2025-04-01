@@ -5,10 +5,26 @@ module.exports = function (mongoose, utils, constants) {
   const SegmentCategory = mongoose.model("SegmentCategory");
 
   const categories = [
-    { category_name: "Class Room" },
-    { category_name: "Self-Practice" },
-    { category_name: "Practice with the Master" },
-    { category_name: "Speaking Room" },
+    {
+      value: 'classroom',
+      label: 'Class Room',
+      colorCode: '#e5f9ee',
+    },
+    {
+      value: 'selfpractice',
+      label: 'Self-Practice',
+      colorCode: '#c1dbe8',
+    },
+    {
+      value: 'practicewithmaster',
+      label: 'Practice With the Master',
+      colorCode: '#f8f6bd',
+    },
+    {
+      value: 'speakingroom',
+      label: 'Speaking Room',
+      colorCode: '#f1ecff',
+    },
   ];
 
   const ctrl = {};
@@ -16,12 +32,12 @@ module.exports = function (mongoose, utils, constants) {
   ctrl.listBanner = async () => {
     try {
       for (const category of categories) {
-        const existingCategory = await SegmentCategory.findOne({ category_name: category.category_name });
+        const existingCategory = await SegmentCategory.findOne({ value: category.value });
         if (!existingCategory) {
           await SegmentCategory.create(category);
-          console.log(`Inserted: ${category.category_name}`);
+          console.log(`Inserted: ${category.value}`);
         } else {
-          console.log(`Already exists: ${category.category_name}`);
+          console.log(`Already exists: ${category.value}`);
         }
       }
 

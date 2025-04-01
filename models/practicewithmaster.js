@@ -29,6 +29,7 @@ module.exports = function (mongoose, constants) {
       },
       videoUrl: {
         type: String,
+        required: true
       },
       shorts: [shortSchema],
       status: {

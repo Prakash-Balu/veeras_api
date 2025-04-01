@@ -42,35 +42,35 @@ module.exports = function (mongoose, utils, constants) {
 
   segmentsCtrl.updateSegment = async (req, res) => {
     try {
-      const { id, title, category,status} = req.body;
+      const { id, title, category, status } = req.body;
 
       const existingSegment = await Segment.findOne({
         _id: id
       });
 
-     
+
       if (!existingSegment) {
         return utils.sendErrorNew(req, res, "BAD_REQUEST", "Segment Not Found");
       }
 
-      if(category) {
-      const existingCategory = await SegmentCategory.find({
-        _id: { $in: category },
-      });
-      if (existingCategory.length !== category.length) {
-        return utils.sendErrorNew(
-          req,
-          res,
-          "BAD_REQUEST",
-          "Segment Category Not Found"
-        );
-      }
+      if (category) {
+        const existingCategory = await SegmentCategory.find({
+          _id: { $in: category },
+        });
+        if (existingCategory.length !== category.length) {
+          return utils.sendErrorNew(
+            req,
+            res,
+            "BAD_REQUEST",
+            "Segment Category Not Found"
+          );
+        }
 
-    }
+      }
       const result = await Segment.findByIdAndUpdate(
         id,
         { title, category, status },
-        { new: true } 
+        { new: true }
       );
 
       return utils.sendResponseNew(req, res, "OK", "SUCCESS", result);
@@ -106,7 +106,7 @@ module.exports = function (mongoose, utils, constants) {
       const { skip, limit } = req.query;
       const segment = await Segment.find({
         status: "active"
-      })
+      }).populate('category')
         .sort({ createdAt: -1 })
         .skip(Number(skip))
         .limit(Number(limit))
@@ -127,6 +127,27 @@ module.exports = function (mongoose, utils, constants) {
       return utils.sendErrorNew(req, res, "BAD_REQUEST", err.message);
     }
   };
+
+  segmentsCtrl.getById = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const segment = await Segment.find({
+        _id: id
+      }).populate('category')
+        .lean();
+      return utils.sendResponseNew(
+        req,
+        res,
+        "OK",
+        "Success",
+        segment,
+      );
+    } catch (err) {
+      console.log(err);
+      return utils.sendErrorNew(req, res, "BAD_REQUEST", err.message);
+    }
+  };
+
 
   return segmentsCtrl;
 };

@@ -4,10 +4,18 @@ module.exports = function (mongoose, constants) {
 
   let schema = new Schema(
     {
-        category_name: {
-            type: String,
-            required: true
-          }
+      value: {
+        type: String,
+        required: true
+      },
+      label: {
+        type: String,
+        required: true
+      },
+      colorCode: {
+        type: String,
+        required: true
+      }
     },
     {
       timestamps: true,

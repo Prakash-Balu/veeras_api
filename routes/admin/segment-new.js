@@ -7,6 +7,7 @@ module.exports = (mongoose, utils, constants) => {
     router.put("/updateSegment", controller.updateSegment);
     router.put("/deleteSegment", controller.deleteSegment);
     router.get("/listSegments", controller.listSegment);
+    router.get("/:id", controller.getById);
 
     return router;
 }
