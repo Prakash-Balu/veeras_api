@@ -8,34 +8,6 @@
 
 /**
  * @swagger
- * /practicewithmaster/uploadVideo:
- *   post:
- *     tags:
- *       - PracticeWithMaster
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             properties:
- *               video:
- *                 type: string
- *                 format: binary
- *     responses:
- *       '200':
- *         description: Success
- *       '201':
- *         description: Created
- *       '400':
- *         description: Bad Request
- *       '500':
- *         description: Server Error
- */
-
-
-/**
- * @swagger
  * /practicewithmaster/addPractice:
  *   post:
  *     tags:

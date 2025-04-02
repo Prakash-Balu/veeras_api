@@ -2,7 +2,7 @@ module.exports = (mongoose, utils, constants) => {
     const express = require('express');
     const router = express.Router();
   
-    const controller = require('../../controller/admin/practicewithmaster_watchedhistory')(mongoose, utils, constants);
+    const controller = require('../../controller/admin/practicewithmaster-watchedhistory')(mongoose, utils, constants);
     
    
     router.post("/addWatchedHistory", controller.addWatchedHistory);

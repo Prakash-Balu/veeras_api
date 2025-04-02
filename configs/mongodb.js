@@ -40,6 +40,7 @@ module.exports = (constants) => {
       require('../models/user_plans')(mongoose)
       require('../models/user_profiles')(mongoose)
       require('../models/payment')(mongoose, constants)
+      require('../models/payment_new')(mongoose, constants)
       require('../models/subscription')(mongoose, constants)
       require('../models/attendance')(mongoose, constants)
       require('../models/chats')(mongoose, constants)
@@ -49,6 +50,9 @@ module.exports = (constants) => {
       require('../models/qa')(mongoose)
       require('../models/notifications')(mongoose, constants)
       require('../models/practicewithmaster')(mongoose)
+      require('../models/bannerSection_new')(mongoose)
+      require('../models/segment_category_new')(mongoose)
+      require('../models/segment_new')(mongoose)
       resolve(mongoose);
     });
 

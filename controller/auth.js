@@ -38,6 +38,7 @@ module.exports = function (mongoose, utils, pusher, constants) {
           otpSecret: secret
         };
         await User.create(userObj)
+        
       } else {
         await User.updateOne({ _id: isUserExist._id }, { $set: { otpSecret: secret } })
       }
@@ -51,6 +52,10 @@ module.exports = function (mongoose, utils, pusher, constants) {
   ctrl.verify = async (req, res) => {
     try {
       const { deviceId } = req.headers;
+      console.log("headers::", req.headers);
+      console.log("deviceID::", deviceId);
+      
+      
       const { phoneNo, otp } = req.body;
       const user = await User.findOne({ phone: phoneNo });
       if (!user) {
@@ -67,10 +72,13 @@ module.exports = function (mongoose, utils, pusher, constants) {
       user.deviceId = deviceId; //Updated deviceId
 
       await user.save();
+      console.log("user::", user);
+      
       const token = utils.generateToken({ _id: user._id, deviceId, phone: user.phone, isMobile: true }, '3d');
       await LoginHistory.findOneAndUpdate({ userId: user._id, status: constants.loginStatus.ACTIVE }, { $set: { status: constants.loginStatus.IN_ACTIVE } })
 
       ctrl.recordLogin(user._id, req);
+
       return utils.sendResponseNew(req, res, 'OK', 'SUCCESS', token);
     } catch (err) {
       return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
@@ -82,14 +90,22 @@ module.exports = function (mongoose, utils, pusher, constants) {
       const hashedData = utils.channelDataHash();
       const TOKEN = process.env.IPINFO_TOKEN;
       const ipinfo = new IPinfoWrapper(TOKEN);
+      console.log("req.headers::", req.headers);
+      
       let ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+      console.log("ipAddress::", ipAddress);
+      
       ipAddress = ipAddress.split(',')[0].trim();
+      console.log("ipAddress::", ipAddress);
+      
       const { ip, city, region, country } = await ipinfo.lookupIp(ipAddress);
       const details = {
         browser: req.useragent.browser,
         ip: ip,
         location: `${city}, ${region}, ${country}`
       };
+
+      
       return utils.sendResponseNew(req, res, 'OK', 'QR_DATA_CREATED', { hashedData, details })
       const encryptData = JSON.stringify({ hashedData, ...details })
       const encryptUtils = utils.encrypt(encryptData);

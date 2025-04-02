@@ -1,16 +1,20 @@
+
 /**
  * @swagger
  * tags:
- *   - name: Payment
- *     description: Payment management APIs
+ *   - name: BannerSection
+ *     description: BannerSection management APIs
  */
+
 
 /**
  * @swagger
- * /payment/create:
+ * /bannerSection/addBannerSection:
  *   post:
  *     tags:
- *       - Payment
+ *       - BannerSection
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -18,16 +22,48 @@
  *           schema:
  *             type: object
  *             properties:
- *               planId:
+ *               name:
  *                 type: string
- *               currencyCode:
+ *               motivationalDescription:
  *                 type: string
- *               amount:
- *                 type: number
+ *               videoUrl:
+ *                 type: string
  *             required:
- *               - planId
- *               - currencyCode
- *               - amount
+ *               - name
+ *               - motivationalDescription
+ *               - videoUrl
+ *     responses:
+ *       '200':
+ *         description: Success
+ *       '201':
+ *         description: Created
+ *       '400':
+ *         description: Bad Request
+ *       '500':
+ *         description: Server Error
+ */
+
+/**
+ * @swagger
+ * /bannerSection/updateBannerSection:
+ *   put:
+ *     tags:
+ *       - BannerSection
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *               motivationalDescription:
+ *                 type: string
+ *               videoUrl:
+ *                 type: string
+ *               status:
+ *                 type: string
  *     responses:
  *       '200':
  *         description: Success
@@ -43,36 +79,11 @@
 
 /**
  * @swagger
- * /payment/createnew:
- *   post:
+ * /bannerSection/listBannerSection:
+ *   get:
  *     tags:
- *       - Payment
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               phoneCode:
- *                 type: string
- *               phone:
- *                 type: string
- *               currencyCode:
- *                 type: string    
- *               planId:
- *                 type: string
- *               amount:
- *                 type: number
- *               referralId:
- *                 type: string 
- *             required:
- *               - planId
- *               - currencyCode
- *               - amount
- *               - phoneCode
- *               - phone     
- *     responses:
+ *       - BannerSection
+ *     responses: 
  *       '200':
  *         description: Success
  *       '201':
@@ -81,4 +92,4 @@
  *         description: Bad Request
  *       '500':
  *         description: Server Error
- */
+ */ 
