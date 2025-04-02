@@ -25,6 +25,8 @@
  *                 type: string
  *               description:
  *                 type: string
+ *               segmentId:
+ *                 type: string
  *               videoUrl:
  *                 type: string
  *               shorts:
@@ -70,6 +72,8 @@
  *               id:
  *                 type: string
  *               description:
+ *                 type: string
+ *               segmentId:
  *                 type: string
  *               videoUrl:
  *                 type: string
@@ -158,6 +162,18 @@
  *     tags:
  *       - PracticeWithMaster
  *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Number of practice with master to list in per page
  *       - in: query
  *         name: status
  *         required: false

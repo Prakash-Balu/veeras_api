@@ -76,8 +76,21 @@
  *  get:
  *     tags:
  *       -  Segments - new
-  *     security:
+ *     security:
  *       - BearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Number of Segment to list in per page
  *     responses:
  *       '200':
  *         description: Success

@@ -133,8 +133,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.listPractices = async (req, res) => {
     try {
-      const { skip, limit } = req.query;
-      const { status } = req.query;
+      const { skip, limit,status } = req.query;
 
       let filter = {};
       if (status) {

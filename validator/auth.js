@@ -18,6 +18,17 @@ module.exports = function (utils) {
     return validator.joiValidateParams(req, res, data, schema, next);
   };
 
+  validator.verifyToken = function (req, res, next) {
+    const data = req.query;
+    const schema = Joi.object().keys({
+      token: Joi.string()
+        .required()
+        .error(() => Error("Invalid Token"))
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+
+
   validator.verify = function (req, res, next) {
     const data = req.body;
     const schema = Joi.object().keys({
@@ -57,16 +68,168 @@ module.exports = function (utils) {
     return validator.joiValidateParams(req, res, data, schema, next);
   };
 
-  validator.verifyToken = function (req, res, next) {
-    const data = req.query;
-    const schema = Joi.object().keys({
-      token: Joi.string()
+  validator.practiceWithMaster = function (req, res, next) {
+    const data = req.body;
+    const schema = Joi.object({
+  
+      name: Joi.string().required(),
+      description: Joi.string().required(),
+  
+      segmentId: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/) 
         .required()
-        .error(() => Error("Invalid Token"))
+        .error(() => Error("Invalid Segment ID")),
+  
+      videoUrl: Joi.string()
+        .uri()
+        .required()
+        .error(() => Error("Invalid Video URL")),
+  
+      shorts: Joi.array()
+        .items(
+          Joi.object({
+            shortUrl: Joi.string().uri().required(),
+            question: Joi.string().required(),
+            answer: Joi.string().required(),
+          })
+        )
+        .required()
+        .error(() => Error("Invalid Shorts Format")),
     });
     return validator.joiValidateParams(req, res, data, schema, next);
   };
 
+  validator.updatePracticeWithMaster = function (req, res, next) {
+    const data = req.body;
+    const schema = Joi.object({
+      id: Joi.string()
+      .pattern(/^[0-9a-fA-F]{24}$/) 
+      .optional()
+      .error(() => Error("Invalid ID")),
+      name: Joi.string().optional(),
+      description: Joi.string().optional(),
+  
+      segmentId: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/) 
+        .optional()
+        .error(() => Error("Invalid Segment ID")),
+  
+      videoUrl: Joi.string()
+        .uri()
+        .optional()
+        .error(() => Error("Invalid Video URL")),
+  
+      shorts: Joi.array()
+        .items(
+          Joi.object({
+            shortUrl: Joi.string().uri().required(),
+            question: Joi.string().required(),
+            answer: Joi.string().required(),
+          })
+        )
+        .optional()
+        .error(() => Error("Invalid Shorts Format")),
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+
+  validator.listPracticeWithMaster = function (req, res, next) {
+    const data = req.query;
+
+    const schema = Joi.object({
+      status: Joi.string().
+      valid("active","inActive","deleted")
+      .optional()
+      .error(() => Error("Invalid status, Allowed values are active ,inActive,delete ")),
+
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+
+  validator.segment = function (req, res, next) {
+    const data = req.body;
+    const schema = Joi.object({
+  
+      title: Joi.string().required(),
+      category: Joi.array()
+        .items(
+          Joi.string()
+          .pattern(/^[0-9a-fA-F]{24}$/) 
+          .required() 
+          .error(() => Error("Invalid category Id")),
+        )
+        .required()
+        .error(() => Error("Required category Id")),
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+
+  validator.updateSegment = function (req, res, next) {
+    const data = req.body;
+    const schema = Joi.object({
+
+      id: Joi.string()
+      .pattern(/^[0-9a-fA-F]{24}$/) 
+      .optional()
+      .error(() => Error("Invalid ID")),
+      title: Joi.string().optional(),
+      category: Joi.array()
+        .items(
+          Joi.string()
+          .pattern(/^[0-9a-fA-F]{24}$/) 
+          .optional() 
+          .error(() => Error("Invalid category Id")),
+        )
+        .optional()
+        .error(() => Error("Required category Id")),
+      status: Joi.string().
+      valid("active","inActive")
+      .optional()
+      .error(() => Error("Invalid status, Allowed values are active ,inActive")),
+
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+  
+
+  validator.bannerSection = function (req, res, next) {
+    const data = req.body;
+    const schema = Joi.object({
+
+      name: Joi.string().required(),
+      motivationalDescription: Joi.string().required(),
+      videoUrl: Joi.string()
+      .uri()
+      .required()
+      .error(() => Error("Invalid Video URL")),
+
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+
+
+  validator.updateBannerSection = function (req, res, next) {
+    const data = req.body;
+    const schema = Joi.object({
+  
+      
+      id: Joi.string()
+      .pattern(/^[0-9a-fA-F]{24}$/) 
+      .optional()
+      .error(() => Error("Invalid ID")),
+      motivationalDescription: Joi.string().optional(),
+      videoUrl: Joi.string()
+      .uri()
+      .optional()
+      .error(() => Error("Invalid Video URL")),
+      status: Joi.string().
+      valid("active","inActive")
+      .optional()
+      .error(() => Error("Invalid status, Allowed values are active ,inActive")),
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+  
   validator.joiValidateParams = function (req, res, data, schema, next) {
     // validate the request data against the schema
     const { error } = schema.validate(data);

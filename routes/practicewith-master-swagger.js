@@ -38,6 +38,18 @@
  *       - PracticeWithMaster-Customer
  *     parameters:
  *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Number of PracticeWithMaster to list in per page
+ *       - in: query
  *         name: status
  *         required: false
  *         description: Get list by status ("active", "inActive", "deleted")
