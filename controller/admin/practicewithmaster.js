@@ -63,22 +63,6 @@ module.exports = function (mongoose, utils, constants) {
           "practice Not Found"
         );
       }
-      if (Array.isArray(shorts) && shorts.length > 0) {
-        const bulkOperations = shorts.map((short) => ({
-          updateOne: {
-            filter: { _id: id, "shorts._id": short.shortId },
-            update: {
-              $set: {
-                "shorts.$.shortUrl": short.shortUrl,
-                "shorts.$.question": short.question,
-                "shorts.$.answer": short.answer,
-              },
-            },
-          },
-        }));
-
-        await PracticeWithMaster.bulkWrite(bulkOperations);
-      }
 
       // Update practice details
       const updatedPractice = await PracticeWithMaster.findOneAndUpdate(
@@ -88,6 +72,7 @@ module.exports = function (mongoose, utils, constants) {
             segmentId,
             description,
             videoUrl,
+            shorts,
             status,
           },
         },
@@ -156,7 +141,7 @@ module.exports = function (mongoose, utils, constants) {
         filter.status = status;
       }
 
-      const getPractice = await PracticeWithMaster.find(filter)
+      const getPractice = await PracticeWithMaster.find(filter).populate('segmentId')
         .sort({ createdAt: -1 })
         .skip(Number(skip))
         .limit(Number(limit))
