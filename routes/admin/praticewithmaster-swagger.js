@@ -163,7 +163,7 @@
  *       - PracticeWithMaster
  *     parameters:
  *       - in: query
- *         name: page
+ *         name: skip
  *         schema:
  *           type: integer
  *         required: false

@@ -11,7 +11,6 @@ module.exports = (mongoose, utils, constants) => {
 
   router.post(
     "/addPractice",
-
     validator.practiceWithMaster,
     controller.addPractice
   );

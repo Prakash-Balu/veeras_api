@@ -11,12 +11,10 @@ module.exports = (mongoose, utils, constants) => {
 
   router.get(
     "/getPractice/:id",
-    authenticate.validateToken,
     controller.getByIdPractice
   );
   router.get(
     "/listPractices",
-    authenticate.validateToken,
     validator.listPracticeWithMaster,
     controller.listPractices
   );

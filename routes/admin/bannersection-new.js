@@ -7,9 +7,9 @@ module.exports = (mongoose, utils, constants) => {
     
 
 
-    router.post("/addBannerSection",authenticate.validateToken,validator.bannerSection,controller.addBanner);
-    router.put("/updateBannerSection",authenticate.validateToken,validator.updateBannerSection, controller.updateBanner);
-    router.get("/listBannerSection", authenticate.validateToken,controller.listBanner);
+    router.post("/addBannerSection",validator.bannerSection,controller.addBanner);
+    router.put("/updateBannerSection",validator.updateBannerSection, controller.updateBanner);
+    router.get("/listBannerSection",controller.listBanner);
 
     return router;
 }

@@ -74,17 +74,14 @@ module.exports = function (utils) {
   
       name: Joi.string().required(),
       description: Joi.string().required(),
-  
       segmentId: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/) 
         .required()
         .error(() => Error("Invalid Segment ID")),
-  
       videoUrl: Joi.string()
         .uri()
         .required()
         .error(() => Error("Invalid Video URL")),
-  
       shorts: Joi.array()
         .items(
           Joi.object({
@@ -137,6 +134,8 @@ module.exports = function (utils) {
     const data = req.query;
 
     const schema = Joi.object({
+      skip:Joi.string().optional(),
+      limit:Joi.string().optional(),
       status: Joi.string().
       valid("active","inActive","deleted")
       .optional()
