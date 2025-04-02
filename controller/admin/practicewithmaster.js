@@ -49,7 +49,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updatePractice = async (req, res) => {
     try {
-      const { id,segmentId, description, videoUrl, status, shorts } = req.body;
+      const { id, segmentId, description, videoUrl, status, shorts } = req.body;
 
       const practice = await PracticeWithMaster.findOne({
         _id: id,
@@ -133,9 +133,11 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.listPractices = async (req, res) => {
     try {
-      const { skip, limit,status } = req.query;
+      const { skip, limit, status, segmentId } = req.query;
 
-      let filter = {};
+      let filter = {
+        ...(segmentId ? { segmentId } : {})
+      };
       if (status) {
         filter.status = status;
       }
