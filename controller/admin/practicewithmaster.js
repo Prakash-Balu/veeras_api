@@ -31,6 +31,7 @@ module.exports = function (mongoose, utils, constants) {
           "Segment is not found"
         );
       }
+      
 
       const createPractice = await PracticeWithMaster.create({
         name,

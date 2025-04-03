@@ -69,6 +69,7 @@ module.exports = (async () => {
   const bannerSectionCustomer = require("./routes/bannersection-new")(mongoose,utils,constants);
   const fileUpload = require("./routes/admin/fileUpload-new")(mongoose,utils,constants);
   const segments_new = require("./routes/admin/segment-new")(mongoose,utils,constants);
+  const segments_new_customer = require("./routes/segment-new")(mongoose,utils,constants);
   const segment_category = require("./routes/admin/segment-category-new")(mongoose,utils,constants);
 
   app.get("/", (req, res) => {
@@ -93,6 +94,7 @@ module.exports = (async () => {
   app.use("/bannerSectionCustomer", bannerSectionCustomer);
   app.use("/fileupload", fileUpload);
   app.use("/segments_new", segments_new);
+  app.use("/segments_new_customer", segments_new_customer);
   app.use("/segment_category", segment_category);
 
   // Serve Swagger documentation
