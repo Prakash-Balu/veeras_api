@@ -73,10 +73,13 @@ module.exports = function(mongoose, utils) {
                 code: planDetails.code,
                 name: planDetails.name,
                 desc: planDetails.desc,
-                duration: planDetails.duration,
-                offer_duration: planDetails.offer_duration,
-                monthsno: planDetails.monthsno,
+                note: planDetails.note,
                 feeFieldName: planDetails.feeFieldName,
+                duration: planDetails.duration,
+                period: planDetails.period,
+                hasValidity: planDetails.hasValidity,
+                validityDuration: planDetails.validityDuration,
+                validityPeriod: planDetails.validityPeriod,
             }
 
             return await Plans.findByIdAndUpdate(
