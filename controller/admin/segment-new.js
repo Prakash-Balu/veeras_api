@@ -28,9 +28,13 @@ module.exports = function (mongoose, utils, constants) {
           "Segment Category Not Found"
         );
       }
+//slugify the title
+      const slugTitle = utils.slug(title);
+
+    console.log("slugTitle",slugTitle);
 
       const segment = await Segment.create({
-        title,
+        title:slugTitle,
         category,
       });
       return utils.sendResponseNew(req, res, "OK", "SUCCESS", segment);

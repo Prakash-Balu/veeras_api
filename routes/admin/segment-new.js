@@ -1,7 +1,7 @@
 module.exports = (mongoose, utils, constants) => {
   const express = require("express");
   const router = express.Router();
-  const controller = require("../../controller/admin/segment_new")(
+  const controller = require("../../controller/admin/segment-new")(
     mongoose,
     utils,
     constants

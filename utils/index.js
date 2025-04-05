@@ -80,6 +80,7 @@ module.exports = {
     return module.exports.notifyErrorNew(req, res, "INTERNAL_SERVER_ERROR", "ERR");
   },
 
+
   channelDataHash: function () {
     const token = crypto.randomBytes(64).toString('hex');
     let channel_data = new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getMinutes()
@@ -90,6 +91,18 @@ module.exports = {
   generateToken: function (data, expire) {
     const token = jwt.sign(data, privateKey, { expiresIn: expire })
     return token;
+  },
+
+  
+  slug: function (text) {
+    console.log("text", text);
+
+    let slug = text
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "_");
+
+    return slug
   },
 
   encrypt: (text) => {
@@ -107,5 +120,8 @@ module.exports = {
     let decrypted = decipher.update(encryptedText);
     decrypted = Buffer.concat([decrypted, decipher.final()]);
     return decrypted.toString();
-  }
+  },
+
+
+  
 };
