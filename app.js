@@ -7,6 +7,9 @@ const useragent = require("express-useragent");
 const path = require("path");
 const http = require("http");
 const socketIo = require("socket.io");
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
+
 
 const swaggerUi = require("swagger-ui-express");
 // const swaggerSpec = require('./configs/swaggerConfig');
@@ -133,6 +136,29 @@ module.exports = (async () => {
   // }, (req, res) => {
   //   swaggerUi.setup(req.swaggerSpec)(req, res);
   // });
+
+
+
+  // Twilio configuration
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: false
+}));
+
+app.post("/whatsapp", (req, res) => {
+  const msg = req.body.msg;
+  client.messages.create({
+      from: 'whatsapp:+14155238886',
+      to: 'whatsapp:+919750989497',
+      body: msg,
+      mediaUrl : ['https://thumbs.dreamstime.com/b/welcome-word-blue-circles-white-93627727.jpg']
+    })
+    .then(message => res.send(message))
+    .catch(err => {
+      console.log(err);
+      res.send(err)
+    })
+});
 
   app.get("/order", async (req, res) => {
     // setting up options for razorpay order.

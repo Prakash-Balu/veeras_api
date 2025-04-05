@@ -73,7 +73,7 @@ module.exports = function (utils) {
     const schema = Joi.object({
   
       name: Joi.string().required(),
-      description: Joi.string().required(),
+      description: Joi.string().optional(),
       segmentId: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/) 
         .required()
