@@ -18,6 +18,10 @@ module.exports = function (mongoose, constants) {
         type: String,
         required: true,
       },
+      isSubject: {
+        type: String,
+        default:null
+      },
       segmentId: 
         {
           type: ObjectId,

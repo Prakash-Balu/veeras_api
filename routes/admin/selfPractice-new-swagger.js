@@ -2,16 +2,16 @@
 /**
  * @swagger
  * tags:
- *   - name: PracticeWithMaster
- *     description: PracticeWithMaster management APIs
+ *   - name: SelfPractice
+ *     description: SelfPractice management APIs
  */
 
 /**
  * @swagger
- * /practicewithmaster/addPractice:
+ * /SelfPractice/add:
  *   post:
  *     tags:
- *       - PracticeWithMaster
+ *       - SelfPractice
  *     security:
  *       - BearerAuth: []
  *     requestBody:
@@ -21,32 +21,27 @@
  *           schema:
  *             type: object
  *             properties:
- *               name:
- *                 type: string
- *               description:
- *                 type: string
- *               isSubject:
+ *               displayType:
  *                 type: string
  *               segmentId:
  *                 type: string
- *               videoUrl:
- *                 type: string
- *               shorts:
+ *               isSubject:
+ *                type: string
+ *               practices:
  *                 type: array 
  *                 items: 
  *                   type: object
  *                   properties:
- *                     shortUrl:
+ *                     questionInEnglish:
  *                       type: string 
- *                     question:
+ *                     questionInTamil:
  *                       type: string
  *                     answer:     
  *                       type: string
  *             required:
- *               - name
- *               - description
- *               - videoUrl
- *               - short
+ *               - display
+ *               - practice
+ *               - segmentId
  *     responses:
  *       '200':
  *         description: Success
@@ -58,10 +53,10 @@
 
 /**
  * @swagger
- * /practicewithmaster/updatePractice:
+ * /SelfPractice/update:
  *   put:
  *     tags:
- *       - PracticeWithMaster
+ *       - SelfPractice
  *     requestBody:
  *       required: true
  *       content:
@@ -71,34 +66,26 @@
  *             properties:
  *               id:
  *                 type: string
- *               description:
+ *               displayType:
  *                 type: string
  *               segmentId:
  *                 type: string
  *               isSubject:
- *                 type: string
- *               videoUrl:
- *                 type: string
- *               status:
- *                 type: string
- *               shorts:
+ *                type: string  
+ *               practices:
  *                 type: array 
  *                 items: 
  *                   type: object
  *                   properties:
- *                     id:
- *                       type: string
- *                     shortUrl:
+ *                     questionInEnglish:
  *                       type: string 
- *                     question:
+ *                     questionInTamil:
  *                       type: string
  *                     answer:     
  *                       type: string
  *     responses:
  *       '200':
  *         description: Success
- *       '201':
- *         description: Created
  *       '400':
  *         description: Bad Request
  *       '500':
@@ -107,10 +94,10 @@
 
 /**
  * @swagger
- * /practicewithmaster/deletePractice:
+ * /SelfPractice/delete:
  *   delete:
  *     tags:
- *       - PracticeWithMaster
+ *       - SelfPractice
  *     requestBody:
  *       required: true
  *       content:
@@ -125,8 +112,6 @@
  *     responses:
  *       '200':
  *         description: Success
- *       '201':
- *         description: Created
  *       '400':
  *         description: Bad Request
  *       '500':
@@ -135,22 +120,20 @@
 
 /**
  * @swagger
- * /practicewithmaster/getPractice/{id}:
+ * /SelfPractice/get/{id}:
  *   get:
  *     tags:
- *       - PracticeWithMaster
+ *       - SelfPractice
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: The ID of the specific practice to retrieve
+ *         description: The ID of the specific self practice to retrieve
  *         schema:
  *           type: string
  *     responses:
  *       '200':
  *         description: Success
- *       '201':
- *         description: Created
  *       '400':
  *         description: Bad Request
  *       '500':
@@ -159,10 +142,10 @@
 
 /**
  * @swagger
- * /practicewithmaster/listPractices:
+ * /SelfPractice/lists:
  *   get:
  *     tags:
- *       - PracticeWithMaster
+ *       - SelfPractice
  *     parameters:
  *       - in: query
  *         name: skip
@@ -175,18 +158,10 @@
  *         schema:
  *           type: integer
  *         required: false
- *         description: Number of practice with master to list in per page
- *       - in: query
- *         name: status
- *         required: false
- *         description: Get list by status ("active", "inActive", "deleted")
- *         schema:
- *           type: string
+ *         description: Number of self practice list in per page
  *     responses: 
  *       '200':
  *         description: Success
- *       '201':
- *         description: Created
  *       '400':
  *         description: Bad Request
  *       '500':

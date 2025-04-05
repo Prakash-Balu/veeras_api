@@ -53,6 +53,7 @@ module.exports = (constants) => {
       require('../models/bannerSection_new')(mongoose)
       require('../models/segment_category_new')(mongoose)
       require('../models/segment_new')(mongoose)
+      require('../models/selfPractice_new')(mongoose)
       resolve(mongoose);
     });
 

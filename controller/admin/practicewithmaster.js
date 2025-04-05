@@ -7,7 +7,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.addPractice = async (req, res) => {
     try {
-      const { name, segmentId, description, videoUrl, shorts } = req.body;
+      const { name,isSubject, segmentId, description, videoUrl, shorts } = req.body;
 
       const existingName = await PracticeWithMaster.findOne({ name });
       if (existingName) {
@@ -36,6 +36,7 @@ module.exports = function (mongoose, utils, constants) {
       const createPractice = await PracticeWithMaster.create({
         name,
         segmentId,
+        isSubject,
         description,
         videoUrl,
         shorts,
@@ -50,7 +51,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updatePractice = async (req, res) => {
     try {
-      const { id, segmentId, description, videoUrl, status, shorts } = req.body;
+      const { id,isSubject, segmentId, description, videoUrl, status, shorts } = req.body;
 
       const practice = await PracticeWithMaster.findOne({
         _id: id,
@@ -71,6 +72,7 @@ module.exports = function (mongoose, utils, constants) {
         {
           $set: {
             segmentId,
+            isSubject,
             description,
             videoUrl,
             shorts,
