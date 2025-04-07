@@ -75,7 +75,7 @@ module.exports = function (utils) {
     const schema = Joi.object({
       name: Joi.string().required(),
       description: Joi.string().optional(),
-      isSubject: Joi.string().allow(null).optional(),
+      subject: Joi.string().allow(null).optional(),
       segmentId: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/)
         .required()
@@ -107,7 +107,8 @@ module.exports = function (utils) {
         .error(() => Error("Invalid ID")),
       name: Joi.string().optional(),
       description: Joi.string().optional(),
-      isSubject: Joi.string().allow(null).optional(),
+      subject: Joi.string().allow(null).optional(),
+      isSubject:Joi.string().allow(null).optional(),
       segmentId: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/)
         .optional()
@@ -235,7 +236,7 @@ module.exports = function (utils) {
       .pattern(/^[0-9a-fA-F]{24}$/)
       .required()
       .error(() => Error("Invalid Segment ID")),
-      isSubject: Joi.string().allow(null).optional(),
+      subject: Joi.string().allow(null).optional(),
       practices: Joi.array()
         .items(
           Joi.object({
@@ -259,6 +260,7 @@ module.exports = function (utils) {
         .error(() => Error("Invalid ID")),
       displayType: Joi.string().valid("type1", "type2", "type3").optional(),
       isSubject: Joi.string().allow(null).optional(),
+      subject: Joi.string().allow(null).optional(),
       segmentId: Joi.string()
       .pattern(/^[0-9a-fA-F]{24}$/)
       .optional()

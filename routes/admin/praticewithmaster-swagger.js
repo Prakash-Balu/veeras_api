@@ -25,7 +25,7 @@
  *                 type: string
  *               description:
  *                 type: string
- *               isSubject:
+ *               subject:
  *                 type: string
  *               segmentId:
  *                 type: string
@@ -75,11 +75,13 @@
  *                 type: string
  *               segmentId:
  *                 type: string
- *               isSubject:
+ *               subject:
  *                 type: string
  *               videoUrl:
  *                 type: string
  *               status:
+ *                 type: string
+ *               isSubject:
  *                 type: string
  *               shorts:
  *                 type: array 

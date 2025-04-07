@@ -17,7 +17,7 @@ module.exports = function (mongoose, constants) {
           ],
         required: true,
       },
-      isSubject: {
+      subject: {
         type: String,
         default:null
       },
@@ -26,6 +26,10 @@ module.exports = function (mongoose, constants) {
         type: ObjectId,
         ref: "Segment_new",
         require: true,
+      },
+      isSubject: {
+        type: Boolean,
+        default:false
       },
       practices: [
       {

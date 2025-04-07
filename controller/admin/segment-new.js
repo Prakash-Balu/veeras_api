@@ -34,7 +34,7 @@ module.exports = function (mongoose, utils, constants) {
     console.log("slugTitle",slugTitle);
 
       const segment = await Segment.create({
-        title:slugTitle,
+        title:slugTitle || title,
         category,
       });
       return utils.sendResponseNew(req, res, "OK", "SUCCESS", segment);

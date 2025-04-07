@@ -25,8 +25,8 @@
  *                 type: string
  *               segmentId:
  *                 type: string
- *               isSubject:
- *                type: string
+ *               subject:
+ *                type: string  
  *               practices:
  *                 type: array 
  *                 items: 
@@ -70,6 +70,8 @@
  *                 type: string
  *               segmentId:
  *                 type: string
+ *               subject:
+ *                type: string  
  *               isSubject:
  *                type: string  
  *               practices:

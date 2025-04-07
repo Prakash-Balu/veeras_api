@@ -7,7 +7,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.addSelfPractice = async (req, res) => {
     try {
-      const { displayType, isSubject, segmentId, practices } = req.body;
+      const { displayType,subject, segmentId, practices } = req.body;
 
       const existingSegment = await Segment.findOne({
         _id: segmentId,
@@ -22,9 +22,11 @@ module.exports = function (mongoose, utils, constants) {
         );
       }
 
+      const slugTitle = utils.slug(subject);
+
       const createSelfPractice = await SelfPractice.create({
         displayType,
-        isSubject,
+        subject :slugTitle || subject,
         segmentId,
         practices,
       });
@@ -44,7 +46,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updateSelfPractice = async (req, res) => {
     try {
-      const { id, isSubject, segmentId, displayType, practices } = req.body;
+      const { id, subject,isSubject, segmentId, displayType, practices } = req.body;
 
       const selfPractice = await SelfPractice.findOne({
         _id: id,
@@ -78,6 +80,7 @@ module.exports = function (mongoose, utils, constants) {
         { _id: id, isDeleted: false },
         {
           $set: {
+            subject,
             isSubject,
             segmentId,
             displayType,

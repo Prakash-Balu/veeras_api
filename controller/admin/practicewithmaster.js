@@ -7,7 +7,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.addPractice = async (req, res) => {
     try {
-      const { name,isSubject, segmentId, description, videoUrl, shorts } = req.body;
+      const { name,subject, segmentId, description, videoUrl, shorts } = req.body;
 
       const existingName = await PracticeWithMaster.findOne({ name });
       if (existingName) {
@@ -31,12 +31,15 @@ module.exports = function (mongoose, utils, constants) {
           "Segment is not found"
         );
       }
-      
+
+      const slugTitle = utils.slug(subject);
+
+      console.log("practicewithmaster",slugTitle);
 
       const createPractice = await PracticeWithMaster.create({
         name,
         segmentId,
-        isSubject,
+        subject : slugTitle ||  subject,
         description,
         videoUrl,
         shorts,
@@ -51,7 +54,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updatePractice = async (req, res) => {
     try {
-      const { id,isSubject, segmentId, description, videoUrl, status, shorts } = req.body;
+      const { id,subject, segmentId, description, videoUrl, isSubject, status, shorts } = req.body;
 
       const practice = await PracticeWithMaster.findOne({
         _id: id,
@@ -72,6 +75,7 @@ module.exports = function (mongoose, utils, constants) {
         {
           $set: {
             segmentId,
+            subject,
             isSubject,
             description,
             videoUrl,

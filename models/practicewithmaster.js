@@ -18,7 +18,7 @@ module.exports = function (mongoose, constants) {
         type: String,
         required: true,
       },
-      isSubject: {
+      subject: {
         type: String,
         default:null
       },
@@ -34,6 +34,10 @@ module.exports = function (mongoose, constants) {
       videoUrl: {
         type: String,
         required: true
+      },
+      isSubject: {
+        type: Boolean,
+        default:false
       },
       shorts: [shortSchema],
       status: {

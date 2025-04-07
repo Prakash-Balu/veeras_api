@@ -100,7 +100,8 @@ module.exports = {
     let slug = text
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, "_");
+    .replace(/\s+/g, "_")
+    .replace(/\./g, "-"); 
 
     return slug
   },
