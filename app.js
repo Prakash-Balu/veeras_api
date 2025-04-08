@@ -7,9 +7,10 @@ const useragent = require("express-useragent");
 const path = require("path");
 const http = require("http");
 const socketIo = require("socket.io");
-const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-
-
+const client = require("twilio")(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
 
 const swaggerUi = require("swagger-ui-express");
 // const swaggerSpec = require('./configs/swaggerConfig');
@@ -51,31 +52,97 @@ module.exports = (async () => {
   const auth = require("./routes/auth")(mongoose, utils, pusher, constants);
   const adminAuth = require("./routes/admin/auth")(mongoose, utils, constants);
   const user = require("./routes/user")(mongoose, utils, constants);
-  const location = require("./routes/location-price")(mongoose,utils,constants);
+  const location = require("./routes/location-price")(
+    mongoose,
+    utils,
+    constants
+  );
   const plan = require("./routes/plan")(mongoose, utils, constants);
   const segments = require("./routes/segments")(mongoose, utils, constants);
   const comments = require("./routes/comments")(mongoose, utils, constants);
   const payments = require("./routes/payment")(mongoose, utils, constants);
   const chat = require("./routes/chat")(mongoose, utils, constants);
-  const adminLocation = require("./routes/admin/location-price")(mongoose,utils,constants);
+  const adminLocation = require("./routes/admin/location-price")(
+    mongoose,
+    utils,
+    constants
+  );
   const adminPlan = require("./routes/admin/plan")(mongoose, utils, constants);
-  const adminSegments = require("./routes/admin/segments")(mongoose,utils,constants);
+  const adminSegments = require("./routes/admin/segments")(
+    mongoose,
+    utils,
+    constants
+  );
   const apiSelfPractice = require("./routes/api")(mongoose, utils, constants);
-  const adminPrice = require("./routes/admin/price")(mongoose,utils,constants);
-  const practicewithmaster = require("./routes/admin/practicewithmaster")(mongoose,utils,constants);
-  const practicewithmaster_customer = require("./routes/practicewith-master")(mongoose,utils,constants);
+  const adminPrice = require("./routes/admin/price")(
+    mongoose,
+    utils,
+    constants
+  );
+  const practicewithmaster = require("./routes/admin/practicewithmaster")(
+    mongoose,
+    utils,
+    constants
+  );
+  const practicewithmaster_customer = require("./routes/practicewith-master")(
+    mongoose,
+    utils,
+    constants
+  );
   const practiceWithMaster_watchedhistory =
-    require("./routes/admin/practicewithmaster-watchedhistory")(mongoose,utils,constants);
+    require("./routes/admin/practicewithmaster-watchedhistory")(
+      mongoose,
+      utils,
+      constants
+    );
   const PracticeWithMaster_Watchedhistory_Customer =
-    require("./routes/practicewithmaster-watchedhistory")(mongoose,utils,constants);
-  const bannerSection = require("./routes/admin/bannersection-new")(mongoose,utils,constants);
-  const bannerSectionCustomer = require("./routes/bannersection-new")(mongoose,utils,constants);
-  const fileUpload = require("./routes/admin/fileUpload-new")(mongoose,utils,constants);
-  const segments_new = require("./routes/admin/segment-new")(mongoose,utils,constants);
-  const segments_new_customer = require("./routes/segment-new")(mongoose,utils,constants);
-  const segment_category = require("./routes/admin/segment-category-new")(mongoose,utils,constants);
-  const selfPractice = require("./routes/admin/selfPractice-new")(mongoose,utils,constants);
-  const {createToken}= require("./service/agora");
+    require("./routes/practicewithmaster-watchedhistory")(
+      mongoose,
+      utils,
+      constants
+    );
+  const bannerSection = require("./routes/admin/bannersection-new")(
+    mongoose,
+    utils,
+    constants
+  );
+  const bannerSectionCustomer = require("./routes/bannersection-new")(
+    mongoose,
+    utils,
+    constants
+  );
+  const fileUpload = require("./routes/admin/fileUpload-new")(
+    mongoose,
+    utils,
+    constants
+  );
+  const segments_new = require("./routes/admin/segment-new")(
+    mongoose,
+    utils,
+    constants
+  );
+  const segments_new_customer = require("./routes/segment-new")(
+    mongoose,
+    utils,
+    constants
+  );
+  const segment_category = require("./routes/admin/segment-category-new")(
+    mongoose,
+    utils,
+    constants
+  );
+  const selfPractice = require("./routes/admin/selfPractice-new")(
+    mongoose,
+    utils,
+    constants
+  );
+  const classroom = require("./routes/admin/classroom-new")(
+    mongoose,
+    utils,
+    constants
+  );
+
+  const { createToken } = require("./service/agora");
 
   app.get("/", (req, res) => {
     res.status(200).json({ message: "Hello World" });
@@ -94,7 +161,10 @@ module.exports = (async () => {
   app.use("/practicewithmaster", practicewithmaster);
   app.use("/practicewithmaster-customer", practicewithmaster_customer);
   app.use("/practiceWithMaster_wh", practiceWithMaster_watchedhistory);
-  app.use("/practicewithmaster_wh_customer", PracticeWithMaster_Watchedhistory_Customer);
+  app.use(
+    "/practicewithmaster_wh_customer",
+    PracticeWithMaster_Watchedhistory_Customer
+  );
   app.use("/bannerSection", bannerSection);
   app.use("/bannerSectionCustomer", bannerSectionCustomer);
   app.use("/fileupload", fileUpload);
@@ -102,6 +172,8 @@ module.exports = (async () => {
   app.use("/segments_new_customer", segments_new_customer);
   app.use("/segment_category", segment_category);
   app.use("/selfPractice", selfPractice);
+  app.use("/classroom", classroom);
+
   app.get("/agora/generate-token", createToken);
 
   // Serve Swagger documentation
@@ -141,28 +213,31 @@ module.exports = (async () => {
   //   swaggerUi.setup(req.swaggerSpec)(req, res);
   // });
 
-
-
   // Twilio configuration
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: false
-}));
+  app.use(express.json());
+  app.use(
+    express.urlencoded({
+      extended: false,
+    })
+  );
 
-app.post("/whatsapp", (req, res) => {
-  const msg = req.body.msg;
-  client.messages.create({
-      from: 'whatsapp:+14155238886',
-      to: 'whatsapp:+919750989497',
-      body: msg,
-      mediaUrl : ['https://thumbs.dreamstime.com/b/welcome-word-blue-circles-white-93627727.jpg']
-    })
-    .then(message => res.send(message))
-    .catch(err => {
-      console.log(err);
-      res.send(err)
-    })
-});
+  app.post("/whatsapp", (req, res) => {
+    const msg = req.body.msg;
+    client.messages
+      .create({
+        from: "whatsapp:+14155238886",
+        to: "whatsapp:+919750989497",
+        body: msg,
+        mediaUrl: [
+          "https://thumbs.dreamstime.com/b/welcome-word-blue-circles-white-93627727.jpg",
+        ],
+      })
+      .then((message) => res.send(message))
+      .catch((err) => {
+        console.log(err);
+        res.send(err);
+      });
+  });
 
   app.get("/order", async (req, res) => {
     // setting up options for razorpay order.

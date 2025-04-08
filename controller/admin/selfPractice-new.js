@@ -26,7 +26,8 @@ module.exports = function (mongoose, utils, constants) {
 
       const createSelfPractice = await SelfPractice.create({
         displayType,
-        subject :slugTitle || subject,
+        subject ,
+        slug_url:slugTitle,
         segmentId,
         practices,
       });
@@ -46,7 +47,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updateSelfPractice = async (req, res) => {
     try {
-      const { id, subject,isSubject, segmentId, displayType, practices } = req.body;
+      const { id, subject,isSubject,slug_url, segmentId, displayType, practices } = req.body;
 
       const selfPractice = await SelfPractice.findOne({
         _id: id,
@@ -82,6 +83,7 @@ module.exports = function (mongoose, utils, constants) {
           $set: {
             subject,
             isSubject,
+            slug_url,
             segmentId,
             displayType,
             practices,

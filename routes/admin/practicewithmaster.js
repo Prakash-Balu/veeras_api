@@ -8,7 +8,6 @@ module.exports = (mongoose, utils, constants) => {
     utils,
     constants
   );
-
   router.post(
     "/addPractice",
     validator.practiceWithMaster,

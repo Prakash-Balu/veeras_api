@@ -54,6 +54,7 @@ module.exports = (constants) => {
       require('../models/segment_category_new')(mongoose)
       require('../models/segment_new')(mongoose)
       require('../models/selfpractice_new')(mongoose)
+      require('../models/classroom_new')(mongoose)
       resolve(mongoose);
     });
 

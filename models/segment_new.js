@@ -17,6 +17,10 @@ module.exports = function (mongoose, constants) {
         require: true,
       }
     ],
+    slug_url: {
+      type: String,
+      required: false,
+    },
       status: {
         type: String,
         enum: [

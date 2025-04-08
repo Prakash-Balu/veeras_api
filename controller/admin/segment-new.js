@@ -31,10 +31,10 @@ module.exports = function (mongoose, utils, constants) {
 //slugify the title
       const slugTitle = utils.slug(title);
 
-    console.log("slugTitle",slugTitle);
 
       const segment = await Segment.create({
-        title:slugTitle || title,
+        title,
+        slug_url:slugTitle,
         category,
       });
       return utils.sendResponseNew(req, res, "OK", "SUCCESS", segment);
@@ -46,7 +46,7 @@ module.exports = function (mongoose, utils, constants) {
 
   segmentsCtrl.updateSegment = async (req, res) => {
     try {
-      const { id, title, category, status } = req.body;
+      const { id, title,slug_url, category, status } = req.body;
 
       const existingSegment = await Segment.findOne({
         _id: id
@@ -73,7 +73,7 @@ module.exports = function (mongoose, utils, constants) {
       }
       const result = await Segment.findByIdAndUpdate(
         id,
-        { title, category, status },
+        { title, category, status,slug_url},
         { new: true }
       );
 

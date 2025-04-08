@@ -13,6 +13,10 @@ module.exports = function (mongoose, constants) {
         type: String,
         required: true,
       },
+      slug_url: {
+        type: String,
+        required: false
+      },
       videoUrl: {
         type: String,
         required: true,

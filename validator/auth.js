@@ -84,6 +84,7 @@ module.exports = function (utils) {
         .uri()
         .required()
         .error(() => Error("Invalid Video URL")),
+      slug_url: Joi.string().allow(null).optional(),
       shorts: Joi.array()
         .items(
           Joi.object({
@@ -108,7 +109,8 @@ module.exports = function (utils) {
       name: Joi.string().optional(),
       description: Joi.string().optional(),
       subject: Joi.string().allow(null).optional(),
-      isSubject:Joi.string().allow(null).optional(),
+      isSubject: Joi.string().allow(null).optional(),
+      slug_url: Joi.string().allow(null).optional(),
       segmentId: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/)
         .optional()
@@ -153,6 +155,7 @@ module.exports = function (utils) {
     const data = req.body;
     const schema = Joi.object({
       title: Joi.string().required(),
+      slug_url: Joi.string().optional(),
       category: Joi.array()
         .items(
           Joi.string()
@@ -168,12 +171,14 @@ module.exports = function (utils) {
 
   validator.updateSegment = function (req, res, next) {
     const data = req.body;
+
     const schema = Joi.object({
       id: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/)
         .optional()
         .error(() => Error("Invalid ID")),
       title: Joi.string().optional(),
+      slug_url: Joi.string().optional(),
       category: Joi.array()
         .items(
           Joi.string()
@@ -198,6 +203,7 @@ module.exports = function (utils) {
     const schema = Joi.object({
       name: Joi.string().required(),
       motivationalDescription: Joi.string().required(),
+      slug_url: Joi.string().optional(),
       videoUrl: Joi.string()
         .uri()
         .required()
@@ -214,6 +220,7 @@ module.exports = function (utils) {
         .optional()
         .error(() => Error("Invalid ID")),
       motivationalDescription: Joi.string().optional(),
+      slug_url: Joi.string().optional(),
       videoUrl: Joi.string()
         .uri()
         .optional()
@@ -233,10 +240,11 @@ module.exports = function (utils) {
     const schema = Joi.object({
       displayType: Joi.string().valid("type1", "type2", "type3").required(),
       segmentId: Joi.string()
-      .pattern(/^[0-9a-fA-F]{24}$/)
-      .required()
-      .error(() => Error("Invalid Segment ID")),
-      subject: Joi.string().allow(null).optional(),
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .error(() => Error("Invalid Segment ID")),
+      subject: Joi.string().optional(),
+      slug_url: Joi.string().optional(),
       practices: Joi.array()
         .items(
           Joi.object({
@@ -259,12 +267,13 @@ module.exports = function (utils) {
         .required()
         .error(() => Error("Invalid ID")),
       displayType: Joi.string().valid("type1", "type2", "type3").optional(),
-      isSubject: Joi.string().allow(null).optional(),
-      subject: Joi.string().allow(null).optional(),
+      isSubject: Joi.string().optional(),
+      subject: Joi.string().optional(),
+      slug_url: Joi.string().optional(),
       segmentId: Joi.string()
-      .pattern(/^[0-9a-fA-F]{24}$/)
-      .optional()
-      .error(() => Error("Invalid Segment ID")),
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .optional()
+        .error(() => Error("Invalid Segment ID")),
       practices: Joi.array()
         .items(
           Joi.object({
@@ -275,6 +284,48 @@ module.exports = function (utils) {
         )
         .optional()
         .error(() => Error("Invalid practice Format")),
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+
+  validator.classRoom = function (req, res, next) {
+    const data = req.body;
+
+    const schema = Joi.object({
+      segmentId: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .error(() => Error("Invalid Segment ID")),
+      subject: Joi.string().required(),
+      slug_url: Joi.string().optional(),
+      isSubject: Joi.string().optional(),
+      video_url: Joi.string()
+        .uri()
+        .required()
+        .error(() => Error("Invalid Video URL")),
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+
+  validator.updateClassRoom = function (req, res, next) {
+    const data = req.body;
+
+    const schema = Joi.object({
+      id: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .optional()
+        .error(() => Error("Invalid ID")),
+      segmentId: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .optional()
+        .error(() => Error("Invalid Segment ID")),
+      subject: Joi.string().optional(),
+      slug_url: Joi.string().optional(),
+      isSubject: Joi.string().optional(),
+      video_url: Joi.string()
+        .uri()
+        .optional()
+        .error(() => Error("Invalid Video URL")),
     });
     return validator.joiValidateParams(req, res, data, schema, next);
   };

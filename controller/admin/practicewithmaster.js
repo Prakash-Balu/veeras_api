@@ -7,7 +7,8 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.addPractice = async (req, res) => {
     try {
-      const { name,subject, segmentId, description, videoUrl, shorts } = req.body;
+      const { name, subject, segmentId, description, videoUrl, shorts } =
+        req.body;
 
       const existingName = await PracticeWithMaster.findOne({ name });
       if (existingName) {
@@ -34,12 +35,13 @@ module.exports = function (mongoose, utils, constants) {
 
       const slugTitle = utils.slug(subject);
 
-      console.log("practicewithmaster",slugTitle);
+      console.log("practicewithmaster", slugTitle);
 
       const createPractice = await PracticeWithMaster.create({
         name,
         segmentId,
-        subject : slugTitle ||  subject,
+        subject,
+        slug_url: slugTitle,
         description,
         videoUrl,
         shorts,
@@ -54,7 +56,17 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updatePractice = async (req, res) => {
     try {
-      const { id,subject, segmentId, description, videoUrl, isSubject, status, shorts } = req.body;
+      const {
+        id,
+        subject,
+        segmentId,
+        description,
+        slug_url,
+        videoUrl,
+        isSubject,
+        status,
+        shorts,
+      } = req.body;
 
       const practice = await PracticeWithMaster.findOne({
         _id: id,
@@ -78,6 +90,7 @@ module.exports = function (mongoose, utils, constants) {
             subject,
             isSubject,
             description,
+            slug_url,
             videoUrl,
             shorts,
             status,
@@ -143,13 +156,14 @@ module.exports = function (mongoose, utils, constants) {
       const { skip, limit, status, segmentId } = req.query;
 
       let filter = {
-        ...(segmentId ? { segmentId } : {})
+        ...(segmentId ? { segmentId } : {}),
       };
       if (status) {
         filter.status = status;
       }
 
-      const getPractice = await PracticeWithMaster.find(filter).populate('segmentId')
+      const getPractice = await PracticeWithMaster.find(filter)
+        .populate("segmentId")
         .sort({ createdAt: -1 })
         .skip(Number(skip))
         .limit(Number(limit))

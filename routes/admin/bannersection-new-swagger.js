@@ -1,11 +1,9 @@
-
 /**
  * @swagger
  * tags:
  *   - name: BannerSection
  *     description: BannerSection management APIs
  */
-
 
 /**
  * @swagger
@@ -35,8 +33,6 @@
  *     responses:
  *       '200':
  *         description: Success
- *       '201':
- *         description: Created
  *       '400':
  *         description: Bad Request
  *       '500':
@@ -67,15 +63,11 @@
  *     responses:
  *       '200':
  *         description: Success
- *       '201':
- *         description: Created
  *       '400':
  *         description: Bad Request
  *       '500':
  *         description: Server Error
  */
-
-
 
 /**
  * @swagger
@@ -96,13 +88,11 @@
  *           type: integer
  *         required: false
  *         description: Number of Banner section to list in per page
- *     responses: 
+ *     responses:
  *       '200':
  *         description: Success
- *       '201':
- *         description: Created
  *       '400':
  *         description: Bad Request
  *       '500':
  *         description: Server Error
- */ 
+ */

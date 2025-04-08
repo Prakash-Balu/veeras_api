@@ -5,17 +5,8 @@ module.exports = function (mongoose, constants) {
   const Schema = mongoose.Schema;
   const ObjectId = Schema.ObjectId;
 
-    const schema = new Schema(
+    const classRoomSchema = new Schema(
     {
-      displayType: {
-        type: String,
-        enum: [
-            "type1",
-            "type2",
-            "type3",
-          ],
-        required: true,
-      },
       subject: {
         type: String,
         default:null
@@ -26,6 +17,10 @@ module.exports = function (mongoose, constants) {
         ref: "Segment_new",
         require: true,
       },
+      video_url: {
+        type: String,
+        required: false
+      },
       slug_url: {
         type: String,
         required: false
@@ -34,22 +29,6 @@ module.exports = function (mongoose, constants) {
         type: Boolean,
         default:false
       },
-      practices: [
-      {
-        questionInEnglish: {
-          type: String,
-          required: true,
-        },
-        questionInTamil: {
-          type: String,
-          required: true,
-        },  
-        answer:{
-            type: String,
-            required: true,
-        }
-    }
-    ],
       isDeleted: {
         type: String,
         default: false,
@@ -61,5 +40,5 @@ module.exports = function (mongoose, constants) {
     }
   );
 
-  return mongoose.model("selfPractice_new", schema);
+  return mongoose.model("classRoom_new", classRoomSchema);
 };

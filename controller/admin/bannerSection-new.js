@@ -19,8 +19,11 @@ module.exports = function (mongoose, utils, constants) {
           "Already this banner name is exists, try different name"
         );
       }
+      const slugTitle = utils.slug(name);
+
       const createBanner = await BannerSection.create({
         name,
+        slug_url : slugTitle,
         motivationalDescription,
         videoUrl,
       });
@@ -34,7 +37,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updateBanner = async (req, res) => {
     try {
-      const { id, motivationalDescription, videoUrl, status } = req.body;
+      const { id, motivationalDescription,slug_url, videoUrl, status } = req.body;
 
       const banner = await BannerSection.findOne({ _id: id });
 
@@ -55,6 +58,7 @@ module.exports = function (mongoose, utils, constants) {
             motivationalDescription,
             videoUrl,
             status,
+            slug_url
           },
         },
         { new: true }

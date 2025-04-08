@@ -1,16 +1,16 @@
 /**
  * @swagger
  * tags:
- *   - name: PracticeWithMaster
- *     description: PracticeWithMaster management APIs
+ *   - name: Classroom
+ *     description: Classroom management APIs
  */
 
 /**
  * @swagger
- * /practicewithmaster/addPractice:
+ * /classroom/add:
  *   post:
  *     tags:
- *       - PracticeWithMaster
+ *       - Classroom
  *     security:
  *       - BearerAuth: []
  *     requestBody:
@@ -20,32 +20,15 @@
  *           schema:
  *             type: object
  *             properties:
- *               name:
- *                 type: string
- *               description:
+ *               segmentId:
  *                 type: string
  *               subject:
  *                 type: string
- *               segmentId:
- *                 type: string
- *               videoUrl:
- *                 type: string
- *               shorts:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     shortUrl:
- *                       type: string
- *                     question:
- *                       type: string
- *                     answer:
- *                       type: string
+ *               video_url:
+ *                type: string
  *             required:
- *               - name
- *               - description
- *               - videoUrl
- *               - short
+ *               - subject
+ *               - segmentId
  *     responses:
  *       '200':
  *         description: Success
@@ -57,10 +40,10 @@
 
 /**
  * @swagger
- * /practicewithmaster/updatePractice:
+ * /classroom/update:
  *   put:
  *     tags:
- *       - PracticeWithMaster
+ *       - Classroom
  *     requestBody:
  *       required: true
  *       content:
@@ -70,31 +53,16 @@
  *             properties:
  *               id:
  *                 type: string
- *               description:
- *                 type: string
  *               segmentId:
  *                 type: string
  *               subject:
  *                 type: string
- *               videoUrl:
- *                 type: string
- *               status:
- *                 type: string
  *               isSubject:
  *                 type: string
- *               shorts:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     id:
- *                       type: string
- *                     shortUrl:
- *                       type: string
- *                     question:
- *                       type: string
- *                     answer:
- *                       type: string
+ *               video_url:
+ *                 type: string
+ *               slug_url:
+ *                 type: string
  *     responses:
  *       '200':
  *         description: Success
@@ -106,10 +74,10 @@
 
 /**
  * @swagger
- * /practicewithmaster/deletePractice:
+ * /classroom/delete:
  *   delete:
  *     tags:
- *       - PracticeWithMaster
+ *       - Classroom
  *     requestBody:
  *       required: true
  *       content:
@@ -132,15 +100,15 @@
 
 /**
  * @swagger
- * /practicewithmaster/getPractice/{id}:
+ * /classroom/get/{id}:
  *   get:
  *     tags:
- *       - PracticeWithMaster
+ *       - Classroom
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: The ID of the specific practice to retrieve
+ *         description: The ID of the specific Classroom to retrieve
  *         schema:
  *           type: string
  *     responses:
@@ -154,10 +122,10 @@
 
 /**
  * @swagger
- * /practicewithmaster/listPractices:
+ * /classroom/lists:
  *   get:
  *     tags:
- *       - PracticeWithMaster
+ *       - Classroom
  *     parameters:
  *       - in: query
  *         name: skip
@@ -170,13 +138,7 @@
  *         schema:
  *           type: integer
  *         required: false
- *         description: Number of practice with master to list in per page
- *       - in: query
- *         name: status
- *         required: false
- *         description: Get list by status ("active", "inActive", "deleted")
- *         schema:
- *           type: string
+ *         description: Number of class room list in per page
  *     responses:
  *       '200':
  *         description: Success
