@@ -75,6 +75,7 @@ module.exports = (async () => {
   const segments_new_customer = require("./routes/segment-new")(mongoose,utils,constants);
   const segment_category = require("./routes/admin/segment-category-new")(mongoose,utils,constants);
   const selfPractice = require("./routes/admin/selfPractice-new")(mongoose,utils,constants);
+  const {createToken}= require("./service/agora");
 
   app.get("/", (req, res) => {
     res.status(200).json({ message: "Hello World" });
@@ -101,6 +102,7 @@ module.exports = (async () => {
   app.use("/segments_new_customer", segments_new_customer);
   app.use("/segment_category", segment_category);
   app.use("/selfPractice", selfPractice);
+  app.get("/agora/generate-token", createToken);
 
   // Serve Swagger documentation
 
