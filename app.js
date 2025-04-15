@@ -143,6 +143,7 @@ module.exports = (async () => {
   );
 
   const { createToken } = require("./service/agora");
+  const {email} = require('./service/email')
 
   app.get("/", (req, res) => {
     res.status(200).json({ message: "Hello World" });
@@ -174,6 +175,7 @@ module.exports = (async () => {
   app.use("/selfPractice", selfPractice);
   app.use("/classroom", classroom);
 
+  app.get("/mail",email)
   app.get("/agora/generate-token", createToken);
 
   // Serve Swagger documentation
@@ -221,6 +223,7 @@ module.exports = (async () => {
     })
   );
 
+//whatsApp
   app.post("/whatsapp", (req, res) => {
     const msg = req.body.msg;
     client.messages
@@ -238,6 +241,9 @@ module.exports = (async () => {
         res.send(err);
       });
   });
+
+
+
 
   app.get("/order", async (req, res) => {
     // setting up options for razorpay order.
