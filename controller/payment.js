@@ -1,9 +1,5 @@
 "use strict";
 
-const { exist } = require("joi");
-const user = require("./user");
-const payment = require("../models/payment");
-
 module.exports = function (mongoose, utils, constants) {
   const moment = require("moment");
   const Payment = mongoose.model("Payment");
@@ -157,7 +153,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.createPaymentLinkNew = async (req, res) => {
     try {
-      const { phoneCode,email, phone,currencyCode, planId, amount, referralId } = req.body;
+      const { phoneCode, phone,currencyCode, planId, amount, referralId } = req.body;
 console.log("reqBody",req.body);
 
       const existPlan = await Plan.findOne({ _id: planId });
@@ -193,7 +189,7 @@ console.log("reqBody",req.body);
           contact: phone, // Default phone number
           name:"test"
         },
-        callback_url: `${process.env.API_URL}/payment/callback`,
+        callback_url: `${process.env.API_URL}/payment/callbacknew`,
       };
       console.log("razorPaymentObj",razorPaymentObj);
       
@@ -205,7 +201,7 @@ console.log("reqBody",req.body);
       const paymentObj = {
         phoneCode,
         phone,
-        email,
+        // email,
         referralId,
         planId,
         amount,
@@ -214,7 +210,7 @@ console.log("reqBody",req.body);
         paymentLinkId: paymentLinkResp.id,
         paymentShortLink: paymentLinkResp.short_url,
       };
-      await Payment.create(paymentObj);
+      await PaymentNew.create(paymentObj);
       console.log("payment",paymentObj);
       
       return utils.sendResponseNew(
@@ -240,11 +236,15 @@ console.log("reqBody",req.body);
         razorpay_payment_link_status,
         razorpay_signature,
       } = req.query;
+
+      console.log("query",req.query);
+      console.log("razorpay_payment_link_id",razorpay_payment_link_id);
+      
       const checkPayment = await PaymentNew.findOne({
         paymentLinkId: razorpay_payment_link_id,
         status: constants.paymentStatus.PROCESSING,
       })
-        .populate("planId")
+        // .populate("planId")
         .lean();
       if (!checkPayment) {
         return utils.sendErrorNew(
@@ -266,11 +266,16 @@ console.log("reqBody",req.body);
       if (razorpay_payment_link_status === "paid") {
 
         const userObj = {
-          phoneCode:checkPayment.phone,
+          phoneCode:checkPayment.phoneCode,
           phone: checkPayment.phone, 
           isVerified: true
       }
+
+      console.log("userObj",userObj);
+      
       const newUser = await User.create(userObj);
+      console.log("newUser",newUser);
+      
 
         const subscriptionObj = {
           userId: newUser._id,

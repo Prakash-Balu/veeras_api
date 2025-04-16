@@ -11,7 +11,7 @@ module.exports = (mongoose, utils, constants) => {
   router.get('/callback', controller.razorpayCallback);
 
   router.post('/createnew',  controller.createPaymentLinkNew);
-  router.get('/callback', controller.razorpayCallbackNew);
+  router.get('/callbacknew', controller.razorpayCallbackNew);
 
   return router;
 }
