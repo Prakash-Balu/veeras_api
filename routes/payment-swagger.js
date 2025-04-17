@@ -58,6 +58,8 @@
  *                 type: string
  *               phone:
  *                 type: string
+ *               email:
+ *                 type: string
  *               currencyCode:
  *                 type: string    
  *               planId:

@@ -14,6 +14,9 @@ module.exports = function (mongoose, constants) {
         type: String,
         required: true,
       },
+      name:{
+        type:String
+      },
       email: {
         type: String,
       },
@@ -23,7 +26,7 @@ module.exports = function (mongoose, constants) {
       },
       planId: {
         type: ObjectId,
-        ref: "Plan",
+        ref: "plans",
         require: true,
       },
       amount: {

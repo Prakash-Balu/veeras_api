@@ -47,6 +47,7 @@ module.exports = (async () => {
   );
   app.use("/", express.static(path.join(__dirname, "public")));
 
+
   require("./cron")(mongoose, utils, constants);
   require("./seed/category_seed")(mongoose, utils, constants);
   const auth = require("./routes/auth")(mongoose, utils, pusher, constants);
@@ -241,8 +242,6 @@ module.exports = (async () => {
         res.send(err);
       });
   });
-
-
 
 
   app.get("/order", async (req, res) => {

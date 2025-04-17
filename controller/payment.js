@@ -6,9 +6,11 @@ module.exports = function (mongoose, utils, constants) {
   const Subscription = mongoose.model("Subscription");
   const UserProfile = mongoose.model("user_profiles");
   const PaymentNew = mongoose.model("Payment_new");
-  const Plan = mongoose.model("plan_details");
+  const PlanDetails = mongoose.model("plan_details");
+  const Plan = mongoose.model("plans");
   const User = mongoose.model("User");
   const razorService = require("../service/razorpay")();
+  const { generateEmailTemplate } = require("../service/template");
   const { IPinfoWrapper } = require("node-ipinfo");
   const ctrl = {};
 
@@ -153,24 +155,27 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.createPaymentLinkNew = async (req, res) => {
     try {
-      const { phoneCode, phone,currencyCode, planId, amount, referralId } = req.body;
-console.log("reqBody",req.body);
+      const {
+        phoneCode,
+        phone,
+        currencyCode,
+        name,
+        email,
+        planId,
+        amount,
+        referralId,
+      } = req.body;
 
       const existPlan = await Plan.findOne({ _id: planId });
       if (!existPlan) {
         return utils.sendErrorNew(req, res, "BAD_REQUEST", "Plan not found");
       }
 
-
-      console.log("existPlan",existPlan);
-      
-
       const isPaymentExists = await PaymentNew.findOne({
         phone,
-        planId, 
+        planId,
       });
-      console.log("isPaymentExists",isPaymentExists);
-      
+
       if (isPaymentExists) {
         return utils.sendResponseNew(
           req,
@@ -186,22 +191,21 @@ console.log("reqBody",req.body);
         accept_partial: false,
         reminder_enable: true,
         customer: {
-          contact: phone, // Default phone number
-          name:"test"
+          contact: phone,
+          name: "test",
         },
         callback_url: `${process.env.API_URL}/payment/callbacknew`,
       };
-      console.log("razorPaymentObj",razorPaymentObj);
-      
+
       const paymentLinkResp = await razorService.createPaymentLink(
         razorPaymentObj
       );
-      console.log("paymentLinkResp",paymentLinkResp);
-      
+
       const paymentObj = {
         phoneCode,
         phone,
-        // email,
+        name,
+        email,
         referralId,
         planId,
         amount,
@@ -211,8 +215,7 @@ console.log("reqBody",req.body);
         paymentShortLink: paymentLinkResp.short_url,
       };
       await PaymentNew.create(paymentObj);
-      console.log("payment",paymentObj);
-      
+
       return utils.sendResponseNew(
         req,
         res,
@@ -237,15 +240,13 @@ console.log("reqBody",req.body);
         razorpay_signature,
       } = req.query;
 
-      console.log("query",req.query);
-      console.log("razorpay_payment_link_id",razorpay_payment_link_id);
-      
       const checkPayment = await PaymentNew.findOne({
         paymentLinkId: razorpay_payment_link_id,
         status: constants.paymentStatus.PROCESSING,
       })
-        // .populate("planId")
+        .populate("planId")
         .lean();
+
       if (!checkPayment) {
         return utils.sendErrorNew(
           req,
@@ -262,20 +263,21 @@ console.log("reqBody",req.body);
             ? constants.paymentStatus.SUCCESS
             : constants.paymentStatus.FAILED,
       };
-      await Payment.updateOne({ _id: checkPayment._id }, { $set: updateObj });
+      await PaymentNew.updateOne(
+        { _id: checkPayment._id },
+        { $set: updateObj }
+      );
       if (razorpay_payment_link_status === "paid") {
-
         const userObj = {
-          phoneCode:checkPayment.phoneCode,
-          phone: checkPayment.phone, 
-          isVerified: true
-      }
+          phoneCode: checkPayment.phoneCode,
+          phone: checkPayment.phone,
+          isVerified: true,
+        };
 
-      console.log("userObj",userObj);
-      
-      const newUser = await User.create(userObj);
-      console.log("newUser",newUser);
-      
+        //User creation
+        const newUser = await User.create(userObj);
+
+        //subscription creation
 
         const subscriptionObj = {
           userId: newUser._id,
@@ -285,9 +287,14 @@ console.log("reqBody",req.body);
           expiresAt: moment().add(checkPayment.duration, "months"),
         };
         await Subscription.create(subscriptionObj);
-   
-    
-        res.redirect(301, process.env.UI_URL + "/payment-success");
+
+        const emailContent = generateEmailTemplate(
+          checkPayment.name,
+          checkPayment.email,
+          checkPayment.phone
+        );
+        // res.send(emailContent);
+         res.redirect(301, process.env.UI_URL + "/payment-success");
       } else {
         res.redirect(301, process.env.UI_URL + "/payment-failure");
       }
@@ -315,24 +322,23 @@ console.log("reqBody",req.body);
   return ctrl;
 };
 // if (existPlan.amount !== amount) {
-      //   return utils.sendErrorNew(
-      //     req,
-      //     res,
-      //     "BAD_REQUEST",
-      //     "Amount not matched with plan amount"
-      //   );
-      // }
+//   return utils.sendErrorNew(
+//     req,
+//     res,
+//     "BAD_REQUEST",
+//     "Amount not matched with plan amount"
+//   );
+// }
 
+// if (referralId) {
+//   const existReferral = await User.findOne({ _id: referralId});
+//   if (!existReferral) {
+//     return utils.sendErrorNew(
+//       req,
+//       res,
+//       "BAD_REQUEST",
+//       "Referral not found"
+//     );
+//   }
 
-      // if (referralId) {
-      //   const existReferral = await User.findOne({ _id: referralId});
-      //   if (!existReferral) {
-      //     return utils.sendErrorNew(
-      //       req,
-      //       res,
-      //       "BAD_REQUEST",
-      //       "Referral not found"
-      //     );
-      //   } 
-        
-      // }
+// }
