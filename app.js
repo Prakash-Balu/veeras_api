@@ -11,6 +11,9 @@ const client = require("twilio")(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN
 );
+const {generateEmailTemplate} = require("./service/template");
+
+
 
 const swaggerUi = require("swagger-ui-express");
 // const swaggerSpec = require('./configs/swaggerConfig');
@@ -46,6 +49,19 @@ module.exports = (async () => {
     })
   );
   app.use("/", express.static(path.join(__dirname, "public")));
+
+  app.get("/test-email", (req, res) => {
+    const html = generateEmailTemplate(
+      "Kumar",               
+      "kumar@example.com",        
+      "9876543210",
+      "tamilnadu",                 
+      "Yearly Plan",          
+      12000                 
+    );
+    res.send(html); 
+  });
+
 
 
   require("./cron")(mongoose, utils, constants);

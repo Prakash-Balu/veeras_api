@@ -201,6 +201,15 @@ module.exports = function (mongoose, utils, constants) {
         razorPaymentObj
       );
 
+      const TOKEN = process.env.IPINFO_TOKEN;
+      const ipinfo = new IPinfoWrapper(TOKEN);
+      let ipAddress =
+        req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+      ipAddress = ipAddress.split(",")[0].trim();
+      ipAddress = "115.240.90.163";
+      const info = await ipinfo.lookupIp(ipAddress);
+      console.log("info", info);
+
       const paymentObj = {
         phoneCode,
         phone,
@@ -210,10 +219,15 @@ module.exports = function (mongoose, utils, constants) {
         planId,
         amount,
         currencyCode,
+        state: info.region || null,
+        country: info.country || null,
         expireIn: moment().add(15, "minutes"),
         paymentLinkId: paymentLinkResp.id,
         paymentShortLink: paymentLinkResp.short_url,
       };
+
+      console.log("paymentObj", paymentObj);
+
       await PaymentNew.create(paymentObj);
 
       return utils.sendResponseNew(
@@ -246,6 +260,8 @@ module.exports = function (mongoose, utils, constants) {
       })
         .populate("planId")
         .lean();
+      console.log("checkPayment", checkPayment);
+      console.log("planId", checkPayment.planId.name);
 
       if (!checkPayment) {
         return utils.sendErrorNew(
@@ -291,10 +307,13 @@ module.exports = function (mongoose, utils, constants) {
         const emailContent = generateEmailTemplate(
           checkPayment.name,
           checkPayment.email,
-          checkPayment.phone
+          checkPayment.phone,
+          checkPayment.state,
+          checkPayment.planId.name,
+          checkPayment.amount
         );
-        // res.send(emailContent);
-         res.redirect(301, process.env.UI_URL + "/payment-success");
+        res.send(emailContent);
+        // res.redirect(301, process.env.UI_URL + "/payment-success");
       } else {
         res.redirect(301, process.env.UI_URL + "/payment-failure");
       }
@@ -312,7 +331,10 @@ module.exports = function (mongoose, utils, constants) {
         req.headers["x-forwarded-for"] || req.connection.remoteAddress;
       ipAddress = ipAddress.split(",")[0].trim();
       // ipAddress = "115.240.90.163";
+
       const info = await ipinfo.lookupIp(ipAddress);
+      console.log("info", info);
+
       return utils.sendResponseNew(req, res, "OK", "SUCCESS", info);
     } catch (err) {
       return utils.sendErrorNew(req, res, "BAD_REQUEST", err.message);

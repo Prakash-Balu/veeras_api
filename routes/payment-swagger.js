@@ -58,6 +58,8 @@
  *                 type: string
  *               phone:
  *                 type: string
+ *               name:
+ *                 type: string
  *               email:
  *                 type: string
  *               currencyCode:

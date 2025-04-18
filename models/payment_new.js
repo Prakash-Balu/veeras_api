@@ -33,6 +33,12 @@ module.exports = function (mongoose, constants) {
         type: Number,
         required: true,
       },
+      state: {
+        type: String
+      },
+      country: {
+        type: String
+      },
       referralId: {
         type: ObjectId,
         ref: "User",
