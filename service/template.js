@@ -3,15 +3,10 @@ const convert = require("number-to-words");
 const fs = require("fs");
 const path = require("path");
 
+
+
 const generateEmailTemplate =  (
-  customerName,
-  email,
-  phone,
-  address,
-  plan,
-  amount,
-  discount
-) => {
+  { name, email, phone, address, plan, amount, discount }) => {
   const templatePath = path.join(__dirname, "../template/email-template.hbs");
   const templateSource = fs.readFileSync(templatePath, "utf-8");
 
@@ -31,12 +26,14 @@ const generateEmailTemplate =  (
   } else {
     igst = +(total * 0.18).toFixed(2);
   }
-
+  const now = new Date();
+  const date = now.toString().split(' GMT')[0]
+  
   const totalamount = (total + sgst + cgst + igst).toFixed(2);
   const amount_in_word = convert.toWords(Math.floor(totalamount));
 
   const context = {
-    customerName: customerName || "user",
+    customerName: name || "user",
     email: email || "-",
     phone: phone || "-",
     address: address || "-",
@@ -51,9 +48,14 @@ const generateEmailTemplate =  (
     cgst,
     igst,
     amount_in_words: amount_in_word,
+    date: date
   };
 
-  return template(context);
+  const content =  template(context);
+  return {
+    content,context
+  };
+
 };
 
 module.exports = {

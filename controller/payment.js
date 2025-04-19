@@ -11,6 +11,8 @@ module.exports = function (mongoose, utils, constants) {
   const User = mongoose.model("User");
   const razorService = require("../service/razorpay")();
   const { generateEmailTemplate } = require("../service/template");
+  const { generatePDF } = require("../service/pdfGenerator");
+  const {email} = require('../service/email')
   const { IPinfoWrapper } = require("node-ipinfo");
   const ctrl = {};
 
@@ -260,8 +262,6 @@ module.exports = function (mongoose, utils, constants) {
       })
         .populate("planId")
         .lean();
-      console.log("checkPayment", checkPayment);
-      console.log("planId", checkPayment.planId.name);
 
       if (!checkPayment) {
         return utils.sendErrorNew(
@@ -271,7 +271,7 @@ module.exports = function (mongoose, utils, constants) {
           "Payment Link id not found"
         );
       }
-      const updateObj = {
+      let updateObj = {
         paymentId: razorpay_payment_id,
         paymentSignature: razorpay_signature,
         status:
@@ -279,10 +279,12 @@ module.exports = function (mongoose, utils, constants) {
             ? constants.paymentStatus.SUCCESS
             : constants.paymentStatus.FAILED,
       };
+
       await PaymentNew.updateOne(
         { _id: checkPayment._id },
         { $set: updateObj }
       );
+
       if (razorpay_payment_link_status === "paid") {
         const userObj = {
           phoneCode: checkPayment.phoneCode,
@@ -304,16 +306,42 @@ module.exports = function (mongoose, utils, constants) {
         };
         await Subscription.create(subscriptionObj);
 
-        const emailContent = generateEmailTemplate(
-          checkPayment.name,
-          checkPayment.email,
-          checkPayment.phone,
-          checkPayment.state,
-          checkPayment.planId.name,
-          checkPayment.amount
+        const contentObj = {
+          name: checkPayment.name,
+          email: checkPayment.email,
+          phone: checkPayment.phone,
+          address: checkPayment.state,
+          planName: checkPayment.planId.name,
+          amount: checkPayment.amount,
+        };
+
+        const emailContent = generateEmailTemplate(contentObj);
+
+        const filePath = await generatePDF(
+          emailContent.content,
+          `invoice${checkPayment.phone}`
         );
-        res.send(emailContent);
-        // res.redirect(301, process.env.UI_URL + "/payment-success");
+        console.log("filePath", filePath);
+
+        const publicUrl = `${process.env.LOCAL_IP}/invoices/invoice${checkPayment.phone}.pdf`;
+
+        console.log(emailContent.context);
+
+        updateObj = {
+          invoiceUrl: publicUrl,
+          amount: emailContent.context.totalamount,
+        };
+
+        console.log("updateObj", updateObj);
+
+        await PaymentNew.updateOne(
+          { _id: checkPayment._id },
+          { $set: updateObj }
+        );
+
+        await email(contentObj.email, contentObj.name, filePath)
+        // res.send(emailContent.content);
+        res.redirect(301, process.env.UI_URL + "/payment-success");
       } else {
         res.redirect(301, process.env.UI_URL + "/payment-failure");
       }

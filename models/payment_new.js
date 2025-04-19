@@ -1,5 +1,7 @@
 "use strict";
 
+const { required } = require("joi");
+
 module.exports = function (mongoose, constants) {
   const Schema = mongoose.Schema;
   const ObjectId = Schema.ObjectId;
@@ -42,11 +44,15 @@ module.exports = function (mongoose, constants) {
       referralId: {
         type: ObjectId,
         ref: "User",
-        require: false,
+        required: false,
       },
       expireIn: {
         type: Date,
         requied: true
+      },
+      invoiceUrl:{
+        type: String,
+        required: false
       },
       paymentLinkId: {
         type: String,

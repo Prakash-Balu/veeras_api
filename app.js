@@ -48,20 +48,23 @@ module.exports = (async () => {
       credentials: true,
     })
   );
-  app.use("/", express.static(path.join(__dirname, "public")));
+  app.use("/", express.static(path.join(__dirname, "public","invoices")));
+  app.use("/invoices", express.static(path.join(__dirname, "public/invoices")));
+
 
   app.get("/test-email", (req, res) => {
-    const html = generateEmailTemplate(
-      "Kumar",               
-      "kumar@example.com",        
-      "9876543210",
-      "tamilnadu",                 
-      "Yearly Plan",          
-      12000                 
-    );
-    res.send(html); 
-  });
 
+    const contentObj = {
+      name:"Kumar",
+      email: "kumar@example.com",
+      phone: "9876547777",
+      address: "tamil nadu",
+      plan: "Yearly Plan",
+      amount: 29000  ,
+    };
+    const html = generateEmailTemplate(contentObj);
+    res.send(html.content); 
+  });
 
 
   require("./cron")(mongoose, utils, constants);
@@ -243,10 +246,13 @@ module.exports = (async () => {
 //whatsApp
   app.post("/whatsapp", (req, res) => {
     const msg = req.body.msg;
+    const to = "+91995265649";
+    console.log("msg", msg);
+    
     client.messages
       .create({
         from: "whatsapp:+14155238886",
-        to: "whatsapp:+919750989497",
+        to: "whatsapp:" + to,
         body: msg,
         mediaUrl: [
           "https://thumbs.dreamstime.com/b/welcome-word-blue-circles-white-93627727.jpg",
