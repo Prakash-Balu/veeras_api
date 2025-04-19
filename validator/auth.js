@@ -109,6 +109,7 @@ module.exports = function (utils) {
       name: Joi.string().optional(),
       description: Joi.string().optional(),
       subject: Joi.string().allow(null).optional(),
+      status: Joi.string().optional(),
       isSubject: Joi.string().allow(null).optional(),
       slug_url: Joi.string().allow(null).optional(),
       segmentId: Joi.string()

@@ -12,7 +12,7 @@ module.exports = function (mongoose, utils, constants) {
   const razorService = require("../service/razorpay")();
   const { generateEmailTemplate } = require("../service/template");
   const { generatePDF } = require("../service/pdfGenerator");
-  const {email} = require('../service/email')
+  const { email } = require("../service/email");
   const { IPinfoWrapper } = require("node-ipinfo");
   const ctrl = {};
 
@@ -208,7 +208,11 @@ module.exports = function (mongoose, utils, constants) {
       let ipAddress =
         req.headers["x-forwarded-for"] || req.connection.remoteAddress;
       ipAddress = ipAddress.split(",")[0].trim();
-      ipAddress = "115.240.90.163";
+      //other tamilnaduip
+      // ipAddress = "115.240.90.163";
+
+      //inner tamilnaduip
+      ipAddress = "103.26.110.153";
       const info = await ipinfo.lookupIp(ipAddress);
       console.log("info", info);
 
@@ -311,7 +315,7 @@ module.exports = function (mongoose, utils, constants) {
           email: checkPayment.email,
           phone: checkPayment.phone,
           address: checkPayment.state,
-          planName: checkPayment.planId.name,
+          plan: checkPayment.planId.name,
           amount: checkPayment.amount,
         };
 
@@ -339,7 +343,7 @@ module.exports = function (mongoose, utils, constants) {
           { $set: updateObj }
         );
 
-        await email(contentObj.email, contentObj.name, filePath)
+        await email(contentObj.email, contentObj.name, filePath);
         // res.send(emailContent.content);
         res.redirect(301, process.env.UI_URL + "/payment-success");
       } else {

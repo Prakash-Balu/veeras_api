@@ -11,12 +11,12 @@ module.exports = function (mongoose, utils, constants) {
       
     try {
       const { id } = req.params;
-      const { _id: userId } = req.userInfo;
+      // const { _id: userId } = req.userInfo;
 
-      const user = await User.findOne({ _id: userId });
-      if (!user) {
-        return utils.sendErrorNew(req, res, "BAD_REQUEST", "User not found");
-      }
+      // const user = await User.findOne({ _id: userId });
+      // if (!user) {
+      //   return utils.sendErrorNew(req, res, "BAD_REQUEST", "User not found");
+      // }
 
       const getPractice = await PracticeWithMaster.findOne({
         _id: id,
@@ -28,7 +28,7 @@ module.exports = function (mongoose, utils, constants) {
         return utils.sendErrorNew(req, res, "BAD_REQUEST", "No practice found");
       }
 
-      const watchedHistory = await Pwm_watchedhistory.find({ userId })
+      const watchedHistory = await Pwm_watchedhistory.find({ })
       .select("practiceWithMasterId shortId")
       .lean();
 

@@ -19,15 +19,16 @@ module.exports = (mongoose, utils, constants) => {
     validator.updateSegment,
     controller.updateSegment
   );
-  router.put(
-    "/deleteSegment",
-    controller.deleteSegment
-  );
   router.get(
     "/listSegments",
     controller.listSegment
   );
   router.get("/:id", controller.getById);
+
+  // router.put(
+  //   "/deleteSegment",
+  //   controller.deleteSegment
+  // );
 
   return router;
 };

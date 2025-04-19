@@ -46,12 +46,11 @@ module.exports = function (mongoose, utils, constants) {
 
   segmentsCtrl.updateSegment = async (req, res) => {
     try {
-      const { id, title,slug_url, category, status } = req.body;
+      const { id, title, category, status } = req.body;
 
       const existingSegment = await Segment.findOne({
         _id: id
       });
-
 
       if (!existingSegment) {
         return utils.sendErrorNew(req, res, "BAD_REQUEST", "Segment Not Found");
@@ -69,11 +68,21 @@ module.exports = function (mongoose, utils, constants) {
             "Segment Category Not Found"
           );
         }
-
       }
+
+      let updateObj = {
+        category: category, 
+        status: status,
+      };
+
+      if(title){
+        updateObj.title = title;
+         updateObj.slug_url = utils.slug(title);
+      }
+
       const result = await Segment.findByIdAndUpdate(
         id,
-        { title, category, status,slug_url},
+        { $set: updateObj },
         { new: true }
       );
 
@@ -84,27 +93,7 @@ module.exports = function (mongoose, utils, constants) {
     }
   };
 
-  segmentsCtrl.deleteSegment = async (req, res) => {
-    try {
-      const { id } = req.body;
-      const segment = await Segment.findOne({
-        _id: id,
-        status: "active",
-      }).lean();
-
-      if (!segment) {
-        return utils.sendErrorNew(req, res, "BAD_REQUEST", "Segment Not Found");
-      }
-
-      await Segment.updateOne({ _id: id }, { $set: { status: "inActive" } });
-
-      return utils.sendResponseNew(req, res, "OK", "Deleted Successfully");
-    } catch (err) {
-      console.log(err);
-      return utils.sendErrorNew(req, res, "BAD_REQUEST", err.message);
-    }
-  };
-
+ 
   segmentsCtrl.listSegment = async (req, res) => {
     try {
       const { skip, limit } = req.query;
@@ -151,6 +140,28 @@ module.exports = function (mongoose, utils, constants) {
       return utils.sendErrorNew(req, res, "BAD_REQUEST", err.message);
     }
   };
+
+
+  // segmentsCtrl.deleteSegment = async (req, res) => {
+  //   try {
+  //     const { id } = req.body;
+  //     const segment = await Segment.findOne({
+  //       _id: id,
+  //       status: "active",
+  //     }).lean();
+
+  //     if (!segment) {
+  //       return utils.sendErrorNew(req, res, "BAD_REQUEST", "Segment Not Found");
+  //     }
+
+  //     await Segment.updateOne({ _id: id }, { $set: { status: "inActive" } });
+
+  //     return utils.sendResponseNew(req, res, "OK", "Deleted Successfully");
+  //   } catch (err) {
+  //     console.log(err);
+  //     return utils.sendErrorNew(req, res, "BAD_REQUEST", err.message);
+  //   }
+  // };
 
 
   return segmentsCtrl;

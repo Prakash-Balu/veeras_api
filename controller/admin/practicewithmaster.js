@@ -69,8 +69,7 @@ module.exports = function (mongoose, utils, constants) {
       } = req.body;
 
       const practice = await PracticeWithMaster.findOne({
-        _id: id,
-        status: "active",
+        _id: id
       });
       if (!practice) {
         return utils.sendErrorNew(
@@ -83,7 +82,7 @@ module.exports = function (mongoose, utils, constants) {
 
       // Update practice details
       const updatedPractice = await PracticeWithMaster.findOneAndUpdate(
-        { _id: id, status: "active" },
+        { _id: id, },
         {
           $set: {
             segmentId,
@@ -114,7 +113,7 @@ module.exports = function (mongoose, utils, constants) {
         status: "active",
       }).lean();
       if (!getPractice) {
-        return utils.sendErrorNew(req, res, "BAD_REQUEST", "Message Not Found");
+        return utils.sendErrorNew(req, res, "BAD_REQUEST","Not Found");
       }
 
       await PracticeWithMaster.updateOne(
@@ -126,7 +125,7 @@ module.exports = function (mongoose, utils, constants) {
         req,
         res,
         "OK",
-        "Message Deleted Successfully"
+        "Deleted Successfully"
       );
     } catch (err) {
       console.log(err);

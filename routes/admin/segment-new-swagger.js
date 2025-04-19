@@ -100,24 +100,19 @@
  *         description: Server Error
  */
 
-
 /**
  * @swagger
- * /segments_new/deleteSegment:
- *  put:
+ * /segments_new/{id}:
+ *   get:
  *     tags:
- *       -  Segments - new
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               id:
- *                 type: string
- *             required:
- *               - _id
+ *       - Segments - new
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the specific segment to retrieve
+ *         schema:
+ *           type: string
  *     responses:
  *       '200':
  *         description: Success
@@ -126,3 +121,31 @@
  *       '500':
  *         description: Server Error
  */
+
+
+
+// /**
+//  * @swagger
+//  * /segments_new/deleteSegment:
+//  *  put:
+//  *     tags:
+//  *       -  Segments - new
+//  *     requestBody:
+//  *       required: true
+//  *       content:
+//  *         application/json:
+//  *           schema:
+//  *             type: object
+//  *             properties:
+//  *               id:
+//  *                 type: string
+//  *             required:
+//  *               - _id
+//  *     responses:
+//  *       '200':
+//  *         description: Success
+//  *       '400':
+//  *         description: Bad Request
+//  *       '500':
+//  *         description: Server Error
+//  */
