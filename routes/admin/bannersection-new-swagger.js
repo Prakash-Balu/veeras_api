@@ -54,6 +54,8 @@
  *             properties:
  *               id:
  *                 type: string
+ *               name:
+ *                 type: string
  *               motivationalDescription:
  *                 type: string
  *               videoUrl:

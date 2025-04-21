@@ -26,7 +26,10 @@
  *               segmentId:
  *                 type: string
  *               subject:
- *                type: string  
+ *                 type: string  
+ *               isSubject:
+ *                 type: boolean
+ *                 example: true or false   
  *               practices:
  *                 type: array 
  *                 items: 
@@ -73,7 +76,8 @@
  *               subject:
  *                type: string  
  *               isSubject:
- *                type: string  
+ *                type: boolean
+ *                example: true or false  
  *               practices:
  *                 type: array 
  *                 items: 

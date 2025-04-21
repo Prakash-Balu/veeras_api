@@ -90,7 +90,7 @@ module.exports = function (mongoose, utils, constants) {
     } catch (err) {
       console.log(err);
       return utils.sendErrorNew(req, res, "BAD_REQUEST", err.message);
-    }
+    } 
   };
 
  

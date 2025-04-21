@@ -208,10 +208,10 @@ module.exports = function (mongoose, utils, constants) {
       let ipAddress =
         req.headers["x-forwarded-for"] || req.connection.remoteAddress;
       ipAddress = ipAddress.split(",")[0].trim();
-      //other tamilnaduip
+      //other tamilnadu-ip
       // ipAddress = "115.240.90.163";
 
-      //inner tamilnaduip
+      //inner tamilnadu-ip
       ipAddress = "103.26.110.153";
       const info = await ipinfo.lookupIp(ipAddress);
       console.log("info", info);

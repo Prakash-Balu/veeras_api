@@ -30,6 +30,9 @@
  *                 type: string
  *               videoUrl:
  *                 type: string
+ *               isSubject:
+ *                 type: boolean
+ *                 example: true or false
  *               shorts:
  *                 type: array
  *                 items:
@@ -70,6 +73,8 @@
  *             properties:
  *               id:
  *                 type: string
+ *               name:
+ *                 type: string
  *               description:
  *                 type: string
  *               segmentId:
@@ -81,7 +86,8 @@
  *               status:
  *                 type: string
  *               isSubject:
- *                 type: string
+ *                 type: boolean
+ *                 example: true or false
  *               shorts:
  *                 type: array
  *                 items:

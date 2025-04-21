@@ -76,6 +76,7 @@ module.exports = function (utils) {
       name: Joi.string().required(),
       description: Joi.string().optional(),
       subject: Joi.string().allow(null).optional(),
+      isSubject: Joi.string().optional(),
       segmentId: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/)
         .required()
@@ -104,7 +105,7 @@ module.exports = function (utils) {
     const schema = Joi.object({
       id: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/)
-        .optional()
+        .required()
         .error(() => Error("Invalid ID")),
       name: Joi.string().optional(),
       description: Joi.string().optional(),
@@ -125,9 +126,13 @@ module.exports = function (utils) {
       shorts: Joi.array()
         .items(
           Joi.object({
-            shortUrl: Joi.string().uri().required(),
-            question: Joi.string().required(),
-            answer: Joi.string().required(),
+            id: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .optional()
+        .error(() => Error("Invalid ID")),
+            shortUrl: Joi.string().uri().optional(),
+            question: Joi.string().optional(),
+            answer: Joi.string().optional(),
           })
         )
         .optional()
@@ -220,6 +225,7 @@ module.exports = function (utils) {
         .pattern(/^[0-9a-fA-F]{24}$/)
         .optional()
         .error(() => Error("Invalid ID")),
+      name: Joi.string().optional(),
       motivationalDescription: Joi.string().optional(),
       slug_url: Joi.string().optional(),
       videoUrl: Joi.string()
@@ -245,6 +251,7 @@ module.exports = function (utils) {
         .required()
         .error(() => Error("Invalid Segment ID")),
       subject: Joi.string().optional(),
+      isSubject: Joi.string().optional(),
       slug_url: Joi.string().optional(),
       practices: Joi.array()
         .items(

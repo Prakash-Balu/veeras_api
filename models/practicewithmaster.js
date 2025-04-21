@@ -41,7 +41,7 @@ module.exports = function (mongoose, constants) {
       },
       isSubject: {
         type: Boolean,
-        default:false
+        default:true
       },
       shorts: [shortSchema],
       status: {

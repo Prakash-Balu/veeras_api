@@ -7,7 +7,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.addPractice = async (req, res) => {
     try {
-      const { name, subject, segmentId, description, videoUrl, shorts } =
+      const { name, subject,isSubject,segmentId, description, videoUrl, shorts } =
         req.body;
 
       const existingName = await PracticeWithMaster.findOne({ name });
@@ -41,6 +41,7 @@ module.exports = function (mongoose, utils, constants) {
         name,
         segmentId,
         subject,
+        isSubject,
         slug_url: slugTitle,
         description,
         videoUrl,
@@ -58,6 +59,7 @@ module.exports = function (mongoose, utils, constants) {
     try {
       const {
         id,
+        name,
         subject,
         segmentId,
         description,
@@ -68,9 +70,8 @@ module.exports = function (mongoose, utils, constants) {
         shorts,
       } = req.body;
 
-      const practice = await PracticeWithMaster.findOne({
-        _id: id
-      });
+      const practice = await PracticeWithMaster.findOne({ _id: id });
+
       if (!practice) {
         return utils.sendErrorNew(
           req,
@@ -80,21 +81,24 @@ module.exports = function (mongoose, utils, constants) {
         );
       }
 
+      const updateObj = {};
+      if (segmentId !== undefined) updateObj.segmentId = segmentId;
+      if (name !== undefined) updateObj.name = name;
+      if (subject !== undefined) updateObj.subject = subject;
+      if (isSubject !== undefined) updateObj.isSubject = isSubject;
+      if (description !== undefined) updateObj.description = description;
+      if (slug_url !== undefined) updateObj.slug_url = slug_url;
+      if (videoUrl !== undefined) updateObj.videoUrl = videoUrl;
+      if (shorts !== undefined) updateObj.shorts = shorts;
+      if (status !== undefined) updateObj.status = status;
+
+      if (subject) {
+        updateObj.slug_url = utils.slug(subject);
+      }
       // Update practice details
       const updatedPractice = await PracticeWithMaster.findOneAndUpdate(
-        { _id: id, },
-        {
-          $set: {
-            segmentId,
-            subject,
-            isSubject,
-            description,
-            slug_url,
-            videoUrl,
-            shorts,
-            status,
-          },
-        },
+        { _id: id },
+        { $set: updateObj },
         { new: true }
       );
 
@@ -113,7 +117,7 @@ module.exports = function (mongoose, utils, constants) {
         status: "active",
       }).lean();
       if (!getPractice) {
-        return utils.sendErrorNew(req, res, "BAD_REQUEST","Not Found");
+        return utils.sendErrorNew(req, res, "BAD_REQUEST", "Not Found");
       }
 
       await PracticeWithMaster.updateOne(
@@ -121,12 +125,7 @@ module.exports = function (mongoose, utils, constants) {
         { $set: { status: "deleted" } }
       );
 
-      return utils.sendResponseNew(
-        req,
-        res,
-        "OK",
-        "Deleted Successfully"
-      );
+      return utils.sendResponseNew(req, res, "OK", "Deleted Successfully");
     } catch (err) {
       console.log(err);
       return utils.sendErrorNew(req, res, "BAD_REQUEST", err.message);

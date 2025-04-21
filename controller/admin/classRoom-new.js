@@ -7,7 +7,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.addClassRoom = async (req, res) => {
     try {
-      const { subject, segmentId, video_url } = req.body;
+      const { subject, segmentId, video_url,isSubject } = req.body;
 
       const existingSubject = await ClassRoom.findOne({ subject });
       if (existingSubject) {
@@ -38,6 +38,7 @@ module.exports = function (mongoose, utils, constants) {
         subject,
         slug_url: slugTitle,
         video_url,
+        isSubject
       });
 
       return utils.sendResponseNew(req, res, "OK", "SUCCESS", createClassRoom);
@@ -49,7 +50,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updateClassRoom = async (req, res) => {
     try {
-      const { id, subject, segmentId, slug_url, video_url, isSubject } =
+      const { id, subject, segmentId, video_url, isSubject } =
         req.body;
 
       const classroom = await ClassRoom.findOne({
@@ -65,18 +66,21 @@ module.exports = function (mongoose, utils, constants) {
         );
       }
 
+      const updateObj = {}
+
+      
+      updateObj.segmentId = segmentId,
+      updateObj.video_url = video_url,
+      updateObj.isSubject = isSubject
+      updateObj.subject = subject
+
+if (subject) {
+  updateObj.slug_url = utils.slug(subject)
+}
       // Update practice details
       const updatedClassRoom = await ClassRoom.findOneAndUpdate(
         { _id: id, isDeleted: false },
-        {
-          $set: {
-            segmentId,
-            subject,
-            isSubject,
-            slug_url,
-            video_url,
-          },
-        },
+        {$set: updateObj},
         { new: true }
       );
 

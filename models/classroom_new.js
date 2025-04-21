@@ -27,7 +27,7 @@ module.exports = function (mongoose, constants) {
       },
       isSubject: {
         type: Boolean,
-        default:false
+        default:true
       },
       isDeleted: {
         type: String,

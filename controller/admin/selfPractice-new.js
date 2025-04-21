@@ -7,7 +7,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.addSelfPractice = async (req, res) => {
     try {
-      const { displayType,subject, segmentId, practices } = req.body;
+      const { displayType,subject,isSubject,segmentId, practices } = req.body;
 
       const existingSegment = await Segment.findOne({
         _id: segmentId,
@@ -30,6 +30,7 @@ module.exports = function (mongoose, utils, constants) {
         slug_url:slugTitle,
         segmentId,
         practices,
+        isSubject
       });
 
       return utils.sendResponseNew(
@@ -47,7 +48,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updateSelfPractice = async (req, res) => {
     try {
-      const { id, subject,isSubject,slug_url, segmentId, displayType, practices } = req.body;
+      const { id, subject,isSubject, segmentId, displayType, practices } = req.body;
 
       const selfPractice = await SelfPractice.findOne({
         _id: id,
@@ -76,19 +77,23 @@ module.exports = function (mongoose, utils, constants) {
         );
       }
     }
+
+    const updateObj = {}
+   updateObj.subject = subject
+    updateObj.isSubject = isSubject
+    updateObj.displayType = displayType 
+    updateObj.practices = practices
+    updateObj.segmentId = segmentId
+
+
+    if(subject) {
+       updateObj.slug_url = utils.slug(subject);
+    }
+
       // Update SelfPractice details
       const updatedSelfPractice = await SelfPractice.findOneAndUpdate(
         { _id: id, isDeleted: false },
-        {
-          $set: {
-            subject,
-            isSubject,
-            slug_url,
-            segmentId,
-            displayType,
-            practices,
-          },
-        },
+        {$set: updateObj},
         { new: true }
       );
 

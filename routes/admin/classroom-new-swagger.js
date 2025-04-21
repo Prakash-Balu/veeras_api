@@ -26,6 +26,9 @@
  *                 type: string
  *               video_url:
  *                type: string
+ *               isSubject:
+ *                 type: boolean
+ *                 example: true or false
  *             required:
  *               - subject
  *               - segmentId
@@ -58,10 +61,9 @@
  *               subject:
  *                 type: string
  *               isSubject:
- *                 type: string
+ *                 type: boolean
+ *                 example: true or false
  *               video_url:
- *                 type: string
- *               slug_url:
  *                 type: string
  *     responses:
  *       '200':
