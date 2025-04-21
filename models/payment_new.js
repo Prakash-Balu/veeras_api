@@ -16,15 +16,15 @@ module.exports = function (mongoose, constants) {
         type: String,
         required: true,
       },
-      name:{
-        type:String
+      name: {
+        type: String,
       },
       email: {
         type: String,
       },
       currencyCode: {
         type: String,
-        required: true
+        required: true,
       },
       planId: {
         type: ObjectId,
@@ -35,11 +35,19 @@ module.exports = function (mongoose, constants) {
         type: Number,
         required: true,
       },
+      tax: {
+        type: Number,
+        required: true,
+      },
+      totalamount: {
+        type: Number,
+        required: true,
+      },
       state: {
-        type: String
+        type: String,
       },
       country: {
-        type: String
+        type: String,
       },
       referralId: {
         type: ObjectId,
@@ -48,25 +56,25 @@ module.exports = function (mongoose, constants) {
       },
       expireIn: {
         type: Date,
-        requied: true
+        requied: true,
       },
-      invoiceUrl:{
+      invoiceUrl: {
         type: String,
-        required: false
+        required: false,
       },
       paymentLinkId: {
         type: String,
-        required: true
+        required: true,
       },
       paymentShortLink: {
         type: String,
-        required: true
+        required: true,
       },
       paymentId: {
-        type: String
+        type: String,
       },
       paymentSignature: {
-        type: String
+        type: String,
       },
       status: {
         type: String,

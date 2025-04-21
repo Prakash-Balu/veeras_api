@@ -187,8 +187,12 @@ module.exports = function (mongoose, utils, constants) {
           isPaymentExists.paymentShortLink
         );
       }
+
+      const gstAmount = (amount * 18) / 100;
+      const totalAmount = amount + gstAmount;
+
       const razorPaymentObj = {
-        amount: Math.round(amount * 100), // Amount in paise (50000 paise = 500 INR)
+        amount: Math.round(totalAmount * 100), // Amount in paise (50000 paise = 500 INR)
         currency: currencyCode,
         accept_partial: false,
         reminder_enable: true,
@@ -215,6 +219,7 @@ module.exports = function (mongoose, utils, constants) {
       ipAddress = "103.26.110.153";
       const info = await ipinfo.lookupIp(ipAddress);
       console.log("info", info);
+      console.log("currecny", info.countryCurrency.symbol);
 
       const paymentObj = {
         phoneCode,
@@ -223,7 +228,9 @@ module.exports = function (mongoose, utils, constants) {
         email,
         referralId,
         planId,
-        amount,
+        amount: amount,
+        tax: gstAmount,
+        totalamount: totalAmount,
         currencyCode,
         state: info.region || null,
         country: info.country || null,
@@ -310,13 +317,29 @@ module.exports = function (mongoose, utils, constants) {
         };
         await Subscription.create(subscriptionObj);
 
+        const TOKEN = process.env.IPINFO_TOKEN;
+        const ipinfo = new IPinfoWrapper(TOKEN);
+        let ipAddress =
+          req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+        ipAddress = ipAddress.split(",")[0].trim();
+        //other tamilnadu-ip
+        // ipAddress = "115.240.90.163";
+
+        //inner tamilnadu-ip
+        ipAddress = "103.26.110.153";
+        const info = await ipinfo.lookupIp(ipAddress);
+        console.log("info", info);
+
         const contentObj = {
           name: checkPayment.name,
           email: checkPayment.email,
           phone: checkPayment.phone,
-          address: checkPayment.state,
+          state: info.region,
           plan: checkPayment.planId.name,
           amount: checkPayment.amount,
+          country: info.country,
+          currencyCode: info.countryCurrency.symbol,
+          countryFlag: info.countryFlagURL,
         };
 
         const emailContent = generateEmailTemplate(contentObj);

@@ -11,9 +11,7 @@ const client = require("twilio")(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN
 );
-const {generateEmailTemplate} = require("./service/template");
-
-
+const { generateEmailTemplate } = require("./service/template");
 
 const swaggerUi = require("swagger-ui-express");
 // const swaggerSpec = require('./configs/swaggerConfig');
@@ -48,24 +46,20 @@ module.exports = (async () => {
       credentials: true,
     })
   );
-  app.use("/", express.static(path.join(__dirname, "public","invoices")));
-  app.use("/invoices", express.static(path.join(__dirname, "public/invoices")));
-
+  app.use("/", express.static(path.join(__dirname, "public")));
 
   app.get("/test-email", (req, res) => {
-
     const contentObj = {
-      name:"Kumar",
+      name: "Kumar",
       email: "kumar@example.com",
       phone: "9876547777",
       address: "tamil nadu",
-      plan: "Yearly Plan",
-      amount: 29000  ,
+      plan: "Half-Yearly",
+      amount: 2000,
     };
     const html = generateEmailTemplate(contentObj);
-    res.send(html.content); 
+    res.send(html.content);
   });
-
 
   require("./cron")(mongoose, utils, constants);
   require("./seed/category_seed")(mongoose, utils, constants);
@@ -163,7 +157,7 @@ module.exports = (async () => {
   );
 
   const { createToken } = require("./service/agora");
-  const {email} = require('./service/email')
+  const { email } = require("./service/email");
 
   app.get("/", (req, res) => {
     res.status(200).json({ message: "Hello World" });
@@ -195,7 +189,7 @@ module.exports = (async () => {
   app.use("/selfPractice", selfPractice);
   app.use("/classroom", classroom);
 
-  app.get("/mail",email)
+  app.get("/mail", email);
   app.get("/agora/generate-token", createToken);
 
   // Serve Swagger documentation
@@ -243,12 +237,12 @@ module.exports = (async () => {
     })
   );
 
-//whatsApp
+  //whatsApp
   app.post("/whatsapp", (req, res) => {
     const msg = req.body.msg;
     const to = "+91995265649";
     console.log("msg", msg);
-    
+
     client.messages
       .create({
         from: "whatsapp:+14155238886",
@@ -264,7 +258,6 @@ module.exports = (async () => {
         res.send(err);
       });
   });
-
 
   app.get("/order", async (req, res) => {
     // setting up options for razorpay order.

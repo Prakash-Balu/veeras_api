@@ -76,7 +76,7 @@ module.exports = function (utils) {
       name: Joi.string().required(),
       description: Joi.string().optional(),
       subject: Joi.string().allow(null).optional(),
-      isSubject: Joi.string().optional(),
+      isSubject: Joi.boolean().optional(),
       segmentId: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/)
         .required()
@@ -111,7 +111,7 @@ module.exports = function (utils) {
       description: Joi.string().optional(),
       subject: Joi.string().allow(null).optional(),
       status: Joi.string().optional(),
-      isSubject: Joi.string().allow(null).optional(),
+      isSubject: Joi.boolean().allow(null).optional(),
       slug_url: Joi.string().allow(null).optional(),
       segmentId: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/)
@@ -127,9 +127,9 @@ module.exports = function (utils) {
         .items(
           Joi.object({
             id: Joi.string()
-        .pattern(/^[0-9a-fA-F]{24}$/)
-        .optional()
-        .error(() => Error("Invalid ID")),
+              .pattern(/^[0-9a-fA-F]{24}$/)
+              .optional()
+              .error(() => Error("Invalid ID")),
             shortUrl: Joi.string().uri().optional(),
             question: Joi.string().optional(),
             answer: Joi.string().optional(),
@@ -255,7 +255,7 @@ module.exports = function (utils) {
         .required()
         .error(() => Error("Invalid Segment ID")),
       subject: Joi.string().optional(),
-      isSubject: Joi.string().optional(),
+      isSubject: Joi.boolean().optional(),
       slug_url: Joi.string().optional(),
       practices: Joi.array()
         .items(
@@ -279,7 +279,7 @@ module.exports = function (utils) {
         .required()
         .error(() => Error("Invalid ID")),
       displayType: Joi.string().valid("type1", "type2", "type3").optional(),
-      isSubject: Joi.string().optional(),
+      isSubject: Joi.boolean().optional(),
       subject: Joi.string().optional(),
       slug_url: Joi.string().optional(),
       segmentId: Joi.string()
@@ -310,7 +310,7 @@ module.exports = function (utils) {
         .error(() => Error("Invalid Segment ID")),
       subject: Joi.string().required(),
       slug_url: Joi.string().optional(),
-      isSubject: Joi.string().optional(),
+      isSubject: Joi.boolean().optional(),
       video_url: Joi.string()
         .uri()
         .required()
@@ -333,7 +333,7 @@ module.exports = function (utils) {
         .error(() => Error("Invalid Segment ID")),
       subject: Joi.string().optional(),
       slug_url: Joi.string().optional(),
-      isSubject: Joi.string().optional(),
+      isSubject: Joi.boolean().optional(),
       video_url: Joi.string()
         .uri()
         .optional()
