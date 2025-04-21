@@ -6,22 +6,22 @@ module.exports = function (mongoose, utils, constants) {
 
   const categories = [
     {
-      value: 'classroom',
+      value: 'class-room',
       label: 'Class Room',
       colorCode: '#e5f9ee',
     },
     {
-      value: 'selfpractice',
+      value: 'self-practice',
       label: 'Self-Practice',
       colorCode: '#c1dbe8',
     },
     {
-      value: 'practicewithmaster',
+      value: 'practice-with-master',
       label: 'Practice With the Master',
       colorCode: '#f8f6bd',
     },
     {
-      value: 'speakingroom',
+      value: 'speaking-room',
       label: 'Speaking Room',
       colorCode: '#f1ecff',
     },
