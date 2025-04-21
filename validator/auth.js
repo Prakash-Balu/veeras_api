@@ -147,6 +147,10 @@ module.exports = function (utils) {
     const schema = Joi.object({
       skip: Joi.string().optional(),
       limit: Joi.string().optional(),
+      segmentId: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .optional()
+        .error(() => Error("Invalid Segment ID")),
       status: Joi.string()
         .valid("active", "inActive", "deleted")
         .optional()
