@@ -40,7 +40,8 @@
             class="row justify-content-between align-items-center border-bottom mb-3">
             <div class="col-md-6">
               <div class="mb-2">
-                <img src="assets/img/logo.svg" class="img-fluid" alt="logo" />
+                <img src="http://192.168.0.10:3000/static/logo_veeras2.png" width="120px" class="img-fluid" alt="logo" />
+                <p><span>Hindi online school</span></p>
               </div>
               <p></p>
             </div>
@@ -70,7 +71,13 @@
               <p class="text-dark mb-2 fw-semibold">To</p>
               <div>
                 <h4 class="mb-1">{{customerName}}</h4>
-                <p class="mb-1">{{address}}</p>
+                <p class="mb-1">{{state}}</p>
+                <div class="d-flex justify-content-start">
+                  <span>{{country}}</span> 
+                  <span class="ps-1"> 
+                    <img src="{{countryFlag}}"  width="24" height="24"/>
+                    </span>
+                    </div> 
                 <p class="mb-1">
                   Email :
                   <span class="text-dark">{{email}}</span>
@@ -105,10 +112,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><h6>Veeras - {{plan}}</h6></td>
-                    <td class="text-gray-9 fw-medium text-end">
-                      {{amount}} x 1
-                    </td>
+                    <td><h6>Veeras - {{plan}}</h6>  <p>{{monthamount}} * {{month}}</p></td>
+                    <td class="text-gray-9 fw-medium text-end">{{amount}} x 1 </td>
                     <td class="text-gray-9 fw-medium text-end">999249</td>
                     <td class="text-gray-9 fw-medium text-end">18%</td>
                     <td class="text-gray-9 fw-medium text-end">{{total}}</td>

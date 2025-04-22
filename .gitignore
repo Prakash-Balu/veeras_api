@@ -1,5 +1,8 @@
 .history
 public/audios*
+public/files*
+public/invoices*
+public/videos*
 
 # Logs
 logs
