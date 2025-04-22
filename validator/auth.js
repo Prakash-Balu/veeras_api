@@ -81,14 +81,13 @@ module.exports = function (utils) {
         .required()
         .error(() => Error("Invalid Segment ID")),
       videoUrl: Joi.string()
-        .uri()
         .required()
         .error(() => Error("Invalid Video URL")),
       slug_url: Joi.string().optional(),
       shorts: Joi.array()
         .items(
           Joi.object({
-            shortUrl: Joi.string().uri().required(),
+            shortUrl: Joi.string().required(),
             question: Joi.string().required(),
             answer: Joi.string().required(),
           })
@@ -117,7 +116,6 @@ module.exports = function (utils) {
         .error(() => Error("Invalid Segment ID")),
 
       videoUrl: Joi.string()
-        .uri()
         .optional()
         .error(() => Error("Invalid Video URL")),
 
@@ -128,7 +126,7 @@ module.exports = function (utils) {
               .pattern(/^[0-9a-fA-F]{24}$/)
               .optional()
               .error(() => Error("Invalid ID")),
-            shortUrl: Joi.string().uri().optional(),
+            shortUrl: Joi.string().optional(),
             question: Joi.string().optional(),
             answer: Joi.string().optional(),
           })
