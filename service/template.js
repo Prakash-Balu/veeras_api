@@ -2,7 +2,8 @@ const handlebars = require("handlebars");
 const convert = require("number-to-words");
 const fs = require("fs");
 const path = require("path");
-
+const moment = require("moment");
+require("dotenv").config();
 const generateEmailTemplate = ({
   name,
   email,
@@ -11,9 +12,9 @@ const generateEmailTemplate = ({
   plan,
   amount,
   discount,
-  currencyCode,
   countryFlag,
   country,
+  currencySymbol,
 }) => {
   const templatePath = path.join(__dirname, "../template/email-template.hbs");
   const templateSource = fs.readFileSync(templatePath, "utf-8");
@@ -34,8 +35,8 @@ const generateEmailTemplate = ({
   } else {
     igst = +(total * 0.18).toFixed(2);
   }
-  const now = new Date();
-  const date = now.toString().split(" GMT")[0];
+
+  const date = moment().format("DD/MM/YYYY hh:mm");
 
   const totalamount = (total + sgst + cgst + igst).toFixed(2);
   const amount_in_word = convert.toWords(Math.floor(totalamount));
@@ -57,9 +58,9 @@ const generateEmailTemplate = ({
     customerName: name || "user",
     email: email || "-",
     phone: phone || "-",
-    state: state || "Tamil Nadu",
+    state: state || "-",
     plan: plan || "-",
-    amount: amount || "-",
+    amount: amount,
     discount: discountVal,
     total: total,
     subtotal: amount,
@@ -70,13 +71,13 @@ const generateEmailTemplate = ({
     igst,
     amount_in_words: amount_in_word,
     date: date,
-    country: country || "India",
-    currencyCode,
-    countryFlag:
-      countryFlag ||
-      "https://cdn.ipinfo.io/static/images/countries-flags/IN.svg",
+    country: country || "-",
+    currencySymbol: currencySymbol,
+    countryFlag: countryFlag || "-",
     monthamount,
     month,
+    veeraLogo: `${process.env.LOCAL_IP}/static/logo_veeras2.png` || "-",
+    indianFlag: `${process.env.LOCAL_IP}/static/india_flag.png` || "-",
   };
 
   const content = template(context);

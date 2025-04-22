@@ -1,5 +1,7 @@
 "use strict";
 
+const { required } = require("joi");
+
 module.exports = function (mongoose, constants) {
   const Schema = mongoose.Schema;
   const ObjectId = Schema.ObjectId;
@@ -14,13 +16,9 @@ module.exports = function (mongoose, constants) {
 
     const schema = new Schema(
     {
-      name: {
-        type: String,
-        required: true,
-      },
       subject: {
         type: String,
-        default:null
+        required: true,
       },
       segmentId: 
         {

@@ -73,9 +73,8 @@ module.exports = function (utils) {
   validator.practiceWithMaster = function (req, res, next) {
     const data = req.body;
     const schema = Joi.object({
-      name: Joi.string().required(),
       description: Joi.string().optional(),
-      subject: Joi.string().allow(null).optional(),
+      subject: Joi.string().optional(),
       isSubject: Joi.boolean().optional(),
       segmentId: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/)
@@ -85,7 +84,7 @@ module.exports = function (utils) {
         .uri()
         .required()
         .error(() => Error("Invalid Video URL")),
-      slug_url: Joi.string().allow(null).optional(),
+      slug_url: Joi.string().optional(),
       shorts: Joi.array()
         .items(
           Joi.object({
@@ -107,12 +106,11 @@ module.exports = function (utils) {
         .pattern(/^[0-9a-fA-F]{24}$/)
         .required()
         .error(() => Error("Invalid ID")),
-      name: Joi.string().optional(),
       description: Joi.string().optional(),
-      subject: Joi.string().allow(null).optional(),
+      subject: Joi.string().optional(),
       status: Joi.string().optional(),
-      isSubject: Joi.boolean().allow(null).optional(),
-      slug_url: Joi.string().allow(null).optional(),
+      isSubject: Joi.boolean().optional(),
+      slug_url: Joi.string().optional(),
       segmentId: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/)
         .optional()

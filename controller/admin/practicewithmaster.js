@@ -7,16 +7,16 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.addPractice = async (req, res) => {
     try {
-      const { name, subject,isSubject,segmentId, description, videoUrl, shorts } =
+      const { subject, isSubject, segmentId, description, videoUrl, shorts } =
         req.body;
 
-      const existingName = await PracticeWithMaster.findOne({ name });
-      if (existingName) {
+      const existingSubject = await PracticeWithMaster.findOne({ subject });
+      if (existingSubject) {
         return utils.sendErrorNew(
           req,
           res,
           "BAD_REQUEST",
-          "Already this name is exists, try different name"
+          "Already this Subject is exists, try different subject"
         );
       }
 
@@ -38,7 +38,6 @@ module.exports = function (mongoose, utils, constants) {
       console.log("practicewithmaster", slugTitle);
 
       const createPractice = await PracticeWithMaster.create({
-        name,
         segmentId,
         subject,
         isSubject,
@@ -59,7 +58,6 @@ module.exports = function (mongoose, utils, constants) {
     try {
       const {
         id,
-        name,
         subject,
         segmentId,
         description,
@@ -83,7 +81,6 @@ module.exports = function (mongoose, utils, constants) {
 
       const updateObj = {};
       if (segmentId !== undefined) updateObj.segmentId = segmentId;
-      if (name !== undefined) updateObj.name = name;
       if (subject !== undefined) updateObj.subject = subject;
       if (isSubject !== undefined) updateObj.isSubject = isSubject;
       if (description !== undefined) updateObj.description = description;

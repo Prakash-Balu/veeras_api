@@ -1,194 +1,199 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Email Template</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
-      crossorigin="anonymous" />
-    <style>
-      /* Additional styles for the email template */
-      body {
-        background-color: #f4f4f4;
-      }
-      .email-container {
-        background-color: #ffffff;
-        border-radius: 8px;
-        margin: 20px auto;
-        padding: 20px; /* max-width: 600px; */
-      }
-      .btn-custom {
-        background-color: #007bff;
-        color: #ffffff;
-        border-radius: 5px;
-        padding: 10px 20px;
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="email-container">
-      <div class="card">
-        <div class="card-body">
-          <div
-            class="row justify-content-between align-items-center border-bottom mb-3">
-            <div class="col-md-6">
-              <div class="mb-2">
-                <img src="http://192.168.0.10:3000/static/logo_veeras2.png" width="120px" class="img-fluid" alt="logo" />
-                <p><span>Hindi online school</span></p>
-              </div>
-              <p></p>
-            </div>
-            <div class="col-md-6">
-              <div class="text-end mb-3">
-                <h1 class="text-gray mb-1">Tax Invoice</h5>
-              </div>
-            </div>
-          </div>
-          <div
-            class="row border-bottom mb-3"
-            style="display: flex; justify-content: space-between">
-            <div class="col-md-6">
-              <p class="text-dark mb-2 fw-semibold">From</p>
-              <div>
-                <h4 class="mb-1">Njveerasmission Education Private Limited</h4>
-                <p class="mb-1">Tamilnadu - 608001</p>
-                <p class="mb-1">India</p>
-                <p class="mb-1">
-                  Gst# :
-                  <span class="text-dark">235987203957</span>
-                </p>
-                <p>CIN : <span class="text-dark">19876543210</span></p>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <p class="text-dark mb-2 fw-semibold">To</p>
-              <div>
-                <h4 class="mb-1">{{customerName}}</h4>
-                <p class="mb-1">{{state}}</p>
-                <div class="d-flex justify-content-start">
-                  <span>{{country}}</span> 
-                  <span class="ps-1"> 
-                    <img src="{{countryFlag}}"  width="24" height="24"/>
-                    </span>
-                    </div> 
-                <p class="mb-1">
-                  Email :
-                  <span class="text-dark">{{email}}</span>
-                </p>
-                <p>Phone : <span class="text-dark">{{phone}}</span></p>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="text-end mb-3">
-                <h5 class="text-gray mb-1">
-                  Invoice No
-                  <span class="text-primary">#INV0001</span>
-                </h5>
-                <p class="mb-1 fw-medium">
-                  Created Date :
-                  <span class="text-dark">{{date}}</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="table-responsive mb-3">
-              <table class="table">
-                <thead class="thead-light">
-                  <tr>
-                    <th>DESCRIPTION</th>
-                    <th class="text-end">FEE</th>
-                    <th class="text-end">HSN CODE</th>
-                    <th class="text-end">GST RATE</th>
-                    <th class="text-end">AMOUNT</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><h6>Veeras - {{plan}}</h6>  <p>{{monthamount}} * {{month}}</p></td>
-                    <td class="text-gray-9 fw-medium text-end">{{amount}} x 1 </td>
-                    <td class="text-gray-9 fw-medium text-end">999249</td>
-                    <td class="text-gray-9 fw-medium text-end">18%</td>
-                    <td class="text-gray-9 fw-medium text-end">{{total}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <div class="row border-bottom mb-3">
-            <div class="col-md-7">
-              <div class="py-4">
-                <div class="mb-3"></div>
-                <div class="mb-3"></div>
-              </div>
-            </div>
-            <div class="col-md-5">
-              <div
-                class="d-flex justify-content-between align-items-center border-bottom mb-2 pe-3">
-                <p class="mb-0">Sub Total</p>
-                <p class="text-dark fw-medium mb-2">{{subtotal}}</p>
-              </div>
-              {{#if sgst}}
-              <div class="align-items-center mb-2 pe-3">
-                <div class="d-flex justify-content-between">
-                  <p class="mb-0">SGST(9%)</p>
-                  <p class="text-dark fw-medium mb-2">{{sgst}}</p>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <p class="mb-0">CGST(9%)</p>
-                  <p class="text-dark fw-medium mb-2">{{cgst}}</p>
-                </div>
-              </div>
 
-              {{/if}} {{#if igst}}
-              <div
-                class="d-flex justify-content-between align-items-center mb-2 pe-3">
-                <p class="mb-0">IGST(18%)</p>
-                <p class="text-dark fw-medium mb-2">{{igst}}</p>
-              </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Template</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous" />
+  <style>
+    /* Additional styles for the email template */
+    body {
+      background-color: #f4f4f4;
+    }
 
-              {{/if}}
-              <div
-                class="d-flex justify-content-between align-items-center mb-2 pe-3">
-                <h5>Total Amount</h5>
-                <h5>{{totalamount}}</h5>
+    .email-container {
+      background-color: #ffffff;
+      border-radius: 8px;
+      margin: 20px auto;
+      padding: 20px;
+      /* max-width: 600px; */
+    }
+
+    .btn-custom {
+      background-color: #007bff;
+      color: #ffffff;
+      border-radius: 5px;
+      padding: 10px 20px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="email-container">
+    <div class="card">
+      <div class="card-body">
+        <div class="row justify-content-between align-items-center border-bottom mb-3">
+          <div class="col-md-6">
+            <div class="mb-2">
+              <img src="{{veeraLogo}}" width="120px" class="img-fluid" alt="logo" />
+              <p><span>Hindi online school</span></p>
+            </div>
+            <p></p>
+          </div>
+          <div class="col-md-6">
+            <div class="text-end mb-3">
+              <h1 class="text-gray mb-1">Tax Invoice</h5>
+            </div>
+          </div>
+        </div>
+        <div class="row border-bottom mb-3" style="display: flex; justify-content: space-between">
+          <div class="col-md-6">
+            <p class="text-dark mb-2 fw-semibold">From</p>
+            <div>
+              <h4 class="mb-1">Njveerasmission Education Private Limited</h4>
+              <p class="mb-1">Tamilnadu - 608001</p>
+              <div class="d-flex justify-content-start">
+                <span>India</span>
+                <span class="ps-1">
+                  <img src="{{indianFlag}}" width="27" height="20" alt="flag" />
+                </span>
               </div>
-              <p class="fs-12">
-                Amount in Words : {{amount_in_words}} Rupees only.
+              <p class="mb-1">
+                Gst# :
+                <span class="text-dark">235987203957</span>
+              </p>
+              <p>CIN : <span class="text-dark">19876543210</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <p class="text-dark mb-2 fw-semibold">To</p>
+            <div>
+              <h4 class="mb-1">{{customerName}}</h4>
+              <p class="mb-1">{{state}}</p>
+              <div class="d-flex justify-content-start">
+                <span>{{country}}</span>
+                <span class="ps-1">
+                  <img src="{{countryFlag}}" width="24" height="24" />
+                </span>
+              </div>
+              <p class="mb-1">
+                Email :
+                <span class="text-dark">{{email}}</span>
+              </p>
+              <p>Phone : <span class="text-dark">{{phone}}</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="text-end mb-3">
+              <h5 class="text-gray mb-1">
+                Invoice No
+                <span class="text-primary">#INV0001</span>
+              </h5>
+              <p class="mb-1 fw-medium">
+                Created Date :
+                <span class="text-dark">{{date}}</span>
               </p>
             </div>
           </div>
+        </div>
+        <div>
+          <div class="table-responsive mb-3">
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th>DESCRIPTION</th>
+                  <th class="text-end">FEE</th>
+                  <th class="text-end">HSN CODE</th>
+                  <th class="text-end">GST RATE</th>
+                  <th class="text-end">AMOUNT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <h6>Veeras - {{plan}}</h6>
+                    <p>{{currencySymbol}} {{monthamount}} * {{month}}</p>
+                  </td>
+                  <td class="text-gray-9 fw-medium text-end">
+                    <span>{{currencySymbol}}</span> <span> {{amount}} x 1 </span>
+                  </td>
+                  <td class="text-gray-9 fw-medium text-end">999249</td>
+                  <td class="text-gray-9 fw-medium text-end">18%</td>
+                  <td class="text-gray-9 fw-medium text-end">{{currencySymbol}} {{total}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row border-bottom mb-3">
+          <div class="col-md-7">
+            <div class="py-4">
+              <div class="mb-3"></div>
+              <div class="mb-3"></div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="d-flex justify-content-between align-items-center border-bottom mb-2 pe-3">
+              <p class="mb-0">Sub Total</p>
+              <p class="text-dark fw-medium mb-2">{{currencySymbol}} {{subtotal}}</p>
+            </div>
+            {{#if sgst}}
+            <div class="align-items-center mb-2 pe-3">
+              <div class="d-flex justify-content-between">
+                <p class="mb-0">SGST(9%)</p>
+                <p class="text-dark fw-medium mb-2">{{currencySymbol}} {{sgst}}</p>
+              </div>
+              <div class="d-flex justify-content-between">
+                <p class="mb-0">CGST(9%)</p>
+                <p class="text-dark fw-medium mb-2">{{currencySymbol}} {{cgst}}</p>
+              </div>
+            </div>
 
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />  
-          <div class="text-center">
-            <p class="text-dark mb-1">
-              This is System Generated invoice and does not require a signature
-              or a digital signature.
+            {{/if}} {{#if igst}}
+            <div class="d-flex justify-content-between align-items-center mb-2 pe-3">
+              <p class="mb-0">IGST(18%)</p>
+              <p class="text-dark fw-medium mb-2">{{currencySymbol}} {{igst}}</p>
+            </div>
+
+            {{/if}}
+            <div class="d-flex justify-content-between align-items-center mb-2 pe-3">
+              <h5>Total Amount</h5>
+              <h5>{{currencySymbol}} {{totalamount}}</h5>
+            </div>
+            <p class="fs-12">
+              Amount in Words : {{amount_in_words}} Rupees only.
             </p>
           </div>
         </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="text-center">
+          <p class="text-dark mb-1">
+            This is System Generated invoice and does not require a signature
+            or a digital signature.
+          </p>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Bootstrap JS and dependencies (optional) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
+  <!-- Bootstrap JS and dependencies (optional) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
 </html>

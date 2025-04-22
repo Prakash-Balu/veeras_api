@@ -215,7 +215,10 @@ module.exports = function (mongoose, utils, constants) {
       //other tamilnadu-ip
       // ipAddress = "115.240.90.163";
 
-      //inner tamilnadu-ip
+      // // other country-ip
+      // ipAddress =  "1.178.95.255"
+
+      // inner tamilnadu-ip
       ipAddress = "103.26.110.153";
       const info = await ipinfo.lookupIp(ipAddress);
       console.log("info", info);
@@ -322,11 +325,15 @@ module.exports = function (mongoose, utils, constants) {
         let ipAddress =
           req.headers["x-forwarded-for"] || req.connection.remoteAddress;
         ipAddress = ipAddress.split(",")[0].trim();
-        //other tamilnadu-ip
+        // other tamilnadu-ip
         // ipAddress = "115.240.90.163";
 
-        //inner tamilnadu-ip
+        // inner tamilnadu-ip
         ipAddress = "103.26.110.153";
+
+        // other country-ip
+        // ipAddress =  "1.178.95.255"
+
         const info = await ipinfo.lookupIp(ipAddress);
         console.log("info", info);
 
@@ -338,7 +345,7 @@ module.exports = function (mongoose, utils, constants) {
           plan: checkPayment.planId.name,
           amount: checkPayment.amount,
           country: info.country,
-          currencyCode: info.countryCurrency.symbol,
+          currencySymbol: info.countryCurrency.symbol,
           countryFlag: info.countryFlagURL,
         };
 
