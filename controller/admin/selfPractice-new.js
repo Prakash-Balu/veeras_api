@@ -7,7 +7,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.addSelfPractice = async (req, res) => {
     try {
-      const { displayType,subject,isSubject,segmentId, practices } = req.body;
+      const { displayType, subject, isSubject, segmentId, practices } = req.body;
 
       const existingSegment = await Segment.findOne({
         _id: segmentId,
@@ -26,8 +26,8 @@ module.exports = function (mongoose, utils, constants) {
 
       const createSelfPractice = await SelfPractice.create({
         displayType,
-        subject ,
-        slug_url:slugTitle,
+        subject,
+        slug_url: slugTitle,
         segmentId,
         practices,
         isSubject
@@ -48,7 +48,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updateSelfPractice = async (req, res) => {
     try {
-      const { id, subject,isSubject, segmentId, displayType, practices } = req.body;
+      const { id, subject, isSubject, segmentId, displayType, practices } = req.body;
 
       const selfPractice = await SelfPractice.findOne({
         _id: id,
@@ -63,37 +63,37 @@ module.exports = function (mongoose, utils, constants) {
         );
       }
 
-      if(segmentId) {
-      const existingSegment = await Segment.findOne({
-        _id: segmentId,
-        status: "active",
-      });
-      if (!existingSegment) {
-        return utils.sendErrorNew(
-          req,
-          res,
-          "BAD_REQUEST",
-          "Segment is not found"
-        );
+      if (segmentId) {
+        const existingSegment = await Segment.findOne({
+          _id: segmentId,
+          status: "active",
+        });
+        if (!existingSegment) {
+          return utils.sendErrorNew(
+            req,
+            res,
+            "BAD_REQUEST",
+            "Segment is not found"
+          );
+        }
       }
-    }
 
-    const updateObj = {}
-   updateObj.subject = subject
-    updateObj.isSubject = isSubject
-    updateObj.displayType = displayType 
-    updateObj.practices = practices
-    updateObj.segmentId = segmentId
+      const updateObj = {}
+      updateObj.subject = subject
+      updateObj.isSubject = isSubject
+      updateObj.displayType = displayType
+      updateObj.practices = practices
+      updateObj.segmentId = segmentId
 
 
-    if(subject) {
-       updateObj.slug_url = utils.slug(subject);
-    }
+      if (subject) {
+        updateObj.slug_url = utils.slug(subject);
+      }
 
       // Update SelfPractice details
       const updatedSelfPractice = await SelfPractice.findOneAndUpdate(
         { _id: id, isDeleted: false },
-        {$set: updateObj},
+        { $set: updateObj },
         { new: true }
       );
 
@@ -158,7 +158,7 @@ module.exports = function (mongoose, utils, constants) {
       let filter = {};
       filter.isDeleted = false;
 
-      const getSelfPractice = await SelfPractice.find(filter)
+      const getSelfPractice = await SelfPractice.find(filter).populate('segmentId')
         .sort({ createdAt: 1 })
         .skip(Number(skip))
         .limit(Number(limit))

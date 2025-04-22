@@ -127,9 +127,9 @@ module.exports = function (utils) {
         .items(
           Joi.object({
             id: Joi.string()
-        .pattern(/^[0-9a-fA-F]{24}$/)
-        .optional()
-        .error(() => Error("Invalid ID")),
+              .pattern(/^[0-9a-fA-F]{24}$/)
+              .optional()
+              .error(() => Error("Invalid ID")),
             shortUrl: Joi.string().uri().optional(),
             question: Joi.string().optional(),
             answer: Joi.string().optional(),
@@ -255,7 +255,7 @@ module.exports = function (utils) {
         .required()
         .error(() => Error("Invalid Segment ID")),
       subject: Joi.string().optional(),
-      isSubject: Joi.string().optional(),
+      isSubject: Joi.boolean().optional(),
       slug_url: Joi.string().optional(),
       practices: Joi.array()
         .items(
@@ -279,7 +279,7 @@ module.exports = function (utils) {
         .required()
         .error(() => Error("Invalid ID")),
       displayType: Joi.string().valid("type1", "type2", "type3").optional(),
-      isSubject: Joi.string().optional(),
+      isSubject: Joi.boolean().optional(),
       subject: Joi.string().optional(),
       slug_url: Joi.string().optional(),
       segmentId: Joi.string()
@@ -292,6 +292,7 @@ module.exports = function (utils) {
             questionInEnglish: Joi.string().optional(),
             questionInTamil: Joi.string().optional(),
             answer: Joi.string().optional(),
+            _id: Joi.string().optional(),
           })
         )
         .optional()
