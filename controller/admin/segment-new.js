@@ -17,9 +17,21 @@ module.exports = function (mongoose, utils, constants) {
           "Title and category are required"
         );
       }
-      const existingCategory = await SegmentCategory.find({
-        _id: { $in: category },
-      });
+
+      const slugTitle = utils.slug(title);
+
+      const [isSegmentExist, existingCategory] = await Promise.all([
+        Segment.findOne({ slug_url: slugTitle }).lean(),
+        SegmentCategory.find({ _id: { $in: category } })
+      ])
+      if (isSegmentExist) {
+        return utils.sendErrorNew(
+          req,
+          res,
+          "BAD_REQUEST",
+          "Segment Already Exists."
+        );
+      }
       if (existingCategory.length !== category.length) {
         return utils.sendErrorNew(
           req,
@@ -28,13 +40,12 @@ module.exports = function (mongoose, utils, constants) {
           "Segment Category Not Found"
         );
       }
-//slugify the title
-      const slugTitle = utils.slug(title);
+      //slugify the title
 
 
       const segment = await Segment.create({
         title,
-        slug_url:slugTitle,
+        slug_url: slugTitle,
         category,
       });
       return utils.sendResponseNew(req, res, "OK", "SUCCESS", segment);
@@ -51,6 +62,19 @@ module.exports = function (mongoose, utils, constants) {
       const existingSegment = await Segment.findOne({
         _id: id
       });
+      if (existingSegment.title !== title) {
+        const slugTitle = utils.slug(title);
+        const isSegmentExist = await
+          Segment.findOne({ slug_url: slugTitle }).lean();
+        if (isSegmentExist) {
+          return utils.sendErrorNew(
+            req,
+            res,
+            "BAD_REQUEST",
+            "Segment Already Exists."
+          );
+        }
+      }
 
       if (!existingSegment) {
         return utils.sendErrorNew(req, res, "BAD_REQUEST", "Segment Not Found");
@@ -71,13 +95,13 @@ module.exports = function (mongoose, utils, constants) {
       }
 
       let updateObj = {
-        category: category, 
+        category: category,
         status: status,
       };
 
-      if(title){
+      if (title) {
         updateObj.title = title;
-         updateObj.slug_url = utils.slug(title);
+        updateObj.slug_url = utils.slug(title);
       }
 
       const result = await Segment.findByIdAndUpdate(
@@ -90,10 +114,10 @@ module.exports = function (mongoose, utils, constants) {
     } catch (err) {
       console.log(err);
       return utils.sendErrorNew(req, res, "BAD_REQUEST", err.message);
-    } 
+    }
   };
 
- 
+
   segmentsCtrl.listSegment = async (req, res) => {
     try {
       const { skip, limit } = req.query;

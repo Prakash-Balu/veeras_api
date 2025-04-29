@@ -154,8 +154,8 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.listSelfPractice = async (req, res) => {
     try {
-      const { skip, limit } = req.query;
-      let filter = {};
+      const { skip, limit, segmentId } = req.query;
+      let filter = { segmentId };
       filter.isDeleted = false;
 
       const getSelfPractice = await SelfPractice.find(filter).populate('segmentId')

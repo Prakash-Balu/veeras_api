@@ -6,6 +6,7 @@ module.exports = function (mongoose, utils, constants) {
   const segmentsCtrl = {};
   const Segment = mongoose.model("Segment_new");
   const PracticeWithMaster = mongoose.model("PracticeWithMaster");
+  const SelfPractice = mongoose.model("selfPractice_new");
 
   segmentsCtrl.listSegment = async (req, res) => {
     try {
@@ -20,69 +21,50 @@ module.exports = function (mongoose, utils, constants) {
 
       const segmentIds = segments.map((seg) => seg._id);
 
-      const [practiceWithMaster] = await Promise.all([
+      const [practiceWithMaster, selfPracticeData] = await Promise.all([
         PracticeWithMaster.find({ segmentId: { $in: segmentIds } }),
+        SelfPractice.find({ segmentId: { $in: segmentIds } }),
       ]);
-      const subjects = [
-            {
-              "_id": "67ecebfc04072134f7122ec1",
-              "name": "1.1 Hahaan",
-              "segmentId": "67ebcc02ed786b75cfcd711e",
-              "videoUrl": "https://",
-              "shorts": [
-                {
-                  "shortUrl": "https://",
-                  "question": "Test",
-                  "answer": "Test",
-                  "isDeleted": false,
-                  "_id": null
-                }
-              ],
-              "status": "active",
-              "createdAt": "2025-04-02T07:49:16.529Z",
-              "updatedAt": "2025-04-02T07:49:16.529Z"
-            },
-            {
-              "_id": "67ed3763da9499d3ed44c15b",
-              "name": "demo2",
-              "segmentId": "67ebcc02ed786b75cfcd711e",
-              "description": "demo2",
-              "videoUrl": "https://vimeo.com",
-              "shorts": [
-                {
-                  "shortUrl": "https://vimeo.com",
-                  "question": "what is your country?",
-                  "answer": "India",
-                  "isDeleted": false,
-                  "_id": "67ed3763da9499d3ed44c15c"
-                }
-              ],
-              "status": "active",
-              "createdAt": "2025-04-02T13:10:59.562Z",
-              "updatedAt": "2025-04-02T13:10:59.562Z"
-            }
-          ]
-      
-     const listSegment =  segments.map((segment) => {
+
+      const listSegment = segments.map((segment) => {
         const updatedCategory = segment.category.map((cat) => {
-          if (cat.value === "practicewithmaster") {
+          if (cat.value === "practice-with-master") {
             return {
               ...cat,
               subjects: practiceWithMaster.filter(
                 (e) => String(e.segmentId) === String(segment._id)
               ),
             };
+          } else if (cat.value === "self-practice") {
+            return {
+              ...cat,
+              subjects: selfPracticeData.filter(
+                (e) => String(e.segmentId) === String(segment._id)
+              ),
+            };
+          } else {
+            return {
+              ...cat,
+              subjects: [],
+            };
           }
-          else {
-            return {...cat, subjects};
-          }
-          
         });
 
         return { ...segment, category: updatedCategory };
       });
 
-   
+      let properData = [];
+      listSegment.forEach(element => {
+        const category = element.category;
+        delete element.category;
+        const filterCategory = category.filter((e) => e.subjects.length > 0);
+        if (filterCategory.length > 0) {
+          properData.push({ ...element, category: filterCategory })
+        }
+
+      });
+
+
 
       const count = await Segment.countDocuments({ status: "active" });
 
@@ -91,7 +73,7 @@ module.exports = function (mongoose, utils, constants) {
         res,
         "OK",
         "Success",
-        listSegment,
+        properData,
         count
       );
     } catch (err) {
