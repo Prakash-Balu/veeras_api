@@ -130,10 +130,10 @@ module.exports = function(mongoose, utils) {
                 // { $match: { locationId: new ObjectId(locationInfo._id) } },
                 {
                     $lookup: {
-                    from: "locations", // Join with the Location collection
-                    localField: "locationId",
-                    foreignField: "_id",
-                    as: "location"
+                        from: "locations", // Join with the Location collection
+                        localField: "locationId",
+                        foreignField: "_id",
+                        as: "location"
                     }
                 },
                 {
@@ -141,10 +141,10 @@ module.exports = function(mongoose, utils) {
                 },
                 {
                     $lookup: {
-                    from: "plans", // Join with the Plans collection
-                    localField: "availablePlans",
-                    foreignField: "_id",
-                    as: "plans"
+                        from: "plans", // Join with the Plans collection
+                        localField: "availablePlans",
+                        foreignField: "_id",
+                        as: "plans"
                     }
                 },
                 {
@@ -178,70 +178,7 @@ module.exports = function(mongoose, utils) {
 
     planService.getAllPlans = async (req, res) => {
         try {
-            return await Locations.aggregate([
-                {
-                    $lookup:{
-                        from: "locationplans",
-                        localField: "_id",
-                        foreignField: "locationId",
-                        as: "locationDetails"
-                    }  
-                },
-                {
-                    $unwind:"$locationDetails",
-                },
-                {
-                    $unwind:"$locationDetails.availablePlans"
-                },
-                {
-                    $lookup:{
-                        from: "plans",
-                        localField: "locationDetails.availablePlans",
-                        foreignField: "_id",
-                        as: "planDetails"
-                    }
-                },
-                {
-                    $unwind:"$planDetails"
-                },
-                {
-                    $lookup:{
-                        from: "planprices",
-                        localField: "locationDetails._id",
-                        foreignField: "locationPlanId",
-                        as: "priceDetails"
-                    }
-                },
-                {
-                    $group:{
-                        "_id": "$_id",
-                        "countryName": { "$first": "$countryName" },
-                        "countryCode": { "$first": "$countryCode" },
-                        "phoneCode": { "$first": "$phoneCode" },
-                        "countryFlag": { "$first": "$countryFlag" },
-                        "currencySymbol": { "$first": "$currencySymbol" },
-                        "currencyName": { "$first": "$currencyName" },
-                        "plans": { "$addToSet": "$planDetails" },
-                        "price":{"$first":"$priceDetails"},
-                    }
-                },
-                {
-                    "$project": {
-                      "_id": 1,
-                      "countryName": 1,
-                      "countryCode": 1,
-                      "phoneCode": 1,
-                      "countryFlag": 1,
-                      "currencySymbol": 1,
-                      "currencyName": 1,
-                      "plans": 1,
-                      "price": 1
-                    }
-                },
-                {
-                    $sort: { "countryName": 1 } // Add this stage to sort by countryName
-                }
-            ]);
+            return await Plans.find();
         } catch (err) {
             console.log(err);
             return utils.sendErrorNew(req, res, 'BAD_REQUEST', err.message);
