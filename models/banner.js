@@ -3,7 +3,7 @@
 module.exports = function (mongoose, constants) {
   const Schema = mongoose.Schema;
 
-    const schema = new Schema(
+  const schema = new Schema(
     {
       name: {
         type: String,
@@ -36,5 +36,5 @@ module.exports = function (mongoose, constants) {
     }
   );
 
-  return mongoose.model("BannerSection_new", schema);
+  return mongoose.model("Banner", schema);
 };

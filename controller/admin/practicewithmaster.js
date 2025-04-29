@@ -157,6 +157,7 @@ module.exports = function (mongoose, utils, constants) {
         filter.status = status;
       }
 
+
       const getPractice = await PracticeWithMaster.find(filter)
         .populate("segmentId")
         .sort({ createdAt: -1 })

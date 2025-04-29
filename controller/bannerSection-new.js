@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function (mongoose, utils, constants) {
-  const BannerSection = mongoose.model("BannerSection_new");
+  const BannerSection = mongoose.model("Banner");
   const ctrl = {};
 
   ctrl.listBanner = async (req, res) => {

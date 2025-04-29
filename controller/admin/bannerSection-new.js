@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function (mongoose, utils, constants) {
-  const BannerSection = mongoose.model("BannerSection_new");
+  const BannerSection = mongoose.model("Banner");
   const ctrl = {};
 
   ctrl.addBanner = async (req, res) => {
@@ -23,7 +23,7 @@ module.exports = function (mongoose, utils, constants) {
 
       const createBanner = await BannerSection.create({
         name,
-        slug_url : slugTitle,
+        slug_url: slugTitle,
         motivationalDescription,
         videoUrl,
       });
@@ -37,7 +37,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updateBanner = async (req, res) => {
     try {
-      const { id, name,motivationalDescription, videoUrl, status } = req.body;
+      const { id, name, motivationalDescription, videoUrl, status } = req.body;
 
       const banner = await BannerSection.findOne({ _id: id });
 
@@ -55,8 +55,8 @@ module.exports = function (mongoose, utils, constants) {
       updateObj.motivationalDescription = motivationalDescription;
       updateObj.videoUrl = videoUrl;
       updateObj.status = status;
-      
-      if(name){
+
+      if (name) {
         updateObj.name = name;
         updateObj.slug_url = utils.slug(name);
       }
@@ -65,7 +65,7 @@ module.exports = function (mongoose, utils, constants) {
       // Update practice details
       const updatedBannerSection = await BannerSection.findOneAndUpdate(
         { _id: id },
-        {$set: updateObj},
+        { $set: updateObj },
         { new: true }
       );
 

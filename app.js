@@ -72,22 +72,13 @@ module.exports = (async () => {
     constants
   );
   const plan = require("./routes/plan")(mongoose, utils, constants);
-  const segments = require("./routes/segments")(mongoose, utils, constants);
-  const comments = require("./routes/comments")(mongoose, utils, constants);
   const payments = require("./routes/payment")(mongoose, utils, constants);
-  const chat = require("./routes/chat")(mongoose, utils, constants);
   const adminLocation = require("./routes/admin/location-price")(
     mongoose,
     utils,
     constants
   );
   const adminPlan = require("./routes/admin/plan")(mongoose, utils, constants);
-  const adminSegments = require("./routes/admin/segments")(
-    mongoose,
-    utils,
-    constants
-  );
-  const apiSelfPractice = require("./routes/api")(mongoose, utils, constants);
   const adminPrice = require("./routes/admin/price")(
     mongoose,
     utils,
@@ -168,10 +159,6 @@ module.exports = (async () => {
   app.use("/location", location, adminLocation);
   app.use("/plan", plan, adminPlan);
   app.use("/payment", payments);
-  app.use("/segments", segments, adminSegments);
-  app.use("/comments", comments);
-  app.use("/chat", chat);
-  app.use("/api", apiSelfPractice);
   app.use("/price", adminPrice);
   app.use("/practicewithmaster", practicewithmaster);
   app.use("/practicewithmaster-customer", practicewithmaster_customer);
