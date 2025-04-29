@@ -93,15 +93,15 @@ module.exports = {
     return token;
   },
 
-  
+
   slug: function (text) {
     console.log("text", text);
 
     let slug = text
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "_")
-    .replace(/\./g, "-"); 
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "_")
+      .replace(/\./g, "_");
 
     return slug
   },
@@ -124,5 +124,5 @@ module.exports = {
   },
 
 
-  
+
 };
