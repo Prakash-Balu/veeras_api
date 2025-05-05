@@ -18,7 +18,15 @@ module.exports = function (mongoose, utils, constants) {
           "Segment Not Exists"
         );
       }
-
+      
+   if (segmentData.title.match(/\d+/g)?.[0] !== subject.match(/\d+/g)?.[0]) {
+        return utils.sendErrorNew(  
+          req,
+          res,
+          "BAD_REQUEST",
+          "Subject does not belong to Segment"
+        );
+      }
 
       const existingSubject = await ClassRoom.findOne({ subject });
       if (existingSubject) {
@@ -42,7 +50,10 @@ module.exports = function (mongoose, utils, constants) {
           "Segment is not found"
         );
       }
-      const slugTitle = utils.slug(subject);
+
+      const slugTitle = subject
+        ? utils.slug(subject)
+        : `${utils.slug("no subject")}_${Date.now()}`;
 
       const createClassRoom = await ClassRoom.create({
         segmentId,
@@ -51,7 +62,7 @@ module.exports = function (mongoose, utils, constants) {
         video_url,
         isSubject
       });
-
+      
       return utils.sendResponseNew(req, res, "OK", "SUCCESS", createClassRoom);
     } catch (err) {
       console.log(err);
@@ -61,8 +72,7 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.updateClassRoom = async (req, res) => {
     try {
-      const { id, subject, segmentId, video_url, isSubject } =
-        req.body;
+      const { id, subject, segmentId, video_url, isSubject } = req.body;
 
       const classroom = await ClassRoom.findOne({
         _id: id,
@@ -77,16 +87,15 @@ module.exports = function (mongoose, utils, constants) {
         );
       }
 
-      const updateObj = {}
+      const updateObj = {};
 
-
-      updateObj.segmentId = segmentId,
-        updateObj.video_url = video_url,
-        updateObj.isSubject = isSubject
-      updateObj.subject = subject
+      (updateObj.segmentId = segmentId),
+        (updateObj.video_url = video_url),
+        (updateObj.isSubject = isSubject);
+      updateObj.subject = subject;
 
       if (subject) {
-        updateObj.slug_url = utils.slug(subject)
+        updateObj.slug_url = utils.slug(subject);
       }
       // Update practice details
       const updatedClassRoom = await ClassRoom.findOneAndUpdate(

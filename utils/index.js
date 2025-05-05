@@ -95,7 +95,6 @@ module.exports = {
 
 
   slug: function (text) {
-    console.log("text", text);
 
     let slug = text
       .toLowerCase()
