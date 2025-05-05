@@ -305,9 +305,12 @@ module.exports = function (utils) {
         .pattern(/^[0-9a-fA-F]{24}$/)
         .required()
         .error(() => Error("Invalid Segment ID")),
-      subject: Joi.string().required(),
-      slug_url: Joi.string().optional(),
-      isSubject: Joi.boolean().optional(),
+      subject: Joi.string().when('isSubject', {
+        is: true,
+        then: Joi.required(),
+        otherwise: Joi.forbidden()
+      }).error(() => Error("Invalid Subject")),
+      isSubject: Joi.boolean().required(),
       video_url: Joi.string()
         .uri()
         .required()

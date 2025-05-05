@@ -7,7 +7,18 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.addClassRoom = async (req, res) => {
     try {
-      const { subject, segmentId, video_url,isSubject } = req.body;
+      const { subject, segmentId, video_url, isSubject } = req.body;
+
+      const segmentData = await Segment.findOne({ _id: segmentId }).lean();
+      if (!segmentData) {
+        return utils.sendErrorNew(
+          req,
+          res,
+          "BAD_REQUEST",
+          "Segment Not Exists"
+        );
+      }
+
 
       const existingSubject = await ClassRoom.findOne({ subject });
       if (existingSubject) {
@@ -68,19 +79,19 @@ module.exports = function (mongoose, utils, constants) {
 
       const updateObj = {}
 
-      
+
       updateObj.segmentId = segmentId,
-      updateObj.video_url = video_url,
-      updateObj.isSubject = isSubject
+        updateObj.video_url = video_url,
+        updateObj.isSubject = isSubject
       updateObj.subject = subject
 
-if (subject) {
-  updateObj.slug_url = utils.slug(subject)
-}
+      if (subject) {
+        updateObj.slug_url = utils.slug(subject)
+      }
       // Update practice details
       const updatedClassRoom = await ClassRoom.findOneAndUpdate(
         { _id: id, isDeleted: false },
-        {$set: updateObj},
+        { $set: updateObj },
         { new: true }
       );
 
