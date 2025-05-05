@@ -71,6 +71,7 @@ module.exports = function(mongoose, utils) {
 
             const planUpdate = {
                 code: planDetails.code,
+                combinePlanId: planDetails.combinePlanId,
                 name: planDetails.name,
                 desc: planDetails.desc,
                 note: planDetails.note,
