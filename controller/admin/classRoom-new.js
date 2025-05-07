@@ -7,7 +7,10 @@ module.exports = function (mongoose, utils, constants) {
 
   ctrl.addClassRoom = async (req, res) => {
     try {
-      const { subject, segmentId, video_url, isSubject } = req.body;
+      let { subject, segmentId, video_url, isSubject } = req.body;
+      if (subject) {
+        subject = subject.trim();
+      }
 
       const segmentData = await Segment.findOne({ _id: segmentId }).lean();
       if (!segmentData) {
@@ -18,9 +21,9 @@ module.exports = function (mongoose, utils, constants) {
           "Segment Not Exists"
         );
       }
-      
-   if (segmentData.title.match(/\d+/g)?.[0] !== subject.match(/\d+/g)?.[0]) {
-        return utils.sendErrorNew(  
+
+      if (subject && segmentData.title.match(/\d+/g)?.[0] !== subject.match(/\d+/g)?.[0]) {
+        return utils.sendErrorNew(
           req,
           res,
           "BAD_REQUEST",
@@ -28,27 +31,16 @@ module.exports = function (mongoose, utils, constants) {
         );
       }
 
-      const existingSubject = await ClassRoom.findOne({ subject });
-      if (existingSubject) {
-        return utils.sendErrorNew(
-          req,
-          res,
-          "BAD_REQUEST",
-          "Already this subject is exists, try different name"
-        );
-      }
-
-      const existingSegment = await Segment.findOne({
-        _id: segmentId,
-        status: "active",
-      });
-      if (!existingSegment) {
-        return utils.sendErrorNew(
-          req,
-          res,
-          "BAD_REQUEST",
-          "Segment is not found"
-        );
+      if (subject) {
+        const existingSubject = await ClassRoom.findOne({ subject });
+        if (existingSubject) {
+          return utils.sendErrorNew(
+            req,
+            res,
+            "BAD_REQUEST",
+            "Already this subject is exists, try different name"
+          );
+        }
       }
 
       const slugTitle = subject
@@ -62,7 +54,7 @@ module.exports = function (mongoose, utils, constants) {
         video_url,
         isSubject
       });
-      
+
       return utils.sendResponseNew(req, res, "OK", "SUCCESS", createClassRoom);
     } catch (err) {
       console.log(err);
