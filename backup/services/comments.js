@@ -2,14 +2,14 @@
 
 module.exports = function (mongoose, utils) {
     const commentsService = {};
-    const Comments = mongoose.model("comments");
+    const comments = require("../model/comments")(mongoose);
     const Notification = mongoose.model("Notification")
-    const Replies = mongoose.model("replies");
+    const Replies = require("../../models/replies")(mongoose);
     const ObjectId = mongoose.Types.ObjectId;
 
     commentsService.addComment = async (req, res) => {
         try {
-            const commentsObject = await Comments.create({
+            const commentsObject = await comments.create({
                 userId: req.userInfo._id,
                 segmentId: req.body.segmentId,
                 seqNo: req.body.seqNo,
@@ -49,7 +49,7 @@ module.exports = function (mongoose, utils) {
         try {
             const segmentId = req.query.segmentId;
             // const commentData = await Comments.find({});
-            var threadObject = await Comments.aggregate([
+            var threadObject = await comments.aggregate([
                 { $match: { segmentId: new ObjectId(segmentId) } },
                 {
                     $lookup: {

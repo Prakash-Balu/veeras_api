@@ -18,7 +18,7 @@
  *           schema:
  *             type: object
  *             properties:
- *               segmentId:
+ *               classRoomId:
  *                 example: any
  *               seqNo:
  *                 type: integer
@@ -27,7 +27,7 @@
  *               audioPath:
  *                 example: any
  *             required:
- *               - segmentId
+ *               - classRoomId
  *               - seqNo
  *               - text
  *               - audioPath
@@ -89,7 +89,7 @@
  *       - BearerAuth: []
  *     parameters:
  *       - in: query
- *         name : segmentId
+ *         name : classRoomId
  *         schema:
  *           type: string
  *     responses:

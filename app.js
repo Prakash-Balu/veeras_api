@@ -147,6 +147,9 @@ module.exports = (async () => {
     constants
   );
 
+  const chat = require("./routes/chat")(mongoose,utils,constants);
+
+
   const { createToken } = require("./service/agora");
   const { email } = require("./service/email");
 
@@ -175,6 +178,8 @@ module.exports = (async () => {
   app.use("/segment_category", segment_category);
   app.use("/selfPractice", selfPractice);
   app.use("/classroom", classroom);
+  app.use("/chat",chat)
+
 
   app.get("/mail", email);
   app.get("/agora/generate-token", createToken);
@@ -204,7 +209,7 @@ module.exports = (async () => {
         },
       ],
     },
-    apis: ["./routes/*.js", "./routes/admin/*.js"], // Adjust the path to match your project
+    apis: ["./routes/*.js", "./routes/admin/*.js","./backup/routes/*.js"], // Adjust the path to match your project
   };
 
   const swaggerSpec = swaggerJsdoc(swaggerOptions);
@@ -227,7 +232,7 @@ module.exports = (async () => {
   //whatsApp
   app.post("/whatsapp", (req, res) => {
     const msg = req.body.msg;
-    const to = "+91995265649";
+    const to = "+919361138073";
     console.log("msg", msg);
 
     client.messages

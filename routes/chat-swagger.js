@@ -20,14 +20,14 @@
  *           schema:
  *             type: object
  *             properties:
- *               segmentId:
+ *               classRoomId:
  *                 type: string
  *               message:
  *                 type: string
  *               isAudio:
  *                 type: boolean
  *             required:
- *               - segmentId
+ *               - classRoomId
  *               - message
  *               - isAudio
  *     responses:
@@ -56,7 +56,7 @@
  *           schema:
  *             type: object
  *             properties:
- *               segmentId:
+ *               classRoomId:
  *                 type: string
  *               parentId:
  *                 type: objectId
@@ -88,11 +88,14 @@
  *       - Chat
  *     security:
  *       - BearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name : classRoomId
+ *         schema:
+ *           type: string
  *     responses:
  *       '200':
  *         description: Success
- *       '201':
- *         description: Created
  *       '400':
  *         description: Bad Request
  *       '500':

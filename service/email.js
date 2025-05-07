@@ -10,8 +10,8 @@ const email = async (toEmail, customerName, pdfFilePath) => {
     const attachment = fs.readFileSync(pdfFilePath).toString("base64");
 
     const msg = {
-      to: toEmail,
-      from: "prasanna.flipflop@gmail.com",
+      to: 'prasanna.flipflop@gmail.com',
+      from: "Antonyrajjero@gmail.com",
       subject: "Sending with SendGrid is Fun",
       text: `Hello ${customerName}, this is a test email with PDF attachment.`,
       html: "<strong>find your attachement.</strong>",

@@ -7,7 +7,7 @@ module.exports = (mongoose, utils, constants) => {
   const fs = require('fs')
   const controller = require('../controller/chat')(mongoose, utils, constants);
   const authenticate = require('../middleware/index')(mongoose, utils, constants)
-
+const validator = require("../validator/auth")(utils);
 
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -25,9 +25,9 @@ module.exports = (mongoose, utils, constants) => {
 
   const upload = multer({ storage: storage });
 
-  router.get('/common-chat/list', authenticate.validateToken, controller.listChat);
-  router.post('/common-chat', authenticate.validateToken, controller.createChat);
-  router.post('/common-chat/reply', authenticate.validateToken, authenticate.adminValidation, controller.replyChat);
+  router.get('/common-chat/list', authenticate.validateToken,validator.listChat, controller.listChat);
+  router.post('/common-chat', authenticate.validateToken,validator.addComment, controller.createChat);
+  router.post('/common-chat/reply', authenticate.validateToken,validator.addReply, controller.replyChat);
   router.post('/upload/audio', authenticate.validateToken, upload.single('audio'), controller.uploadAudio);
 
   return router;

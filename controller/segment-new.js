@@ -62,9 +62,7 @@ module.exports = function (mongoose, utils, constants) {
           properData.push({ ...element, category: filterCategory })
         }
 
-      });
-
-
+      });s
 
       const count = await Segment.countDocuments({ status: "active" });
 

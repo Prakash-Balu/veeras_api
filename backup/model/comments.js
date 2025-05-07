@@ -9,7 +9,7 @@ module.exports = function (mongoose) {
         // _id: {type: Schema.Types.ObjectId},
         userId: {type: ObjectId, ref: "users"},
         // segment_id: String,
-        segmentId: {type: ObjectId, ref: "segments"},
+        classRoomId: {type: ObjectId, ref: "classRoom_new"},
         seqNo: Number,
         text: String,
         audioPath: String,
