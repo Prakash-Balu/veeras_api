@@ -25,12 +25,12 @@ module.exports = function (mongoose, utils, pusher, constants) {
       totp.options = { digits: 6, step: 600 };
       const otp = totp.generate(secret);
       // Send OTP via Twilio SMS
-      const twillioResp = await client.messages.create({
-        body: `Your OTP is: ${otp}`,
-        from: twilioPhone,
-        to: `${phoneCode}${phoneNo}`
-      })
-      console.log("twillioResp::", twillioResp);
+      // const twillioResp = await client.messages.create({
+      //   body: `Your OTP is: ${otp}`,
+      //   from: twilioPhone,
+      //   to: `${phoneCode}${phoneNo}`
+      // })
+      // console.log("twillioResp::", twillioResp);
       if (!isUserExist) {
         const userObj = {
           phone: phoneNo,
