@@ -1,6 +1,7 @@
 "use strict";
 module.exports = function (mongoose, utils, constants) {
   const Chat = require("../models/chats")(mongoose);
+  const Classroom = mongoose.model("classRoom_new");
   const ctrl = {};
 
   ctrl.uploadAudio = async (req, res) => {
@@ -18,6 +19,18 @@ module.exports = function (mongoose, utils, constants) {
     try {
       const { _id: userId } = req.userInfo;
       const { classRoomId, message, isAudio } = req.body;
+
+      const classRoom = await Classroom.findOne({ _id: classRoomId }).lean();
+      if (!classRoom) {
+        return utils.sendErrorNew(
+          req,
+          res,
+          "BAD_REQUEST",
+          "Classroom Id Not Exists"
+        );
+      }
+
+
       const createdChatObj = await Chat.create({
         userId,
         message,
@@ -41,7 +54,18 @@ module.exports = function (mongoose, utils, constants) {
           req,
           res,
           "BAD_REQUEST",
-          "Parent Message Info Not Found"
+          "Parent Id Not Found"
+        );
+      }
+
+
+    const classRoom = await Classroom.findOne({ _id: classRoomId }).lean();
+      if (!classRoom) {
+        return utils.sendErrorNew(
+          req,
+          res,
+          "BAD_REQUEST",
+          "Classroom Id Not Exists"
         );
       }
       const createdChatObj = await Chat.create({

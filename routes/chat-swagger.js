@@ -59,7 +59,7 @@
  *               classRoomId:
  *                 type: string
  *               parentId:
- *                 type: objectId
+ *                 type: string
  *               message:
  *                 type: string
  *               isAudio:
@@ -93,6 +93,18 @@
  *         name : classRoomId
  *         schema:
  *           type: string
+ *       - in: query
+ *         name: skip
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Number of chat list in per page
  *     responses:
  *       '200':
  *         description: Success
