@@ -342,6 +342,57 @@ module.exports = function (utils) {
     return validator.joiValidateParams(req, res, data, schema, next);
   };
 
+
+  validator.addComment = function (req, res, next) {
+    const data = req.body;
+
+    const schema = Joi.object({
+      classRoomId: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .error(() => Error("Invalid ClassRoom ID")),
+      message: Joi.string()
+      .required()
+      .error(() => Error("Invalid Message")),
+      isAudio: Joi.boolean().required().error(() => Error("Isaudio Must be true or false"))
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+
+  validator.addReply = function (req, res, next) {
+    const data = req.body;
+
+    const schema = Joi.object({
+    parentId: Joi.string()
+      .pattern(/^[0-9a-fA-F]{24}$/)
+      .required()
+      .error(() => Error("Invalid Parent ID")),
+    classRoomId: Joi.string()
+      .pattern(/^[0-9a-fA-F]{24}$/)
+      .required()
+      .error(() => Error("Invalid ClassRoom ID")),
+    message: Joi.string()
+      .required()
+      .error(() => Error("Invalid Message")),
+    isAudio: Joi.boolean().required().error(() => Error("Isaudio Must be true or false"))
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+
+  validator.listChat = function (req, res, next) {
+    const data = req.query;
+
+    const schema = Joi.object({
+      skip: Joi.string().optional(),
+      limit: Joi.string().optional(),
+      classRoomId: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .optional()
+        .error(() => Error("Invalid classroom ID")),
+    });
+    return validator.joiValidateParams(req, res, data, schema, next);
+  };
+
   validator.joiValidateParams = function (req, res, data, schema, next) {
     // validate the request data against the schema
     const { error } = schema.validate(data);

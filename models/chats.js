@@ -13,13 +13,13 @@ module.exports = function (mongoose, constants) {
         type: ObjectId,
         ref: "User",
       },
-      segmentId: {
+      classRoomId: {
         type: ObjectId,
         ref: "segments",
       },
       message: {
         type: String,
-        required: true
+        required: true,
       },
       isDeleted: {
         type: Boolean,
@@ -27,16 +27,16 @@ module.exports = function (mongoose, constants) {
       },
       isReply: {
         type: Boolean,
-        default: false
+        default: false,
       },
       isAudio: {
         type: Boolean,
-        default: false
+        default: false,
       },
       parentId: {
         type: ObjectId,
-        ref: "CommonChat",
-      }
+        ref: "Chat",
+      },
     },
     {
       timestamps: true,

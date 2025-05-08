@@ -20,14 +20,14 @@
  *           schema:
  *             type: object
  *             properties:
- *               segmentId:
+ *               classRoomId:
  *                 type: string
  *               message:
  *                 type: string
  *               isAudio:
  *                 type: boolean
  *             required:
- *               - segmentId
+ *               - classRoomId
  *               - message
  *               - isAudio
  *     responses:
@@ -56,10 +56,10 @@
  *           schema:
  *             type: object
  *             properties:
- *               segmentId:
+ *               classRoomId:
  *                 type: string
  *               parentId:
- *                 type: objectId
+ *                 type: string
  *               message:
  *                 type: string
  *               isAudio:
@@ -88,11 +88,26 @@
  *       - Chat
  *     security:
  *       - BearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name : classRoomId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: skip
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Number of chat list in per page
  *     responses:
  *       '200':
  *         description: Success
- *       '201':
- *         description: Created
  *       '400':
  *         description: Bad Request
  *       '500':

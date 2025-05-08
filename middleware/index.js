@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
+const constant = require('../configs/constants/index')
 
 module.exports = function (mongoose, utils) {
   const authenticate = {};
@@ -105,7 +106,9 @@ module.exports = function (mongoose, utils) {
 
   authenticate.adminValidation = async (req, res, next) => {
     const { role } = req.userInfo;
-    if (role !== constants.role.ADMIN) {
+    console.log("role",role);
+    
+    if (role !== constant.role.ADMIN) {
       return utils.sendErrorNew(req, res, 'UNAUTHORIZED', "Unauthorized");
     }
     return next();
