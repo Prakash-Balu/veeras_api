@@ -306,11 +306,13 @@ module.exports = function (utils) {
         .required()
         .error(() => Error("Invalid Segment ID")),
       isSubject: Joi.boolean().required(),
-      subject: Joi.string().when('isSubject', {
-        is: true,
-        then: Joi.required(),
-        otherwise: Joi.forbidden()
-      }).error(() => Error("Invalid Subject")),
+      subject: Joi.string()
+        .when("isSubject", {
+          is: true,
+          then: Joi.required(),
+          otherwise: Joi.forbidden(),
+        })
+        .error(() => Error("Invalid Subject")),
       video_url: Joi.string()
         .uri()
         .required()
@@ -342,7 +344,6 @@ module.exports = function (utils) {
     return validator.joiValidateParams(req, res, data, schema, next);
   };
 
-
   validator.addComment = function (req, res, next) {
     const data = req.body;
 
@@ -351,10 +352,19 @@ module.exports = function (utils) {
         .pattern(/^[0-9a-fA-F]{24}$/)
         .required()
         .error(() => Error("Invalid ClassRoom ID")),
-      message: Joi.string()
-      .required()
-      .error(() => Error("Invalid Message")),
-      isAudio: Joi.boolean().required().error(() => Error("Isaudio Must be true or false"))
+      isAudio: Joi.boolean()
+        .required()
+        .error(() => Error("Isaudio Must be true or false")),
+      message: Joi.string().when("isAudio", {
+        is: Joi.valid(true),
+        then: Joi.string()
+          .uri()
+          .required()
+          .error(() => Error("Message must be Url,If audio is true")),
+        otherwise: Joi.required()
+          .required()
+          .error(() => Error("Invalid Message")),
+      }),
     });
     return validator.joiValidateParams(req, res, data, schema, next);
   };
@@ -363,18 +373,27 @@ module.exports = function (utils) {
     const data = req.body;
 
     const schema = Joi.object({
-    parentId: Joi.string()
-      .pattern(/^[0-9a-fA-F]{24}$/)
-      .required()
-      .error(() => Error("Invalid Parent ID")),
-    classRoomId: Joi.string()
-      .pattern(/^[0-9a-fA-F]{24}$/)
-      .required()
-      .error(() => Error("Invalid ClassRoom ID")),
-    message: Joi.string()
-      .required()
-      .error(() => Error("Invalid Message")),
-    isAudio: Joi.boolean().required().error(() => Error("Isaudio Must be true or false"))
+      parentId: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .error(() => Error("Invalid Parent ID")),
+      classRoomId: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .error(() => Error("Invalid ClassRoom ID")),
+      isAudio: Joi.boolean()
+        .required()
+        .error(() => Error("Isaudio Must be true or false")),
+      message: Joi.string().when("isAudio", {
+        is: Joi.valid(true),
+        then: Joi.string()
+          .uri()
+          .required()
+          .error(() => Error("Message must be Url, if audio is true")),
+        otherwise: Joi.required()
+          .required()
+          .error(() => Error("Invalid Message")),
+      }),
     });
     return validator.joiValidateParams(req, res, data, schema, next);
   };

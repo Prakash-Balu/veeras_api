@@ -30,7 +30,6 @@ module.exports = function (mongoose, utils, constants) {
         );
       }
 
-
       const createdChatObj = await Chat.create({
         userId,
         message,
@@ -58,8 +57,7 @@ module.exports = function (mongoose, utils, constants) {
         );
       }
 
-
-    const classRoom = await Classroom.findOne({ _id: classRoomId }).lean();
+      const classRoom = await Classroom.findOne({ _id: classRoomId }).lean();
       if (!classRoom) {
         return utils.sendErrorNew(
           req,
